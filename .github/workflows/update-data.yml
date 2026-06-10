@@ -1,10 +1,10 @@
-name: Mise à jour données PMI (complète)
+name: Mise à jour données PMI (V3)
 
 on:
   schedule:
-    - cron: '0 7-22 * * 1-5'   # Lundi-Vendredi, 9h-00h heure Paris
-    - cron: '0 8,12 * * 6,0'   # Week-end : 10h et 14h
-  workflow_dispatch:             # Lancement manuel depuis GitHub
+    - cron: '0 7-22 * * 1-5'   # Lundi-Vendredi 9h-00h Paris
+    - cron: '0 8,12 * * 6,0'   # Week-end 10h et 14h
+  workflow_dispatch:
 
 jobs:
   fetch-and-calculate:
@@ -16,304 +16,301 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Installer les dépendances Python
+      - name: Installer requests
         run: pip install requests --quiet
 
-      - name: Récupérer données de marché + calculer indicateurs techniques
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Récupérer toutes les données
         run: |
           python3 << 'PYEOF'
 import requests, json, time, sys
 from datetime import datetime, timezone, timedelta
-from math import isnan
 
-TZ_PARIS = timezone(timedelta(hours=2))  # CEST (été)
+TZ_PARIS = timezone(timedelta(hours=2))
 now_utc = datetime.now(timezone.utc)
 now_paris = datetime.now(TZ_PARIS)
+print(f"Heure Paris : {now_paris.strftime('%d/%m/%Y %H:%M')}")
 
-print(f"🕐 Heure Paris : {now_paris.strftime('%d/%m/%Y %H:%M')}")
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
-# ─────────────────────────────────────────────
-# 1. DONNÉES HISTORIQUES YAHOO FINANCE (200 jours)
-#    Pour calculer RSI, SMA 50j, SMA 200j, MACD
-# ─────────────────────────────────────────────
-FALLBACK_PRICE = 173.75
-
-def get_yahoo_history(ticker="PM", days=220):
-    """Récupère l'historique de cours via Yahoo Finance (endpoint non officiel mais stable)."""
-    end = int(time.time())
-    start = int(time.time()) - days * 86400
+# ─── HELPER : appel Yahoo Finance ───
+def yahoo_chart(ticker, range_="1d", interval="1d"):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
-    params = {
-        "period1": start, "period2": end,
-        "interval": "1d", "range": f"{days}d"
-    }
-    headers = {"User-Agent": "Mozilla/5.0"}
+    params = {"interval": interval, "range": range_}
     try:
-        r = requests.get(url, params=params, headers=headers, timeout=15)
+        r = requests.get(url, params=params, headers=HEADERS, timeout=15)
         r.raise_for_status()
-        data = r.json()
-        closes = data["chart"]["result"][0]["indicators"]["quote"][0]["close"]
-        timestamps = data["chart"]["result"][0]["timestamps"]
-        # Nettoyer les None
-        pairs = [(t, c) for t, c in zip(timestamps, closes) if c is not None]
-        closes_clean = [c for _, c in pairs]
-        print(f"✅ Yahoo Finance : {len(closes_clean)} cours récupérés pour {ticker}")
-        return closes_clean
+        return r.json()
     except Exception as e:
-        print(f"⚠️ Yahoo Finance erreur : {e}")
-        return []
+        print(f"  Erreur Yahoo {ticker}: {e}")
+        return None
 
-def get_yahoo_quote(ticker="PM"):
-    """Récupère le cours actuel, variations, volume."""
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
-    params = {"interval": "1d", "range": "5d"}
-    headers = {"User-Agent": "Mozilla/5.0"}
+# ─── COURS ACTUEL (quote) ───
+def get_quote(ticker):
+    data = yahoo_chart(ticker, "5d", "1d")
+    if not data:
+        return {}
     try:
-        r = requests.get(url, params=params, headers=headers, timeout=15)
-        r.raise_for_status()
-        data = r.json()
         meta = data["chart"]["result"][0]["meta"]
-        quote = {
-            "pm_price": round(meta.get("regularMarketPrice", FALLBACK_PRICE), 2),
-            "pm_open": round(meta.get("regularMarketOpen", 0), 2),
-            "pm_high": round(meta.get("regularMarketDayHigh", 0), 2),
-            "pm_low": round(meta.get("regularMarketDayLow", 0), 2),
-            "pm_volume": f"{meta.get('regularMarketVolume', 0)/1e6:.1f}M",
-            "pm_prev_close": round(meta.get("regularMarketPreviousClose", FALLBACK_PRICE), 2),
+        price = meta.get("regularMarketPrice", 0)
+        prev  = meta.get("regularMarketPreviousClose", price)
+        return {
+            "price":  round(price, 2),
+            "open":   round(meta.get("regularMarketOpen", price), 2),
+            "high":   round(meta.get("regularMarketDayHigh", price), 2),
+            "low":    round(meta.get("regularMarketDayLow", price), 2),
+            "prev":   round(prev, 2),
+            "volume": f"{meta.get('regularMarketVolume',0)/1e6:.1f}M",
+            "chg_abs": round(price - prev, 2),
+            "chg_pct": round((price - prev) / prev * 100, 2) if prev else 0,
             "market_status": "open" if meta.get("marketState") == "REGULAR" else "closed",
         }
-        price = quote["pm_price"]
-        prev = quote["pm_prev_close"]
-        quote["pm_chg_abs"] = round(price - prev, 2)
-        quote["pm_chg_pct"] = round((price - prev) / prev * 100, 2)
-        print(f"✅ Cours PM : {price}$ ({quote['pm_chg_pct']:+.2f}%)")
-        return quote
     except Exception as e:
-        print(f"⚠️ Yahoo quote erreur : {e}")
+        print(f"  Erreur quote {ticker}: {e}")
         return {}
 
-def get_yahoo_eurusd():
-    """Récupère EUR/USD."""
-    url = "https://query1.finance.yahoo.com/v8/finance/chart/EURUSD=X"
-    params = {"interval": "1d", "range": "1d"}
-    headers = {"User-Agent": "Mozilla/5.0"}
+# ─── HISTORIQUE LONG (pour calculs techniques + graphique) ───
+def get_history(ticker, days=260):
+    data = yahoo_chart(ticker, f"{days}d", "1d")
+    if not data:
+        return [], []
     try:
-        r = requests.get(url, params=params, headers=headers, timeout=10)
-        r.raise_for_status()
-        data = r.json()
-        rate = data["chart"]["result"][0]["meta"]["regularMarketPrice"]
-        rate = round(rate, 4)
-        print(f"✅ EUR/USD : {rate}")
-        return {"eurusd": rate, "usdeur": round(1/rate, 4)}
-    except Exception as e:
-        print(f"⚠️ EUR/USD erreur : {e}")
-        return {"eurusd": 1.085, "usdeur": 0.9217}
+        result = data["chart"]["result"][0]
+        closes = result["indicators"]["quote"][0]["close"]
+        timestamps = result["timestamps"]
+        pairs = [(t, c) for t, c in zip(timestamps, closes) if c is not None]
+        return [c for _, c in pairs], [t for t, _ in pairs]
+    except:
+        return [], []
 
-def get_perf(closes, current_price):
-    """Calcule les performances sur différentes périodes."""
+# ─── GRAPHIQUE : données pour 6 périodes ───
+def build_chart_data(closes, timestamps):
+    """Retourne les données pour 1j, 5j, 1m, 3m, 6m, 1an"""
+    if not closes:
+        return {}
+    now = timestamps[-1] if timestamps else time.time()
+    periods = {
+        "5d":  5,   "1m":  22,  "3m":  66,
+        "6m": 130,  "1y": 252,
+    }
     result = {}
-    # 5 jours ouvrés ≈ 1 semaine
-    if len(closes) >= 6:
-        ref = closes[-6]
-        result["pm_week_chg"] = round((current_price - ref) / ref * 100, 2)
-    if len(closes) >= 22:
-        ref = closes[-22]
-        result["pm_month_chg"] = round((current_price - ref) / ref * 100, 2)
-    # YTD : approximation depuis début janvier (environ 110 jours ouvrés)
-    if len(closes) >= 110:
-        ref = closes[-110]
-        result["pm_ytd_chg"] = round((current_price - ref) / ref * 100, 2)
-    # 52 semaines = 252 jours ouvrés
-    if len(closes) >= 252:
-        ref = closes[-252]
-        result["pm_1y_chg"] = round((current_price - ref) / ref * 100, 2)
-    elif len(closes) >= 2:
-        ref = closes[0]
-        result["pm_1y_chg"] = round((current_price - ref) / ref * 100, 2)
+    for key, trading_days in periods.items():
+        n = min(trading_days, len(closes))
+        c_slice = closes[-n:]
+        t_slice = timestamps[-n:] if timestamps else []
+        result[key] = {
+            "closes": [round(v, 2) for v in c_slice],
+            "dates":  [datetime.fromtimestamp(t, tz=timezone.utc).strftime("%d/%m") for t in t_slice],
+            "min":    round(min(c_slice), 2),
+            "max":    round(max(c_slice), 2),
+            "start":  round(c_slice[0], 2),
+            "end":    round(c_slice[-1], 2),
+            "chg_pct": round((c_slice[-1] - c_slice[0]) / c_slice[0] * 100, 2) if c_slice[0] else 0,
+        }
     return result
 
-# ─────────────────────────────────────────────
-# 2. CALCULS TECHNIQUES
-# ─────────────────────────────────────────────
-
+# ─── CALCULS TECHNIQUES ───
 def sma(closes, n):
-    """Simple Moving Average sur n périodes."""
-    if len(closes) < n:
-        return None
+    if len(closes) < n: return None
     return round(sum(closes[-n:]) / n, 2)
 
-def ema(closes, n):
-    """Exponential Moving Average sur n périodes."""
-    if len(closes) < n:
-        return None
+def ema_series(closes, n):
+    if len(closes) < n: return []
     k = 2 / (n + 1)
-    ema_val = sum(closes[:n]) / n
-    for price in closes[n:]:
-        ema_val = price * k + ema_val * (1 - k)
-    return round(ema_val, 4)
+    e = sum(closes[:n]) / n
+    series = [e]
+    for p in closes[n:]:
+        e = p * k + e * (1 - k)
+        series.append(e)
+    return series
 
 def rsi(closes, period=14):
-    """RSI sur 14 périodes."""
-    if len(closes) < period + 1:
-        return None
+    if len(closes) < period + 1: return None
     deltas = [closes[i] - closes[i-1] for i in range(1, len(closes))]
-    gains = [max(d, 0) for d in deltas]
+    gains  = [max(d, 0) for d in deltas]
     losses = [abs(min(d, 0)) for d in deltas]
-    avg_gain = sum(gains[:period]) / period
-    avg_loss = sum(losses[:period]) / period
+    ag = sum(gains[:period]) / period
+    al = sum(losses[:period]) / period
     for i in range(period, len(deltas)):
-        avg_gain = (avg_gain * (period - 1) + gains[i]) / period
-        avg_loss = (avg_loss * (period - 1) + losses[i]) / period
-    if avg_loss == 0:
-        return 100.0
-    rs = avg_gain / avg_loss
-    return round(100 - (100 / (1 + rs)), 2)
+        ag = (ag * (period-1) + gains[i]) / period
+        al = (al * (period-1) + losses[i]) / period
+    if al == 0: return 100.0
+    return round(100 - 100 / (1 + ag/al), 2)
 
 def macd_calc(closes):
-    """MACD (12, 26, 9) — retourne les 7 dernières valeurs de l'histogramme."""
-    if len(closes) < 35:
-        return None
-    ema12_series = []
-    ema26_series = []
-    k12 = 2 / 13
-    k26 = 2 / 27
-    e12 = sum(closes[:12]) / 12
-    e26 = sum(closes[:26]) / 26
-    for price in closes[12:]:
-        e12 = price * k12 + e12 * (1 - k12)
-        ema12_series.append(e12)
-    for price in closes[26:]:
-        e26 = price * k26 + e26 * (1 - k26)
-        ema26_series.append(e26)
-    n = min(len(ema12_series), len(ema26_series))
-    macd_line = [ema12_series[-(n-i)] - ema26_series[-(n-i)] for i in range(n-1, -1, -1)]
-    if len(macd_line) < 9:
-        return None
-    k9 = 2 / 10
-    signal = sum(macd_line[:9]) / 9
-    signal_series = [signal]
+    if len(closes) < 35: return None
+    e12 = ema_series(closes, 12)
+    e26 = ema_series(closes, 26)
+    n   = min(len(e12), len(e26))
+    macd_line    = [e12[-(n-i)] - e26[-(n-i)] for i in range(n-1, -1, -1)]
+    if len(macd_line) < 9: return None
+    k9 = 2/10
+    sig = sum(macd_line[:9]) / 9
+    sig_series = [sig]
     for v in macd_line[9:]:
-        signal = v * k9 + signal * (1 - k9)
-        signal_series.append(signal)
-    hist = [m - s for m, s in zip(macd_line[-len(signal_series):], signal_series)]
-    # Retourner les 7 dernières valeurs de l'histogramme
+        sig = v * k9 + sig * (1-k9)
+        sig_series.append(sig)
+    hist = [m - s for m, s in zip(macd_line[-len(sig_series):], sig_series)]
     hist7 = [round(h, 3) for h in hist[-7:]]
-    labels = ["J-30", "J-25", "J-20", "J-15", "J-10", "J-5", "J"]
-    # Signal actuel
-    last_hist = hist7[-1] if hist7 else 0
-    signal_txt = "haussier" if last_hist > 0 else "baissier"
-    return {"hist": hist7, "labels": labels, "signal": signal_txt, "last_value": hist7[-1] if hist7 else 0}
+    lv = hist7[-1] if hist7 else 0
+    return {
+        "hist": hist7,
+        "labels": ["J-30","J-25","J-20","J-15","J-10","J-5","J"],
+        "signal": "haussier" if lv > 0 else "baissier",
+        "last_value": lv,
+    }
 
-# ─────────────────────────────────────────────
-# 3. S&P 500
-# ─────────────────────────────────────────────
-def get_sp500_chg():
-    url = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC"
-    params = {"interval": "1d", "range": "2d"}
-    headers = {"User-Agent": "Mozilla/5.0"}
+def perfs(closes, price):
+    r = {}
+    map_ = [("pm_week_chg",5),("pm_month_chg",22),("pm_ytd_chg",110),("pm_1y_chg",252)]
+    for k, d in map_:
+        if len(closes) >= d+1:
+            ref = closes[-(d+1)]
+            r[k] = round((price - ref) / ref * 100, 2)
+    return r
+
+# ─── EUR/USD ───
+def get_eurusd():
+    data = yahoo_chart("EURUSD=X", "5d", "1d")
+    if data:
+        try:
+            rate = data["chart"]["result"][0]["meta"]["regularMarketPrice"]
+            rate = round(rate, 4)
+            return {"eurusd": rate, "usdeur": round(1/rate, 4)}
+        except: pass
+    return {"eurusd": 1.154, "usdeur": 0.866}
+
+# ─── S&P 500 ───
+def get_sp500():
+    data = yahoo_chart("%5EGSPC", "5d", "1d")
+    if data:
+        try:
+            meta = data["chart"]["result"][0]["meta"]
+            p = meta["regularMarketPrice"]
+            prev = meta["regularMarketPreviousClose"]
+            return round((p - prev) / prev * 100, 2)
+        except: pass
+    return None
+
+# ─── CONCURRENTS ───
+def get_competitor(ticker):
+    q = get_quote(ticker)
+    if not q: return {}
+    # Récupérer PER et rendement depuis Yahoo summary
     try:
-        r = requests.get(url, params=params, headers=headers, timeout=10)
-        data = r.json()
-        meta = data["chart"]["result"][0]["meta"]
-        price = meta["regularMarketPrice"]
-        prev = meta["regularMarketPreviousClose"]
-        chg = round((price - prev) / prev * 100, 2)
-        print(f"✅ S&P 500 : {chg:+.2f}%")
-        return chg
+        url = f"https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}"
+        params = {"modules": "summaryDetail,defaultKeyStatistics"}
+        r = requests.get(url, params=params, headers=HEADERS, timeout=10)
+        summary = r.json()
+        sd = summary["quoteSummary"]["result"][0]["summaryDetail"]
+        per = sd.get("trailingPE", {}).get("raw")
+        rend = sd.get("dividendYield", {}).get("raw")
+        cap = sd.get("marketCap", {}).get("raw", 0)
+        return {
+            "price": q["price"],
+            "chg_pct": q["chg_pct"],
+            "per": round(per, 1) if per else None,
+            "rendement": round(rend * 100, 2) if rend else None,
+            "capitalisation": f"{cap/1e9:.0f} Mrd$" if cap else "—",
+        }
     except Exception as e:
-        print(f"⚠️ S&P500 erreur : {e}")
-        return None
+        print(f"  Erreur summary {ticker}: {e}")
+        return {"price": q["price"], "chg_pct": q["chg_pct"], "per": None, "rendement": None, "capitalisation": "—"}
 
-# ─────────────────────────────────────────────
-# 4. EXÉCUTION
-# ─────────────────────────────────────────────
-print("\n--- Récupération des données ---")
+# ════ EXÉCUTION ════
+print("\n--- PM ---")
+pm_quote = get_quote("PM")
+pm_closes, pm_ts = get_history("PM", 260)
+print(f"  Cours : {pm_quote.get('price','?')}$ ({pm_quote.get('chg_pct','?'):+}%)")
+print(f"  Historique : {len(pm_closes)} jours")
 
-closes = get_yahoo_history("PM", 260)
-quote  = get_yahoo_quote("PM")
-fx     = get_yahoo_eurusd()
-sp500  = get_sp500_chg()
+print("\n--- EUR/USD ---")
+fx = get_eurusd()
+print(f"  EUR/USD : {fx['eurusd']}")
 
-current_price = quote.get("pm_price", FALLBACK_PRICE)
-perfs  = get_perf(closes, current_price)
+print("\n--- S&P 500 ---")
+sp500 = get_sp500()
+print(f"  S&P 500 : {sp500:+.2f}%" if sp500 else "  Non disponible")
 
-# Indicateurs techniques
-sma50_val  = sma(closes, 50)
-sma200_val = sma(closes, 200)
-rsi_val    = rsi(closes, 14)
-macd_data  = macd_calc(closes)
+print("\n--- Techniques ---")
+price = pm_quote.get("price", 173.75)
+sma50_v  = sma(pm_closes, 50)
+sma200_v = sma(pm_closes, 200)
+rsi_v    = rsi(pm_closes, 14)
+macd_v   = macd_calc(pm_closes)
+perf_v   = perfs(pm_closes, price)
+chart_v  = build_chart_data(pm_closes, pm_ts)
+print(f"  SMA50={sma50_v} SMA200={sma200_v} RSI={rsi_v}")
+if macd_v: print(f"  MACD signal={macd_v['signal']}")
 
-print(f"\n--- Indicateurs techniques ---")
-print(f"SMA 50j  : {sma50_val}$")
-print(f"SMA 200j : {sma200_val}$")
-print(f"RSI 14j  : {rsi_val}")
-if macd_data:
-    print(f"MACD signal : {macd_data['signal']}, hist J : {macd_data['last_value']}")
+print("\n--- Concurrents ---")
+competitors = {}
+for ticker, name in [("MO","Altria Group"),("BTI","British Am. Tobacco"),("2914.T","Japan Tobacco")]:
+    print(f"  {ticker}...")
+    competitors[ticker] = {"name": name, **get_competitor(ticker)}
+    time.sleep(0.5)
 
-# ─────────────────────────────────────────────
-# 5. ASSEMBLAGE DU data.json
-# ─────────────────────────────────────────────
-# Lire data.json existant pour conserver les données manuelles
+# ════ CHARGEMENT data.json existant ════
 try:
-    with open("data.json", "r") as f:
+    with open("data.json","r") as f:
         existing = json.load(f)
-    print("\n✅ data.json existant chargé (données manuelles préservées)")
+    print("\ndata.json chargé")
 except:
     existing = {}
-    print("\n⚠️ Nouveau data.json créé")
+    print("\nNouveau data.json")
 
-# Données automatiques (écrasent les valeurs précédentes)
-auto_data = {
-    # Cours et marché
-    **quote,
+# ════ ASSEMBLAGE ════
+auto = {
+    "pm_price":     pm_quote.get("price", 173.75),
+    "pm_chg_pct":   pm_quote.get("chg_pct", 0),
+    "pm_chg_abs":   pm_quote.get("chg_abs", 0),
+    "pm_open":      pm_quote.get("open", 0),
+    "pm_high":      pm_quote.get("high", 0),
+    "pm_low":       pm_quote.get("low", 0),
+    "pm_volume":    pm_quote.get("volume", "—"),
+    "pm_prev_close":pm_quote.get("prev", 173.75),
+    "market_status":pm_quote.get("market_status","closed"),
     **fx,
-    **perfs,
+    **perf_v,
     "sp500_chg": sp500,
-    # Indicateurs techniques calculés
     "technicals": {
-        "sma50":  sma50_val,
-        "sma200": sma200_val,
-        "rsi14":  rsi_val,
-        "macd":   macd_data,
-        "sma50_signal":  "above" if sma50_val  and current_price > sma50_val  else "below",
-        "sma200_signal": "above" if sma200_val and current_price > sma200_val else "below",
-        "rsi_zone": "suracheté" if rsi_val and rsi_val > 70 else "survendu" if rsi_val and rsi_val < 30 else "neutre",
+        "sma50":  sma50_v,
+        "sma200": sma200_v,
+        "rsi14":  rsi_v,
+        "macd":   macd_v,
+        "sma50_signal":  "above" if sma50_v  and price > sma50_v  else "below",
+        "sma200_signal": "above" if sma200_v and price > sma200_v else "below",
+        "rsi_zone": "suracheté" if rsi_v and rsi_v>70 else "survendu" if rsi_v and rsi_v<30 else "neutre",
     },
-    # Horodatage
-    "updated_at": now_utc.isoformat(),
-    "updated_paris": now_paris.strftime("%d/%m/%Y à %H:%M"),
-    "is_fallback": False,
+    "chart_data": chart_v,
+    "competitors": competitors,
+    "updated_at":     now_utc.isoformat(),
+    "updated_paris":  now_paris.strftime("%d/%m/%Y à %H:%M"),
+    "is_fallback":    False,
 }
 
-# Fusionner : les données manuelles (analystes, résultats, calendrier)
-# ont priorité sur leurs propres clés, mais les données auto écrasent les données auto
-MANUAL_KEYS = ["manuel_analystes", "manuel_resultats", "manuel_calendrier", "manuel_consensus"]
-final = {**existing}  # partir de l'existant
-for k, v in auto_data.items():
-    final[k] = v  # écraser avec les nouvelles données auto
-# Préserver explicitement les clés manuelles
+MANUAL_KEYS = ["manuel_analystes","manuel_resultats","manuel_calendrier"]
+final = {**existing}
+for k, v in auto.items():
+    final[k] = v
 for k in MANUAL_KEYS:
     if k in existing:
         final[k] = existing[k]
 
-with open("data.json", "w") as f:
+with open("data.json","w") as f:
     json.dump(final, f, ensure_ascii=False, indent=2)
 
-print(f"\n✅ data.json sauvegardé — PM : {current_price}$ | EUR/USD : {fx['eurusd']} | SMA50 : {sma50_val}$ | RSI : {rsi_val}")
+print(f"\ndata.json OK — PM={price}$ EUR/USD={fx['eurusd']} SMA50={sma50_v} RSI={rsi_v}")
 PYEOF
 
       - name: Commit et push
         run: |
-          git config user.name "PMI Dashboard Bot"
-          git config user.email "bot@pmi-dashboard"
+          git config user.name "PMI Bot"
+          git config user.email "bot@pmi"
           git add data.json
           if git diff --staged --quiet; then
-            echo "Aucun changement."
+            echo "Pas de changement."
           else
             HEURE=$(TZ='Europe/Paris' date '+%d/%m/%Y à %H:%M')
-            git commit -m "📊 PMI update — $HEURE (Paris)"
+            git commit -m "📊 PMI update — $HEURE"
             git push
-            echo "✅ Poussé"
           fi
