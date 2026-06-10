@@ -2,575 +2,619 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Philip Morris International — Tableau de Bord Investisseur</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#060e1a;color:#f8fafc;font-family:'Courier New',monospace;padding:20px;min-height:100vh}
+body{background:#060e1a;color:#f8fafc;font-family:'Courier New',monospace;min-height:100vh;padding:16px}
 .app{max-width:1100px;margin:0 auto}
-.header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #131e2e;padding-bottom:18px;margin-bottom:20px;flex-wrap:wrap;gap:12px}
-.logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#22d3a5,#0891b2);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#060e1a;flex-shrink:0}
-.header-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.status-bar{display:flex;align-items:center;gap:8px;background:#0a111e;border:1px solid #1e293b;border-radius:8px;padding:5px 12px;font-size:11px}
-.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dot-ok{background:#22d3a5;box-shadow:0 0 7px #22d3a5}
-.dot-warn{background:#facc15;animation:blink 1.5s infinite}
-.dot-error{background:#f87171}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.tabs{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap}
-.tab{padding:9px 16px;border-radius:7px;border:1px solid #131e2e;background:#0f172a;color:#475569;cursor:pointer;font-size:12px;font-family:inherit;transition:all .15s}
-.tab.active{border-color:#22d3a5;background:#22d3a511;color:#22d3a5;font-weight:700}
-.card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:18px 22px;margin-bottom:14px;position:relative}
-.card.accent{border-color:#22d3a566}
-.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.card-title{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#475569}
-.card-source{font-size:9px;color:#253348;font-style:italic}
-.hero{background:linear-gradient(135deg,#09192e,#0d2040);border:1px solid #22d3a566;border-radius:16px;padding:26px 30px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.hero-price{font-size:54px;font-weight:900;letter-spacing:-2px;line-height:1}
+/* HEADER */
+.hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #131e2e;padding-bottom:16px;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.logo{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#22d3a5,#0891b2);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#060e1a;flex-shrink:0}
+.hdr-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sbar{display:flex;align-items:center;gap:7px;background:#0a111e;border:1px solid #1e293b;border-radius:8px;padding:5px 11px;font-size:11px}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dok{background:#22d3a5;box-shadow:0 0 7px #22d3a5}
+.dwarn{background:#facc15;animation:bl 1.5s infinite}
+.derr{background:#f87171}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
+/* TABS */
+.tabs{display:flex;gap:5px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:8px 15px;border-radius:7px;border:1px solid #131e2e;background:#0f172a;color:#475569;cursor:pointer;font-size:12px;font-family:inherit;transition:all .15s}
+.tab.on{border-color:#22d3a5;background:#22d3a511;color:#22d3a5;font-weight:700}
+/* SUB TABS */
+.stabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.stab{padding:6px 16px;border-radius:6px;border:1px solid #334155;background:transparent;color:#64748b;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit}
+.stab.on{border-color:#818cf8;background:#818cf811;color:#818cf8}
+/* CARDS */
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:16px 20px;margin-bottom:12px;position:relative}
+.card.hl{border-color:#22d3a566}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ct{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#475569}
+.cs{font-size:9px;color:#253348;font-style:italic}
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.kbox{background:#0a111e;border-radius:8px;padding:12px;text-align:center;border:1px solid #1e293b}
+.kl{font-size:10px;color:#475569;margin-bottom:5px}
+.kv{font-size:18px;font-weight:800;color:#f8fafc}
+.ksub{font-size:9px;color:#334155;margin-top:3px}
+/* HERO */
+.hero{background:linear-gradient(135deg,#09192e,#0d2040);border:1px solid #22d3a566;border-radius:14px;padding:22px 26px;margin-bottom:14px}
+/* PILLS */
 .pill{font-weight:700;font-size:13px;padding:2px 8px;border-radius:4px;display:inline-block}
-.pill-up{color:#22d3a5;background:rgba(34,211,165,.1)}
-.pill-down{color:#f87171;background:rgba(248,113,113,.1)}
-.pill-flat{color:#94a3b8;background:rgba(148,163,184,.08)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.kpi-box{background:#0a111e;border-radius:8px;padding:14px;text-align:center;border:1px solid #1e293b}
-.kpi-label{font-size:11px;color:#475569;margin-bottom:6px}
-.kpi-val{font-size:20px;font-weight:800;color:#f8fafc}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{padding:9px 10px;text-align:left;color:#475569;font-weight:600;font-size:10px;text-transform:uppercase;border-bottom:2px solid #1e293b}
-td{padding:11px 10px;border-bottom:1px solid #0d1628}
+.pup{color:#22d3a5;background:rgba(34,211,165,.1)}
+.pdn{color:#f87171;background:rgba(248,113,113,.1)}
+.pfl{color:#94a3b8;background:rgba(148,163,184,.08)}
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{padding:8px 9px;text-align:left;color:#475569;font-weight:600;font-size:10px;text-transform:uppercase;border-bottom:2px solid #1e293b}
+td{padding:9px 9px;border-bottom:1px solid #0d1628}
 tr:nth-child(even) td{background:#0a111e}
-.tt-icon{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:#0d2540;border:1px solid #22d3a555;color:#22d3a5;font-size:9px;font-weight:900;cursor:pointer;flex-shrink:0;user-select:none;line-height:1;margin-left:3px;vertical-align:middle}
-.tt-icon:hover{background:#22d3a5;color:#060e1a}
-.range-track{background:#1e293b;height:8px;border-radius:4px;position:relative;overflow:visible}
-.range-gradient{width:100%;height:100%;background:linear-gradient(90deg,#f87171,#facc15,#22d3a5);border-radius:4px}
-.range-cursor{position:absolute;height:20px;width:4px;border-radius:2px;background:#22d3a5;top:-6px;box-shadow:0 0 8px #22d3a5;transition:left .5s}
-.con-track{background:#1e293b;border-radius:4px;height:7px}
-.con-fill{height:100%;border-radius:4px;transition:width .5s}
-.ab{padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.macd-wrap{display:flex;align-items:flex-end;gap:6px;height:100px;padding:0 4px;margin-bottom:8px}
-.macd-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.macd-bar{width:100%;border-radius:3px;transition:height .5s}
-.btn-ghost{padding:6px 13px;border-radius:7px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;font-size:11px;font-family:inherit}
-.btn-ghost:hover{background:#1e293b}
-.btn-primary{padding:8px 18px;border-radius:7px;border:none;background:#22d3a5;color:#060e1a;cursor:pointer;font-size:12px;font-family:inherit;font-weight:700}
-.btn-primary:hover{background:#1ab88e}
-.btn-danger{padding:6px 12px;border-radius:6px;border:none;background:#f8717122;color:#f87171;cursor:pointer;font-size:11px;font-family:inherit}
-.sub-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
-.sub-tab{padding:7px 18px;border-radius:6px;border:1px solid #334155;background:transparent;color:#64748b;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit}
-.sub-tab.active{border-color:#818cf8;background:#818cf811;color:#818cf8}
-.view-tabs{display:flex;gap:8px;margin-bottom:18px}
-.view-tab{padding:7px 18px;border-radius:6px;border:1px solid #334155;background:transparent;color:#64748b;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit}
-.view-tab.active{border-color:#22d3a5;background:#22d3a511;color:#22d3a5}
-.cal-item{display:flex;align-items:center;gap:14px;border-radius:9px;padding:12px 18px;margin-bottom:8px}
-/* EDIT BUTTON */
-.edit-btn{position:absolute;top:14px;right:14px;padding:4px 10px;border-radius:5px;border:1px solid #334155;background:#0a111e;color:#64748b;cursor:pointer;font-size:10px;font-family:inherit;display:flex;align-items:center;gap:4px}
-.edit-btn:hover{border-color:#22d3a5;color:#22d3a5}
+/* TOOLTIP i */
+.ti{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#0d2540;border:1px solid #22d3a544;color:#22d3a5;font-size:9px;font-weight:900;cursor:pointer;flex-shrink:0;user-select:none;margin-left:3px;vertical-align:middle;line-height:1}
+.ti:hover{background:#22d3a5;color:#060e1a}
+/* CHART */
+.chart-wrap{position:relative;width:100%;height:160px;margin:8px 0}
+.chart-svg{width:100%;height:100%}
+/* CALENDAR */
+.ci{display:flex;align-items:center;gap:12px;border-radius:8px;padding:10px 16px;margin-bottom:7px}
+/* ANALYST */
+.ab{padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700}
+/* MACD */
+.mwrap{display:flex;align-items:flex-end;gap:5px;height:90px;padding:0 4px;margin-bottom:7px}
+.mcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.mbar{width:100%;border-radius:3px}
+/* EUR/USD compact */
+.fx-compact{background:#0a111e;border-radius:8px;padding:10px 14px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:12px}
+/* EDIT BTN */
+.ebtn{position:absolute;top:12px;right:12px;padding:3px 9px;border-radius:5px;border:1px solid #334155;background:#0a111e;color:#64748b;cursor:pointer;font-size:10px;font-family:inherit}
+.ebtn:hover{border-color:#22d3a5;color:#22d3a5}
+/* ICS BTN */
+.ics{padding:3px 8px;border-radius:5px;border:1px solid #818cf844;background:#818cf811;color:#818cf8;cursor:pointer;font-size:10px;font-family:inherit;white-space:nowrap}
+.ics:hover{background:#818cf822}
+/* RANGE */
+.rtrack{background:#1e293b;height:7px;border-radius:4px;position:relative;overflow:visible}
+.rgrad{width:100%;height:100%;background:linear-gradient(90deg,#f87171,#facc15,#22d3a5);border-radius:4px}
+.rcursor{position:absolute;height:18px;width:3px;border-radius:2px;background:#22d3a5;top:-5px;box-shadow:0 0 7px #22d3a5;transition:left .5s}
 /* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{background:#0f172a;border:1px solid #22d3a566;border-radius:14px;padding:28px;width:100%;max-width:650px;max-height:90vh;overflow-y:auto}
-.modal h2{font-size:14px;font-weight:700;color:#f8fafc;margin-bottom:6px}
-.modal-sub{font-size:11px;color:#475569;margin-bottom:20px}
-.field-group{margin-bottom:14px}
-.field-label{font-size:11px;color:#64748b;margin-bottom:5px;display:block}
-.field-input{width:100%;background:#060e1a;border:1px solid #334155;border-radius:6px;color:#f8fafc;padding:8px 12px;font-size:13px;font-family:inherit}
-.field-input:focus{outline:1px solid #22d3a566;border-color:#22d3a566}
-.field-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;border-top:1px solid #1e293b;padding-top:16px}
-.analyst-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;background:#0a111e;border-radius:6px;padding:8px 10px}
-.analyst-row input, .analyst-row select{background:#060e1a;border:1px solid #334155;border-radius:5px;color:#f8fafc;padding:5px 8px;font-size:12px;font-family:inherit;flex:1}
+.mov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;padding:16px}
+.mov.open{display:flex}
+.modal{background:#0f172a;border:1px solid #22d3a566;border-radius:12px;padding:24px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto}
+.fld{margin-bottom:12px}
+.flbl{font-size:11px;color:#64748b;margin-bottom:4px;display:block}
+.finp{width:100%;background:#060e1a;border:1px solid #334155;border-radius:6px;color:#f8fafc;padding:7px 10px;font-size:12px;font-family:inherit}
+.finp:focus{outline:1px solid #22d3a566}
+.frow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;border-top:1px solid #1e293b;padding-top:14px}
+.arow{display:flex;gap:7px;align-items:center;margin-bottom:7px;background:#0a111e;border-radius:6px;padding:7px 9px}
+.arow input,.arow select{background:#060e1a;border:1px solid #334155;border-radius:5px;color:#f8fafc;padding:4px 7px;font-size:11px;font-family:inherit;flex:1}
 /* GLOSSAIRE */
-#glossaire-panel{display:none;background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:18px 22px;margin-bottom:20px}
-#glossaire-panel.visible{display:block}
-.gloss-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.gloss-item{background:#0a111e;border-radius:8px;padding:10px 12px;border:1px solid #131e2e}
-.gloss-term{font-weight:700;color:#22d3a5;font-size:11px;margin-bottom:4px}
-.gloss-def{font-size:10px;color:#475569;line-height:1.55}
-.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.swot-box{background:#0a111e;border-radius:8px;padding:14px}
-.sim-input{background:#060e1a;border:1px solid #334155;border-radius:6px;color:#f8fafc;padding:5px 10px;width:130px;font-size:13px;font-family:inherit}
-.tech-signal-up{color:#22d3a5;font-size:10px;font-weight:700}
-.tech-signal-down{color:#f87171;font-size:10px;font-weight:700}
-.badge-maj{background:#22d3a511;border:1px solid #22d3a533;border-radius:4px;padding:2px 8px;font-size:9px;color:#22d3a5}
-.footer{margin-top:28px;padding-top:14px;border-top:1px solid #0d1628;font-size:9px;color:#131e2e;line-height:1.7}
-/* TOOLTIP GLOBAL */
-#tt-overlay{display:none;position:fixed;inset:0;z-index:9990}
-#tt-popup{display:none;position:fixed;z-index:9999;background:#0b1e35;border:1px solid #22d3a566;border-radius:10px;padding:16px 18px;max-width:310px;font-size:12px;line-height:1.65;color:#cbd5e1;box-shadow:0 16px 48px rgba(0,0,0,.85);top:50%;left:50%;transform:translate(-50%,-50%)}
-@media(max-width:700px){.grid3,.grid4{grid-template-columns:1fr 1fr}.hero{flex-direction:column}.hero-price{font-size:38px}.grid2{grid-template-columns:1fr}.swot{grid-template-columns:1fr}.gloss-grid{grid-template-columns:1fr}.field-row{grid-template-columns:1fr}}
-@media(max-width:480px){.grid3,.grid4{grid-template-columns:1fr}}
+#gpanel{display:none;background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:16px 20px;margin-bottom:18px}
+#gpanel.vis{display:block}
+.ggrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.gi{background:#0a111e;border-radius:8px;padding:9px 11px;border:1px solid #131e2e}
+/* BUTTONS */
+.btn{padding:7px 16px;border-radius:7px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;font-size:11px;font-family:inherit}
+.btn:hover{background:#1e293b}
+.btnp{padding:7px 16px;border-radius:7px;border:none;background:#22d3a5;color:#060e1a;cursor:pointer;font-size:12px;font-family:inherit;font-weight:700}
+.btnd{padding:5px 10px;border-radius:5px;border:none;background:#f8717122;color:#f87171;cursor:pointer;font-size:10px;font-family:inherit}
+/* SWOT */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* CHART PERIOD TABS */
+.ptabs{display:flex;gap:5px;margin-bottom:8px}
+.ptab{padding:3px 10px;border-radius:5px;border:1px solid #1e293b;background:transparent;color:#475569;cursor:pointer;font-size:10px;font-family:inherit}
+.ptab.on{border-color:#22d3a5;color:#22d3a5;background:#22d3a511}
+/* WEEKLY RECAP */
+.weekly{background:#0a111e;border-radius:8px;padding:12px 14px;border-left:3px solid #22d3a5}
+/* SEPARATOR */
+.sep{border:none;border-top:1px solid #1e293b;margin:12px 0}
+/* VIEW TABS */
+.vtabs{display:flex;gap:6px;margin-bottom:16px}
+.vtab{padding:6px 16px;border-radius:6px;border:1px solid #334155;background:transparent;color:#64748b;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit}
+.vtab.on{border-color:#22d3a5;background:#22d3a511;color:#22d3a5}
+/* TOOLTIP OVERLAY */
+#tto{display:none;position:fixed;inset:0;z-index:9990}
+#ttp{display:none;position:fixed;z-index:9999;background:#0b1e35;border:1px solid #22d3a566;border-radius:10px;padding:14px 16px;max-width:300px;font-size:12px;line-height:1.65;color:#cbd5e1;box-shadow:0 16px 48px rgba(0,0,0,.85);top:50%;left:50%;transform:translate(-50%,-50%)}
+/* FOOTER */
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid #0d1628;font-size:9px;color:#131e2e;line-height:1.7}
+@media(max-width:700px){.g3,.g4,.g5{grid-template-columns:1fr 1fr}.hero{flex-direction:column}.g2{grid-template-columns:1fr}.swot{grid-template-columns:1fr}.ggrid{grid-template-columns:1fr}.frow,.frow2{grid-template-columns:1fr}}
+@media(max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="app">
 
 <!-- HEADER -->
-<div class="header">
-  <div style="display:flex;align-items:center;gap:14px">
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:12px">
     <div class="logo">PM</div>
     <div>
-      <h1 style="font-size:19px;font-weight:900;letter-spacing:-.3px">Philip Morris International</h1>
+      <div style="font-size:18px;font-weight:900;letter-spacing:-.3px">Philip Morris International</div>
       <div style="font-size:9px;color:#253348;letter-spacing:.12em">NYSE : PM &middot; TABLEAU DE BORD INVESTISSEUR &middot; USAGE FAMILIAL PRIV&Eacute;</div>
     </div>
   </div>
-  <div class="header-right">
-    <div class="status-bar">
-      <span class="status-dot dot-warn" id="dot"></span>
-      <span id="status-text" style="color:#facc15">Chargement&hellip;</span>
-      <span id="last-update" style="color:#2d4060;font-size:10px"></span>
-      <span id="countdown-txt" style="color:#1a2e48"></span>
-      <button onclick="loadData()" class="btn-ghost" style="padding:1px 6px;font-size:10px" title="Recharger">&#x21BB;</button>
+  <div class="hdr-right">
+    <div class="sbar">
+      <span class="sdot dwarn" id="dot"></span>
+      <span id="stxt" style="color:#facc15">Chargement&hellip;</span>
+      <span id="lupd" style="color:#2d4060;font-size:10px"></span>
+      <span id="cdtxt" style="color:#1a2e48"></span>
+      <button onclick="loadData()" class="btn" style="padding:1px 6px;font-size:10px">&#x21BB;</button>
     </div>
-    <button class="btn-ghost" onclick="toggleGlossaire()">&#128218; Glossaire</button>
+    <button class="btn" onclick="toggleG()">&#128218; Glossaire</button>
   </div>
 </div>
 
 <!-- GLOSSAIRE -->
-<div id="glossaire-panel">
+<div id="gpanel">
   <div style="font-size:11px;color:#475569;text-transform:uppercase;letter-spacing:.12em">&#128218; Glossaire des termes financiers &amp; boursiers</div>
-  <div class="gloss-grid" id="gloss-grid"></div>
+  <div class="ggrid" id="ggrid"></div>
 </div>
 
-<!-- TABS -->
+<!-- MAIN TABS -->
 <div class="tabs">
-  <button class="tab active" onclick="showTab('synthese',this)">&#128200; Synth&egrave;se</button>
+  <button class="tab on" onclick="showTab('synthese',this)">&#128200; Synth&egrave;se</button>
   <button class="tab" onclick="showTab('calendrier',this)">&#128197; Calendrier</button>
   <button class="tab" onclick="showTab('resultats',this)">&#128185; R&eacute;sultats</button>
   <button class="tab" onclick="showTab('analystes',this)">&#128302; Analystes</button>
   <button class="tab" onclick="showTab('secteur',this)">&#127758; Secteur</button>
 </div>
 
-<!-- ════ SYNTHÈSE ════ -->
-<div id="tab-synthese" class="tab-content">
-  <div class="hero">
-    <div>
-      <div style="font-size:10px;color:#334155;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px">
-        NYSE : PM &mdash; Philip Morris International
-        <span id="market-badge"></span>
-      </div>
-      <div style="display:flex;align-items:baseline;gap:12px">
-        <div class="hero-price" id="price-hero">&middot;&middot;&middot;</div>
-        <span style="font-size:18px;color:#475569">USD</span>
-        <span style="font-size:15px;color:#334155" id="price-eur-hero"></span>
-      </div>
-      <div style="margin-top:8px;display:flex;gap:10px;align-items:center">
-        <span id="chg-pill" class="pill pill-flat">&mdash;</span>
-        <span id="chg-abs-txt" style="font-size:13px;color:#94a3b8"></span>
-      </div>
-      <div id="ohlcv" style="font-size:10px;color:#253348;margin-top:6px"></div>
-      <div style="font-size:9px;color:#1a2e48;margin-top:4px">Sources : Yahoo Finance (automatique) &mdash; Mise &agrave; jour horaire via GitHub Actions</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 28px">
-      <div><div style="font-size:9px;color:#253348;text-transform:uppercase;margin-bottom:3px">Semaine</div><span id="p-week" class="pill pill-flat">&mdash;</span></div>
-      <div><div style="font-size:9px;color:#253348;text-transform:uppercase;margin-bottom:3px">1 mois</div><span id="p-month" class="pill pill-flat">&mdash;</span></div>
-      <div><div style="font-size:9px;color:#253348;text-transform:uppercase;margin-bottom:3px">YTD 2026</div><span id="p-ytd" class="pill pill-flat">&mdash;</span></div>
-      <div><div style="font-size:9px;color:#253348;text-transform:uppercase;margin-bottom:3px">52 semaines</div><span id="p-1y" class="pill pill-flat">&mdash;</span></div>
-    </div>
+<!-- ══════════ SYNTHÈSE ══════════ -->
+<div id="tab-synthese" class="tc">
+  <div class="stabs">
+    <button class="stab on" onclick="showSub('vue',this)">Vue d&rsquo;ensemble</button>
+    <button class="stab" onclick="showSub('detail',this)">D&eacute;tail march&eacute;</button>
   </div>
 
-  <!-- EUR/USD -->
-  <div class="card">
-    <div class="card-header"><span class="card-title">Taux de change EUR &harr; USD</span><span class="card-source">Yahoo Finance &mdash; automatique</span></div>
-    <div class="grid3" style="margin-bottom:14px">
-      <div class="kpi-box"><div class="kpi-label">1 EUR = <span class="tt-icon" onclick="openTT('EUR/USD')">i</span></div><div class="kpi-val" id="eurusd-val" style="color:#22d3a5">&hellip;</div><div style="font-size:10px;color:#475569">US Dollar</div></div>
-      <div class="kpi-box"><div class="kpi-label">1 USD =</div><div class="kpi-val" id="usdeur-val" style="color:#818cf8">&hellip;</div><div style="font-size:10px;color:#475569">Euro</div></div>
-      <div class="kpi-box"><div class="kpi-label">1 action PM en &euro;</div><div class="kpi-val" id="pm-eur-val" style="color:#fb923c">&hellip;</div><div style="font-size:10px;color:#475569" id="pm-eur-calc"></div></div>
+  <!-- SUB: VUE D'ENSEMBLE -->
+  <div id="sub-vue">
+
+    <!-- BLOC 1 : COURS + PERFORMANCE -->
+    <div class="hero">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px">
+        <div>
+          <div style="font-size:10px;color:#334155;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">
+            NYSE : PM <span id="mktbadge"></span>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <div style="font-size:50px;font-weight:900;color:#f8fafc;letter-spacing:-2px;line-height:1" id="phero">&middot;&middot;&middot;</div>
+            <span style="font-size:16px;color:#475569">USD</span>
+            <span style="font-size:14px;color:#334155" id="peur"></span>
+          </div>
+          <div style="margin-top:6px;display:flex;gap:8px;align-items:center">
+            <span id="cpill" class="pill pfl">&mdash;</span>
+            <span id="cabtxt" style="font-size:12px;color:#94a3b8"></span>
+          </div>
+          <div id="ohlcv" style="font-size:9px;color:#253348;margin-top:5px"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 22px">
+          <div><div style="font-size:9px;color:#253348;text-transform:uppercase;margin-bottom:2px">Sem.</div><span id="pw" class="pill pfl">&mdash;</span></div>
+          <div><div style="font-size:9px;color:#253348;text-transform:uppercase;margin-bottom:2px">1 mois</div><span id="pm_" class="pill pfl">&mdash;</span></div>
+          <div><div style="font-size:9px;color:#253348;text-transform:uppercase;margin-bottom:2px">YTD</div><span id="py" class="pill pfl">&mdash;</span></div>
+          <div><div style="font-size:9px;color:#253348;text-transform:uppercase;margin-bottom:2px">52 sem.</div><span id="p1y" class="pill pfl">&mdash;</span></div>
+        </div>
+      </div>
+      <!-- RANGE 52W -->
+      <div style="margin-top:14px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:10px;color:#64748b">Bas 52s : <strong style="color:#f87171">142,11$</strong></span>
+          <span style="font-size:10px;color:#64748b">Haut 52s : <strong style="color:#22d3a5">191,30$</strong></span>
+        </div>
+        <div class="rtrack"><div class="rgrad"></div><div class="rcursor" id="rcur" style="left:50%"></div></div>
+      </div>
     </div>
-    <div style="background:#0a111e;border-radius:8px;padding:14px 16px">
-      <div style="font-size:11px;color:#475569;margin-bottom:10px">Simulateur d&rsquo;investissement</div>
+
+    <!-- GRAPHIQUE COURS -->
+    <div class="card">
+      <div class="ch"><span class="ct">&#128200; &Eacute;volution du cours</span><span class="cs">Yahoo Finance &mdash; automatique</span></div>
+      <div class="ptabs">
+        <button class="ptab on" onclick="drawChart('5d',this)">5j</button>
+        <button class="ptab" onclick="drawChart('1m',this)">1M</button>
+        <button class="ptab" onclick="drawChart('3m',this)">3M</button>
+        <button class="ptab" onclick="drawChart('6m',this)">6M</button>
+        <button class="ptab" onclick="drawChart('1y',this)">1A</button>
+      </div>
+      <div class="chart-wrap" id="chart-wrap">
+        <svg class="chart-svg" id="chart-svg" viewBox="0 0 700 160" preserveAspectRatio="none"></svg>
+      </div>
+      <div id="chart-info" style="display:flex;gap:16px;font-size:10px;color:#475569;margin-top:4px"></div>
+    </div>
+
+    <!-- WEEKLY RECAP -->
+    <div class="card">
+      <div class="ch"><span class="ct">&#128240; Bilan de la semaine</span><span class="cs">Yahoo Finance &middot; pmi.com</span></div>
+      <div class="weekly" id="weekly-recap">Chargement du bilan hebdomadaire&hellip;</div>
+    </div>
+
+    <!-- BLOC 2 : BUSINESS -->
+    <div class="card">
+      <div class="ch"><span class="ct">&#127970; Profil business</span><span class="cs">pmi.com &middot; Q1 2026</span></div>
+      <div class="g4">
+        <div class="kbox"><div class="kl">Capitalisation <span class="ti" onclick="openTT('Capitalisation boursière')">i</span></div><div class="kv" id="capv" style="font-size:16px">&hellip;</div><div class="ksub">Valeur de march&eacute;</div></div>
+        <div class="kbox"><div class="kl">Part march&eacute; HTU <span class="ti" onclick="openTT('HTU')">i</span></div><div class="kv" style="color:#818cf8">77%</div><div class="ksub">Leader mondial IQOS</div></div>
+        <div class="kbox"><div class="kl">March&eacute;s <span class="ti" onclick="openTT('SFP')">SFP</span></div><div class="kv" style="color:#fb923c">108</div><div class="ksub">Pr&eacute;sence mondiale</div></div>
+        <div class="kbox"><div class="kl">CA Smoke-Free <span class="ti" onclick="openTT('Smoke-Free')">i</span></div><div class="kv" style="color:#22d3a5">43%</div><div class="ksub">Q1 2026 &uarr; +1,3pp</div></div>
+      </div>
+    </div>
+
+    <!-- BLOC 3 : RÉSUMÉ FINANCIER + DIVIDENDE -->
+    <div class="g2">
+      <div class="card">
+        <div class="ch"><span class="ct">&#128202; Synth&egrave;se financi&egrave;re 2025</span><span class="cs">pmi.com / SEC</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px" id="fin-summary"></div>
+        <hr class="sep">
+        <div style="font-size:10px;color:#475569;margin-bottom:8px">Corr&eacute;lation r&eacute;sultat net / dividendes</div>
+        <div style="background:#0a111e;border-radius:8px;padding:10px 12px" id="div-corr"></div>
+      </div>
+      <div class="card hl">
+        <div class="ch"><span class="ct">&#128176; Dividende</span><span class="cs">pmi.com / SEC</span></div>
+        <div style="text-align:center;margin-bottom:12px">
+          <div style="font-size:30px;font-weight:900;color:#22d3a5" id="rendv">&hellip;</div>
+          <div style="font-size:10px;color:#475569">Rendement <span class="ti" onclick="openTT('Rendement')">i</span></div>
+          <div style="font-size:14px;font-weight:700;color:#f8fafc;margin:6px 0">5,88$/an &middot; 1,47$/trimestre</div>
+          <div style="font-size:11px;color:#4ade80">+17 ans cons&eacute;cutifs de hausse &#8599;</div>
+        </div>
+        <div style="font-size:10px;color:#475569;margin-bottom:6px">Prochains versements</div>
+        <div id="next-divs"></div>
+        <div style="font-size:9px;color:#1e3a5f;margin-top:8px">
+          Ex-div. <span class="ti" onclick="openTT('Ex-dividende')">i</span> : d&eacute;tenir l&rsquo;action AVANT la date pour percevoir le dividende
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOC INDICATEURS CLÉS (simplifié) -->
+    <div class="card">
+      <div class="ch"><span class="ct">&#127919; Indicateurs cl&eacute;s</span><span class="cs">Yahoo Finance &middot; Rendementbourse.com</span></div>
+      <div class="g5" id="kpis-key"></div>
+    </div>
+
+    <!-- EUR/USD COMPACT -->
+    <div class="fx-compact">
+      <div style="font-size:10px;color:#475569;flex-shrink:0">Taux de change <span class="ti" onclick="openTT('EUR/USD')">i</span></div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <span style="font-size:12px">1&nbsp;EUR&nbsp;=&nbsp;<strong id="fx1" style="color:#22d3a5">&hellip;</strong>&nbsp;USD</span>
+        <span style="font-size:12px">1&nbsp;USD&nbsp;=&nbsp;<strong id="fx2" style="color:#818cf8">&hellip;</strong>&nbsp;EUR</span>
+        <span style="font-size:12px">1 action PM&nbsp;=&nbsp;<strong id="fx3" style="color:#fb923c">&hellip;</strong>&nbsp;€</span>
+      </div>
+    </div>
+
+  </div><!-- /sub-vue -->
+
+  <!-- SUB: DÉTAIL MARCHÉ -->
+  <div id="sub-detail" style="display:none">
+    <div class="card">
+      <div class="ch"><span class="ct">Indicateurs boursiers complets</span><span class="cs">Rendementbourse.com &middot; Yahoo Finance &middot; Zonebourse</span></div>
+      <div class="g4" id="kpis-full"></div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct">Simulateur d&rsquo;investissement</span></div>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
         <label style="font-size:11px;color:#64748b">Montant en &euro;</label>
-        <input type="number" id="sim-input" class="sim-input" value="1000" oninput="updateSim()">
+        <input type="number" id="simi" class="finp" value="1000" oninput="updateSim()" style="width:130px">
       </div>
-      <div class="grid3">
-        <div style="text-align:center"><div style="font-size:10px;color:#475569;margin-bottom:3px">Montant en USD</div><div id="sim-usd" style="font-weight:700;color:#22d3a5;font-size:16px">&hellip;</div></div>
-        <div style="text-align:center"><div style="font-size:10px;color:#475569;margin-bottom:3px">Nb. actions PM</div><div id="sim-nb" style="font-weight:700;color:#818cf8;font-size:16px">&hellip;</div></div>
-        <div style="text-align:center"><div style="font-size:10px;color:#475569;margin-bottom:3px">Dividende annuel</div><div id="sim-div" style="font-weight:700;color:#4ade80;font-size:16px">&hellip;</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 52W + DIV + PROFIL -->
-  <div class="grid3">
-    <div class="card">
-      <div class="card-header"><span class="card-title">Plage 52 semaines</span><span class="card-source">Yahoo Finance</span></div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="color:#64748b;font-size:12px">Plus bas</span><span style="color:#f87171;font-weight:700">142,11$</span></div>
-      <div class="range-track"><div class="range-gradient"></div><div class="range-cursor" id="range-cursor" style="left:50%"></div></div>
-      <div style="display:flex;justify-content:space-between;margin-top:10px"><span style="color:#64748b;font-size:12px">Plus haut</span><span style="color:#22d3a5;font-weight:700">191,30$</span></div>
-    </div>
-    <div class="card accent">
-      <div class="card-header"><span class="card-title">Dividende</span><span class="card-source">pmi.com / SEC</span></div>
-      <div style="text-align:center">
-        <div style="font-size:32px;font-weight:900;color:#22d3a5" id="rendement-val">&hellip;</div>
-        <div style="color:#475569;font-size:10px;margin-bottom:6px">Rendement annualis&eacute; <span class="tt-icon" onclick="openTT('Rendement')">i</span></div>
-        <div style="font-size:14px;color:#f8fafc;font-weight:700">1,47$ / trimestre</div>
-        <div style="font-size:11px;color:#4ade80;margin:4px 0">= 5,88$/an &middot; +17 ans de hausse &uarr;</div>
-        <div style="font-size:10px;color:#2d4060">Prochain ex-div. <span class="tt-icon" onclick="openTT('Ex-dividende')">i</span> estim&eacute; : ~19 juin 2026</div>
+      <div class="g3">
+        <div style="text-align:center"><div style="font-size:10px;color:#475569;margin-bottom:3px">Montant en USD</div><div id="s-usd" style="font-weight:700;color:#22d3a5;font-size:16px">&hellip;</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#475569;margin-bottom:3px">Nb. actions PM</div><div id="s-nb" style="font-weight:700;color:#818cf8;font-size:16px">&hellip;</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#475569;margin-bottom:3px">Dividende annuel</div><div id="s-div" style="font-weight:700;color:#4ade80;font-size:16px">&hellip;</div></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><span class="card-title">Profil de march&eacute;</span><span class="card-source">Yahoo Finance</span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span style="color:#475569;font-size:12px">Capitalisation <span class="tt-icon" onclick="openTT('Capitalisation boursière')">i</span></span><span id="cap-val" style="color:#e2e8f0;font-size:12px;font-weight:600">&hellip;</span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span style="color:#475569;font-size:12px">B&ecirc;ta <span class="tt-icon" onclick="openTT('Bêta')">i</span></span><span style="color:#e2e8f0;font-size:12px;font-weight:600">0,39 (d&eacute;fensif)</span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span style="color:#475569;font-size:12px">Volume moyen</span><span style="color:#e2e8f0;font-size:12px;font-weight:600">5,66M titres/j</span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center"><span style="color:#475569;font-size:12px">S&amp;P 500 auj.</span><span id="sp500-txt" style="color:#94a3b8;font-size:12px;font-weight:600">&mdash;</span></div>
-    </div>
-  </div>
-
-  <!-- INDICATEURS -->
-  <div class="card">
-    <div class="card-header"><span class="card-title">Indicateurs boursiers cl&eacute;s</span><span class="card-source">Yahoo Finance &mdash; calcul&eacute;s automatiquement</span></div>
-    <div class="grid4">
-      <div class="kpi-box"><div class="kpi-label">PER TTM <span class="tt-icon" onclick="openTT('PER')">i</span></div><div class="kpi-val" id="per-val">24,9x</div></div>
-      <div class="kpi-box"><div class="kpi-label">PER pr&eacute;v. <span class="tt-icon" onclick="openTT('PER prévisionnel')">i</span></div><div class="kpi-val">20,7x</div></div>
-      <div class="kpi-box"><div class="kpi-label">VE/EBITDA <span class="tt-icon" onclick="openTT('VE/EBITDA')">i</span></div><div class="kpi-val">18,2x</div></div>
-      <div class="kpi-box"><div class="kpi-label">Price/FCF <span class="tt-icon" onclick="openTT('Price/FCF')">i</span></div><div class="kpi-val" id="pfcf-val">26,7x</div></div>
-      <div class="kpi-box"><div class="kpi-label">Marge brute <span class="tt-icon" onclick="openTT('Marge brute')">i</span></div><div class="kpi-val">67,3%</div></div>
-      <div class="kpi-box"><div class="kpi-label">Marge nette <span class="tt-icon" onclick="openTT('Marge nette')">i</span></div><div class="kpi-val">27,9%</div></div>
-      <div class="kpi-box"><div class="kpi-label">ROIC <span class="tt-icon" onclick="openTT('ROIC')">i</span></div><div class="kpi-val">33,3%</div></div>
-      <div class="kpi-box"><div class="kpi-label">Dette/EBITDA <span class="tt-icon" onclick="openTT('Dette/EBITDA')">i</span></div><div class="kpi-val">2,45x</div></div>
-    </div>
-  </div>
-
-  <!-- CONSENSUS mini -->
-  <div class="card" style="position:relative">
-    <button class="edit-btn" onclick="openModal('consensus')">&#9998; Mettre &agrave; jour</button>
-    <div class="card-header"><span class="card-title">Consensus des analystes <span class="tt-icon" onclick="openTT('Consensus analystes')">i</span></span><span class="card-source" id="consensus-source"></span></div>
-    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
-      <div style="text-align:center">
-        <div style="font-size:34px;font-weight:900;color:#22d3a5" id="consensus-label">Achat</div>
-        <div style="font-size:10px;color:#475569" id="consensus-nb"></div>
-        <div style="margin-top:6px;font-size:13px">Cible m&eacute;diane <span class="tt-icon" onclick="openTT('Objectif de cours')">i</span> : <strong style="color:#f8fafc" id="median-val">&hellip;</strong></div>
-        <div style="font-size:12px;color:#22d3a5" id="potentiel-val"></div>
+      <div class="ch"><span class="ct">Rapports &amp; Documents officiels PMI</span><span class="cs">pmi.com</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="https://www.pmi.com/investor-relations/overview" target="_blank" style="color:#22d3a5;font-size:12px;text-decoration:none;padding:8px 12px;background:#0a111e;border-radius:6px;border:1px solid #22d3a533">&#128196; Relations Investisseurs — pmi.com &#8599;</a>
+        <a href="https://www.pmi.com/investor-relations/pm-stock-and-bond-information" target="_blank" style="color:#818cf8;font-size:12px;text-decoration:none;padding:8px 12px;background:#0a111e;border-radius:6px;border:1px solid #818cf833">&#128200; Cours de l&rsquo;action &amp; obligations &#8599;</a>
+        <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001413159&type=10-Q&dateb=&owner=include&count=10" target="_blank" style="color:#fb923c;font-size:12px;text-decoration:none;padding:8px 12px;background:#0a111e;border-radius:6px;border:1px solid #fb923c33">&#128203; Rapports SEC (10-K / 10-Q) &#8599;</a>
       </div>
-      <div style="flex:1;min-width:180px" id="consensus-bars"></div>
     </div>
-  </div>
+  </div><!-- /sub-detail -->
+</div><!-- /tab-synthese -->
 
-  <!-- SMOKE FREE -->
-  <div class="card">
-    <div class="card-header"><span class="card-title">Transformation Smoke-Free &mdash; KPIs Q1 2026</span><span class="card-source">pmi.com &middot; Q1 2026 Press Release</span></div>
-    <div class="grid3">
-      <div style="background:#0a111e;border-radius:8px;padding:18px;text-align:center;border:1px solid #22d3a533"><div style="font-size:34px;font-weight:900;color:#22d3a5">43%</div><div style="font-size:11px;color:#94a3b8;margin:6px 0 3px">Part smoke-free du CA <span class="tt-icon" onclick="openTT('Smoke-Free')">i</span></div><div style="font-size:10px;color:#475569">+1,3pp vs Q1 2025</div></div>
-      <div style="background:#0a111e;border-radius:8px;padding:18px;text-align:center;border:1px solid #818cf833"><div style="font-size:34px;font-weight:900;color:#818cf8">77%</div><div style="font-size:11px;color:#94a3b8;margin:6px 0 3px">Part march&eacute; PMI HTU (IQOS) <span class="tt-icon" onclick="openTT('HTU')">i</span></div><div style="font-size:10px;color:#475569">Leader mondial</div></div>
-      <div style="background:#0a111e;border-radius:8px;padding:18px;text-align:center;border:1px solid #fb923c33"><div style="font-size:34px;font-weight:900;color:#fb923c">108</div><div style="font-size:11px;color:#94a3b8;margin:6px 0 3px">March&eacute;s avec produits smoke-free</div><div style="font-size:10px;color:#475569">Expansion continue</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ════ CALENDRIER ════ -->
-<div id="tab-calendrier" class="tab-content" style="display:none">
+<!-- ══════════ CALENDRIER ══════════ -->
+<div id="tab-calendrier" class="tc" style="display:none">
   <div class="card" style="position:relative">
-    <button class="edit-btn" onclick="openModal('calendrier')">&#9998; Mettre &agrave; jour</button>
-    <div class="card-header"><span class="card-title">Calendrier des &eacute;ch&eacute;ances</span><span class="card-source" id="cal-source"></span></div>
-    <div id="next-banner" style="margin-bottom:16px"></div>
-    <div style="display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap;font-size:11px;color:#64748b">
-      <span>&#128176; Dividendes</span><span>&#128202; Publications</span><span>&#127983; Assembl&eacute;e G&eacute;n&eacute;rale</span>
+    <button class="ebtn" onclick="openM('calendrier')">&#9998; Modifier</button>
+    <div class="ch"><span class="ct">Calendrier des &eacute;ch&eacute;ances PMI</span><span class="cs" id="calsrc"></span></div>
+    <div id="next-banner" style="margin-bottom:14px"></div>
+    <div style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;font-size:11px;color:#64748b">
+      <span>&#128176; Dividendes</span><span>&#128202; Publications</span><span>&#127983; AG</span>
     </div>
-    <div id="cal-list"></div>
+    <div id="callist"></div>
+    <div style="margin-top:10px;font-size:9px;color:#253348">Sources : pmi.com/investor-relations &middot; Dates officielles 2026</div>
   </div>
 </div>
 
-<!-- ════ RÉSULTATS ════ -->
-<div id="tab-resultats" class="tab-content" style="display:none">
-  <div class="view-tabs">
-    <button class="view-tab active" onclick="showView('annuel',this)">Annuel 2021&ndash;2025</button>
-    <button class="view-tab" onclick="showView('trim',this)">Trimestriel</button>
+<!-- ══════════ RÉSULTATS ══════════ -->
+<div id="tab-resultats" class="tc" style="display:none">
+  <div class="vtabs">
+    <button class="vtab on" onclick="showVt('annuel',this)">Annuel 2021&ndash;2025</button>
+    <button class="vtab" onclick="showVt('trim',this)">Trimestriel</button>
   </div>
   <div class="card" style="position:relative">
-    <button class="edit-btn" onclick="openModal('resultats')">&#9998; Mettre &agrave; jour</button>
-    <div class="card-header"><span class="card-title">Tableau des r&eacute;sultats financiers</span><span class="card-source" id="resultats-source"></span></div>
-    <div style="overflow-x:auto"><table id="fin-table"></table></div>
+    <button class="ebtn" onclick="openM('resultats')">&#9998; Mettre &agrave; jour</button>
+    <div class="ch"><span class="ct">Tableau des r&eacute;sultats financiers</span><span class="cs" id="ressrc"></span></div>
+    <div style="overflow-x:auto"><table id="restable"></table></div>
   </div>
-  <div class="card accent">
-    <div class="card-header"><span class="card-title">Guidance Management 2026</span><span class="card-source">pmi.com &mdash; Q1 2026 Earnings Release</span></div>
-    <div class="grid3">
-      <div class="kpi-box"><div class="kpi-label">BPA rapport&eacute; <span class="tt-icon" onclick="openTT('BPA')">i</span></div><div class="kpi-val" id="g-bpa-rep" style="font-size:16px;color:#94a3b8">&hellip;</div></div>
-      <div class="kpi-box"><div class="kpi-label">BPA ajust&eacute; <span class="tt-icon" onclick="openTT('BPA ajusté')">i</span></div><div class="kpi-val" id="g-bpa-adj" style="font-size:16px;color:#22d3a5">&hellip;</div></div>
-      <div class="kpi-box"><div class="kpi-label">Croissance BPA adj.</div><div class="kpi-val" id="g-croiss" style="font-size:16px;color:#4ade80">&hellip;</div></div>
+  <div class="card hl">
+    <div class="ch"><span class="ct">Guidance Management 2026</span><span class="cs">pmi.com &mdash; Q1 2026</span></div>
+    <div class="g3">
+      <div class="kbox"><div class="kl">BPA rapport&eacute; <span class="ti" onclick="openTT('BPA')">i</span></div><div class="kv" id="g-rep" style="font-size:15px;color:#94a3b8">&hellip;</div></div>
+      <div class="kbox"><div class="kl">BPA ajust&eacute; <span class="ti" onclick="openTT('BPA ajusté')">i</span></div><div class="kv" id="g-adj" style="font-size:15px;color:#22d3a5">&hellip;</div></div>
+      <div class="kbox"><div class="kl">Croissance BPA adj.</div><div class="kv" id="g-cro" style="font-size:15px;color:#4ade80">&hellip;</div></div>
     </div>
-    <div style="margin-top:10px;background:#0a111e;border-radius:8px;padding:10px 14px;font-size:11px;color:#94a3b8" id="g-notes"></div>
-    <div style="margin-top:8px;font-size:10px;color:#253348;font-style:italic" id="g-cite"></div>
+    <div style="margin-top:10px;background:#0a111e;border-radius:8px;padding:9px 12px;font-size:11px;color:#94a3b8" id="g-notes"></div>
+    <div style="margin-top:7px;font-size:10px;color:#253348;font-style:italic" id="g-cite"></div>
   </div>
   <div class="card">
-    <div class="card-header"><span class="card-title">KPIs de rentabilit&eacute; FY 2025</span><span class="card-source">Gurufocus &middot; Rendementbourse.com</span></div>
-    <div class="grid3">
-      <div style="background:#0a111e;border-radius:8px;padding:14px;border:1px solid #22d3a522"><div style="font-size:11px;color:#475569;margin-bottom:4px">Free Cash Flow <span class="tt-icon" onclick="openTT('FCF')">i</span></div><div style="font-size:22px;font-weight:800;color:#22d3a5">10,6 Mrd$</div><div style="font-size:10px;color:#253348;margin-top:4px">Flux libre annuel</div></div>
-      <div style="background:#0a111e;border-radius:8px;padding:14px;border:1px solid #818cf822"><div style="font-size:11px;color:#475569;margin-bottom:4px">Marge EBITDA <span class="tt-icon" onclick="openTT('Marge EBITDA')">i</span></div><div style="font-size:22px;font-weight:800;color:#818cf8">43%</div><div style="font-size:10px;color:#253348;margin-top:4px">Excellente g&eacute;n&eacute;ration cash</div></div>
-      <div style="background:#0a111e;border-radius:8px;padding:14px;border:1px solid #4ade8022"><div style="font-size:11px;color:#475569;margin-bottom:4px">ROIC <span class="tt-icon" onclick="openTT('ROIC')">i</span></div><div style="font-size:22px;font-weight:800;color:#4ade80">33,3%</div><div style="font-size:10px;color:#253348;margin-top:4px">Efficacit&eacute; capital exceptionnelle</div></div>
-      <div style="background:#0a111e;border-radius:8px;padding:14px;border:1px solid #f8717122"><div style="font-size:11px;color:#475569;margin-bottom:4px">Dette nette <span class="tt-icon" onclick="openTT('Dette nette')">i</span></div><div style="font-size:22px;font-weight:800;color:#f87171">43,9 Mrd$</div><div style="font-size:10px;color:#253348;margin-top:4px">Capitaux propres n&eacute;gatifs (technique)</div></div>
-      <div style="background:#0a111e;border-radius:8px;padding:14px;border:1px solid #facc1522"><div style="font-size:11px;color:#475569;margin-bottom:4px">Dette/EBITDA <span class="tt-icon" onclick="openTT('Dette/EBITDA')">i</span></div><div style="font-size:22px;font-weight:800;color:#facc15">2,45x</div><div style="font-size:10px;color:#253348;margin-top:4px">Niveau confortable, en baisse</div></div>
-      <div style="background:#0a111e;border-radius:8px;padding:14px;border:1px solid #fb923c22"><div style="font-size:11px;color:#475569;margin-bottom:4px">Marge nette <span class="tt-icon" onclick="openTT('Marge nette')">i</span></div><div style="font-size:22px;font-weight:800;color:#fb923c">27,9%</div><div style="font-size:10px;color:#253348;margin-top:4px">+4,3 Mrd$ r&eacute;sultat net vs 2024</div></div>
+    <div class="ch"><span class="ct">KPIs de rentabilit&eacute; FY 2025</span><span class="cs">Gurufocus &middot; Rendementbourse.com</span></div>
+    <div class="g3">
+      <div style="background:#0a111e;border-radius:8px;padding:12px;border:1px solid #22d3a522"><div style="font-size:10px;color:#475569;margin-bottom:3px">Free Cash Flow <span class="ti" onclick="openTT('FCF')">i</span></div><div style="font-size:20px;font-weight:800;color:#22d3a5">10,6 Mrd$</div><div style="font-size:9px;color:#253348;margin-top:3px">Flux libre annuel</div></div>
+      <div style="background:#0a111e;border-radius:8px;padding:12px;border:1px solid #818cf822"><div style="font-size:10px;color:#475569;margin-bottom:3px">Marge op. ajust&eacute;e <span class="ti" onclick="openTT('Marge opérationnelle')">i</span></div><div style="font-size:20px;font-weight:800;color:#818cf8">43%</div><div style="font-size:9px;color:#253348;margin-top:3px">Marge EBITDA ajust&eacute;e</div></div>
+      <div style="background:#0a111e;border-radius:8px;padding:12px;border:1px solid #4ade8022"><div style="font-size:10px;color:#475569;margin-bottom:3px">ROIC <span class="ti" onclick="openTT('ROIC')">i</span></div><div style="font-size:20px;font-weight:800;color:#4ade80">33,3%</div><div style="font-size:9px;color:#253348;margin-top:3px">Efficacit&eacute; capital</div></div>
+      <div style="background:#0a111e;border-radius:8px;padding:12px;border:1px solid #f8717122"><div style="font-size:10px;color:#475569;margin-bottom:3px">Dette nette <span class="ti" onclick="openTT('Dette nette')">i</span></div><div style="font-size:20px;font-weight:800;color:#f87171">43,9 Mrd$</div><div style="font-size:9px;color:#253348;margin-top:3px">Capital. propres n&eacute;g. (technique)</div></div>
+      <div style="background:#0a111e;border-radius:8px;padding:12px;border:1px solid #facc1522"><div style="font-size:10px;color:#475569;margin-bottom:3px">Dette/EBITDA <span class="ti" onclick="openTT('Dette/EBITDA')">i</span></div><div style="font-size:20px;font-weight:800;color:#facc15">2,45x</div><div style="font-size:9px;color:#253348;margin-top:3px">Niveau confortable</div></div>
+      <div style="background:#0a111e;border-radius:8px;padding:12px;border:1px solid #fb923c22"><div style="font-size:10px;color:#475569;margin-bottom:3px">Marge nette <span class="ti" onclick="openTT('Marge nette')">i</span></div><div style="font-size:20px;font-weight:800;color:#fb923c">27,9%</div><div style="font-size:9px;color:#253348;margin-top:3px">+4,3 Mrd$ r&eacute;s. net vs 2024</div></div>
     </div>
   </div>
 </div>
 
-<!-- ════ ANALYSTES ════ -->
-<div id="tab-analystes" class="tab-content" style="display:none">
-  <div class="sub-tabs">
-    <button class="sub-tab active" onclick="showSub('avis',this)">Avis analystes</button>
-    <button class="sub-tab" onclick="showSub('consensus-detail',this)">Consensus &amp; cibles</button>
-    <button class="sub-tab" onclick="showSub('technique',this)">Analyse technique</button>
+<!-- ══════════ ANALYSTES ══════════ -->
+<div id="tab-analystes" class="tc" style="display:none">
+  <div class="stabs">
+    <button class="stab on" onclick="showSub2('avis',this)">Avis analystes</button>
+    <button class="stab" onclick="showSub2('concensus',this)">Consensus &amp; cibles</button>
+    <button class="stab" onclick="showSub2('technique',this)">Analyse technique</button>
   </div>
-  <div id="sub-avis">
+  <div id="sub2-avis">
     <div class="card" style="position:relative">
-      <button class="edit-btn" onclick="openModal('analystes')">&#9998; Mettre &agrave; jour</button>
-      <div class="card-header"><span class="card-title">Avis des analystes financiers</span><span class="card-source" id="avis-source"></span></div>
-      <div id="avis-list"></div>
-      <div style="font-size:10px;color:#1a2e48;margin-top:8px;font-style:italic">&#9888;&#65039; &Agrave; titre informatif uniquement &mdash; pas un conseil en investissement.</div>
+      <button class="ebtn" onclick="openM('analystes')">&#9998; Mettre &agrave; jour</button>
+      <div class="ch"><span class="ct">Avis des analystes financiers</span><span class="cs" id="avissrc"></span></div>
+      <div id="avislist"></div>
+      <div style="font-size:10px;color:#1a2e48;margin-top:7px;font-style:italic">&#9888;&#65039; &Agrave; titre informatif &mdash; pas un conseil en investissement.</div>
     </div>
   </div>
-  <div id="sub-consensus-detail" style="display:none">
-    <div class="card accent">
-      <div class="card-header"><span class="card-title">Synth&egrave;se du consensus</span><span class="card-source" id="consensus-detail-source"></span></div>
-      <div class="grid2">
-        <div><div style="font-size:10px;color:#475569;margin-bottom:12px;text-transform:uppercase">R&eacute;partition <span class="tt-icon" onclick="openTT('Consensus analystes')">i</span></div><div id="consensus-bars2"></div></div>
-        <div style="background:#0a111e;border-radius:8px;padding:16px">
-          <div style="font-size:10px;color:#475569;margin-bottom:10px">Fourchette d&rsquo;objectifs <span class="tt-icon" onclick="openTT('Objectif de cours')">i</span></div>
-          <div id="objectifs-list"></div>
+  <div id="sub2-concensus" style="display:none">
+    <div class="card hl" style="position:relative">
+      <button class="ebtn" onclick="openM('consensus')">&#9998; Modifier</button>
+      <div class="ch"><span class="ct">Synth&egrave;se du consensus <span class="ti" onclick="openTT('Consensus analystes')">i</span></span><span class="cs" id="consrc"></span></div>
+      <div class="g2">
+        <div><div style="font-size:10px;color:#475569;margin-bottom:10px;text-transform:uppercase">R&eacute;partition</div><div id="conbars"></div></div>
+        <div style="background:#0a111e;border-radius:8px;padding:14px">
+          <div style="font-size:10px;color:#475569;margin-bottom:8px">Fourchette objectifs <span class="ti" onclick="openTT('Objectif de cours')">i</span></div>
+          <div id="objlist"></div>
         </div>
       </div>
     </div>
   </div>
-  <div id="sub-technique" style="display:none">
+  <div id="sub2-technique" style="display:none">
     <div class="card">
-      <div class="card-header"><span class="card-title">Indicateurs techniques <span style="font-size:9px;color:#22d3a5" class="badge-maj">Calcul&eacute;s automatiquement</span></span><span class="card-source">Yahoo Finance &mdash; calcul Python</span></div>
-      <div class="grid2" id="tech-grid"></div>
+      <div class="ch"><span class="ct">Indicateurs techniques <span style="font-size:9px;color:#22d3a5;background:#22d3a511;padding:2px 6px;border-radius:4px">Auto</span></span><span class="cs">Yahoo Finance &mdash; calcul Python</span></div>
+      <div class="g2" id="techgrid"></div>
     </div>
     <div class="card">
-      <div class="card-header"><span class="card-title">MACD <span class="tt-icon" onclick="openTT('MACD')">i</span> &mdash; Histogramme 30 jours <span style="font-size:9px;color:#22d3a5" class="badge-maj">Calcul&eacute; automatiquement</span></span><span class="card-source">Yahoo Finance &mdash; calcul Python</span></div>
-      <div class="macd-wrap" id="macd-chart"></div>
-      <div style="display:flex;gap:16px;margin-bottom:8px"><span style="font-size:10px;color:#22d3a5">&#9642; Vert = momentum haussier</span><span style="font-size:10px;color:#f87171">&#9642; Rouge = momentum baissier</span></div>
-      <div style="background:#0a111e;border-radius:6px;padding:10px 12px;font-size:11px;color:#94a3b8" id="macd-signal"></div>
+      <div class="ch"><span class="ct">MACD <span class="ti" onclick="openTT('MACD')">i</span> &mdash; Histogramme <span style="font-size:9px;color:#22d3a5;background:#22d3a511;padding:2px 6px;border-radius:4px">Auto</span></span><span class="cs">Yahoo Finance</span></div>
+      <div class="mwrap" id="macdchart"></div>
+      <div style="display:flex;gap:14px;margin-bottom:7px"><span style="font-size:10px;color:#22d3a5">&#9642; Vert = momentum haussier</span><span style="font-size:10px;color:#f87171">&#9642; Rouge = momentum baissier</span></div>
+      <div style="background:#0a111e;border-radius:6px;padding:9px 11px;font-size:11px;color:#94a3b8" id="macdsig"></div>
     </div>
   </div>
 </div>
 
-<!-- ════ SECTEUR ════ -->
-<div id="tab-secteur" class="tab-content" style="display:none">
+<!-- ══════════ SECTEUR ══════════ -->
+<div id="tab-secteur" class="tc" style="display:none">
   <div class="card">
-    <div class="card-header"><span class="card-title">Comparatif sectoriel</span><span class="card-source">Yahoo Finance &middot; Zonebourse</span></div>
+    <div class="ch"><span class="ct">Comparatif sectoriel &mdash; Tabac &amp; Nicotine mondial</span><span class="cs">Yahoo Finance &middot; Zonebourse &middot; Automatique</span></div>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th>Entreprise</th><th>Ticker</th><th>Cours</th><th>PER <span class="tt-icon" onclick="openTT('PER')">i</span></th><th>Rendement <span class="tt-icon" onclick="openTT('Rendement')">i</span></th><th>Cap.</th><th>Perf. 1 an</th></tr></thead>
-      <tbody id="secteur-table"></tbody>
+      <thead><tr>
+        <th>Entreprise</th><th>Ticker</th><th>Cours</th><th>Variation</th>
+        <th>PER <span class="ti" onclick="openTT('PER')">i</span></th>
+        <th>Rendement <span class="ti" onclick="openTT('Rendement')">i</span></th>
+        <th>Cap.</th>
+      </tr></thead>
+      <tbody id="sectbl"></tbody>
     </table></div>
   </div>
   <div class="card">
-    <div class="card-header"><span class="card-title">Tendances sectorielles</span><span class="card-source">pmi.com &middot; Zonebourse &middot; BFM Business</span></div>
-    <div id="tendances-list"></div>
+    <div class="ch"><span class="ct">Tendances sectorielles</span><span class="cs">pmi.com &middot; Zonebourse &middot; BFM Business</span></div>
+    <div id="tendlist"></div>
   </div>
   <div class="card">
-    <div class="card-header"><span class="card-title">Analyse SWOT</span><span class="card-source">pmi.com &middot; Les Investisseurs Heureux</span></div>
-    <div class="swot" id="swot-grid"></div>
+    <div class="ch"><span class="ct">Analyse SWOT</span><span class="cs">pmi.com &middot; Les Investisseurs Heureux</span></div>
+    <div class="swot" id="swotgrid"></div>
   </div>
 </div>
 
-<div class="footer">&#9888;&#65039; AVERTISSEMENT : Application &agrave; usage priv&eacute; et p&eacute;dagogique. Donn&eacute;es issues de sources publiques. Ne constituent pas un conseil en investissement. Risques de perte en capital. Consultez un conseiller financier agr&eacute;&eacute;.</div>
+<div class="footer">&#9888;&#65039; Application &agrave; usage priv&eacute; et p&eacute;dagogique. Donn&eacute;es issues de sources publiques. Ne constituent pas un conseil en investissement. Risques de perte en capital. Consultez un conseiller financier agr&eacute;&eacute;.</div>
 </div><!-- .app -->
 
 <!-- TOOLTIP OVERLAY -->
-<div id="tt-overlay" onclick="closeTT()"></div>
-<div id="tt-popup"><div id="tt-title" style="color:#22d3a5;font-weight:800;margin-bottom:6px;font-size:13px"></div><div id="tt-body"></div><div style="color:#334155;margin-top:10px;font-size:10px">&#x2715; cliquez &agrave; l&rsquo;ext&eacute;rieur pour fermer</div></div>
+<div id="tto" onclick="closeTT()"></div>
+<div id="ttp"><div id="tttitle" style="color:#22d3a5;font-weight:800;margin-bottom:5px;font-size:13px"></div><div id="ttbody"></div><div style="color:#334155;margin-top:8px;font-size:10px">&#x2715; cliquez pour fermer</div></div>
 
-<!-- ════ MODALES DE MISE À JOUR ════ -->
+<!-- ══ MODALES ══ -->
 <!-- Consensus -->
-<div class="modal-overlay" id="modal-consensus">
+<div class="mov" id="m-consensus">
   <div class="modal">
-    <h2>&#9998; Mettre &agrave; jour le consensus</h2>
-    <div class="modal-sub">Sources recommand&eacute;es : Investing.com &middot; Zonebourse &middot; Boursier.com</div>
-    <div class="field-row">
-      <div class="field-group"><label class="field-label">Consensus global</label><select id="m-consensus" class="field-input"><option>Achat Fort</option><option>Achat</option><option>Conserver</option><option>Vendre</option></select></div>
-      <div class="field-group"><label class="field-label">Nb. analystes</label><input type="number" id="m-nb-anal" class="field-input" placeholder="18"></div>
-      <div class="field-group"><label class="field-label">Objectif m&eacute;dian ($)</label><input type="number" id="m-median" class="field-input" placeholder="187.5" step="0.5"></div>
+    <h2 style="font-size:14px;font-weight:700;color:#f8fafc;margin-bottom:5px">&#9998; Consensus des analystes</h2>
+    <div style="font-size:11px;color:#475569;margin-bottom:18px">Sources : Investing.com &middot; Zonebourse &middot; Boursier.com</div>
+    <div class="frow">
+      <div class="fld"><label class="flbl">Consensus global</label><select id="mc" class="finp"><option>Achat Fort</option><option>Achat</option><option>Conserver</option><option>Vendre</option></select></div>
+      <div class="fld"><label class="flbl">Nb. analystes</label><input type="number" id="mna" class="finp" placeholder="18"></div>
+      <div class="fld"><label class="flbl">Objectif m&eacute;dian ($)</label><input type="number" id="mmed" class="finp" placeholder="187.5" step="0.5"></div>
     </div>
-    <div class="field-row">
-      <div class="field-group"><label class="field-label">Objectif haut ($)</label><input type="number" id="m-haut" class="field-input" placeholder="220" step="0.5"></div>
-      <div class="field-group"><label class="field-label">Objectif bas ($)</label><input type="number" id="m-bas" class="field-input" placeholder="155" step="0.5"></div>
-      <div class="field-group"><label class="field-label">Source</label><input type="text" id="m-con-source" class="field-input" placeholder="Investing.com"></div>
+    <div class="frow">
+      <div class="fld"><label class="flbl">Objectif haut ($)</label><input type="number" id="mhaut" class="finp" step="0.5"></div>
+      <div class="fld"><label class="flbl">Objectif bas ($)</label><input type="number" id="mbas" class="finp" step="0.5"></div>
+      <div class="fld"><label class="flbl">Source</label><input type="text" id="mcsrc" class="finp" placeholder="Investing.com"></div>
     </div>
-    <div style="font-size:11px;color:#475569;margin-bottom:10px">R&eacute;partition (nombre d&rsquo;analystes)</div>
-    <div class="field-row">
-      <div class="field-group"><label class="field-label">Achat Fort</label><input type="number" id="m-af" class="field-input" min="0" placeholder="8"></div>
-      <div class="field-group"><label class="field-label">Achat</label><input type="number" id="m-a" class="field-input" min="0" placeholder="7"></div>
-      <div class="field-group"><label class="field-label">Conserver</label><input type="number" id="m-c" class="field-input" min="0" placeholder="3"></div>
+    <div style="font-size:11px;color:#475569;margin:10px 0 7px">R&eacute;partition (nombre d&rsquo;analystes)</div>
+    <div class="frow">
+      <div class="fld"><label class="flbl">Achat Fort</label><input type="number" id="maf" class="finp" min="0"></div>
+      <div class="fld"><label class="flbl">Achat</label><input type="number" id="ma" class="finp" min="0"></div>
+      <div class="fld"><label class="flbl">Conserver</label><input type="number" id="mco" class="finp" min="0"></div>
     </div>
-    <div class="field-row">
-      <div class="field-group"><label class="field-label">Vendre</label><input type="number" id="m-v" class="field-input" min="0" placeholder="0"></div>
-      <div class="field-group"><label class="field-label">Vendre Fort</label><input type="number" id="m-vf" class="field-input" min="0" placeholder="0"></div>
-      <div></div>
+    <div class="frow2">
+      <div class="fld"><label class="flbl">Vendre</label><input type="number" id="mv" class="finp" min="0"></div>
+      <div class="fld"><label class="flbl">Vendre Fort</label><input type="number" id="mvf" class="finp" min="0"></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('consensus')">Annuler</button>
-      <button class="btn-primary" onclick="saveConsensus()">&#10003; Enregistrer</button>
-    </div>
+    <div class="mfoot"><button class="btn" onclick="closeM('consensus')">Annuler</button><button class="btnp" onclick="saveCon()">&#10003; Enregistrer</button></div>
   </div>
 </div>
 
 <!-- Analystes -->
-<div class="modal-overlay" id="modal-analystes">
+<div class="mov" id="m-analystes">
   <div class="modal">
-    <h2>&#9998; Mettre &agrave; jour les avis analystes</h2>
-    <div class="modal-sub">Sources : Investing.com &middot; Zonebourse &middot; Boursier.com &middot; BFM Business &middot; ABC Bourse</div>
-    <div id="avis-edit-list"></div>
-    <button onclick="addAnalystRow()" class="btn-ghost" style="margin-top:8px;width:100%">+ Ajouter un analyste</button>
-    <div class="field-group" style="margin-top:12px"><label class="field-label">Source g&eacute;n&eacute;rale</label><input type="text" id="m-avis-source" class="field-input" placeholder="Investing.com / Zonebourse"></div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('analystes')">Annuler</button>
-      <button class="btn-primary" onclick="saveAnalystes()">&#10003; Enregistrer</button>
-    </div>
+    <h2 style="font-size:14px;font-weight:700;color:#f8fafc;margin-bottom:5px">&#9998; Avis des analystes</h2>
+    <div style="font-size:11px;color:#475569;margin-bottom:18px">Investing.com &middot; Zonebourse &middot; Boursier.com &middot; BFM Business</div>
+    <div id="avisedits"></div>
+    <button onclick="addArow()" class="btn" style="width:100%;margin-top:7px">+ Ajouter un analyste</button>
+    <div class="fld" style="margin-top:10px"><label class="flbl">Source g&eacute;n&eacute;rale</label><input type="text" id="mav-src" class="finp" placeholder="Investing.com / Zonebourse"></div>
+    <div class="mfoot"><button class="btn" onclick="closeM('analystes')">Annuler</button><button class="btnp" onclick="saveAv()">&#10003; Enregistrer</button></div>
   </div>
 </div>
 
 <!-- Résultats -->
-<div class="modal-overlay" id="modal-resultats">
+<div class="mov" id="m-resultats">
   <div class="modal">
-    <h2>&#9998; Ajouter un r&eacute;sultat trimestriel</h2>
-    <div class="modal-sub">Sources : pmi.com/investor-relations &middot; SEC (sec.gov) &middot; Communiqu&eacute; de presse PMI</div>
-    <div class="field-row">
-      <div class="field-group"><label class="field-label">P&eacute;riode</label><input type="text" id="m-periode" class="field-input" placeholder="Q2 2026"></div>
-      <div class="field-group"><label class="field-label">CA (Mrd$)</label><input type="number" id="m-ca" class="field-input" placeholder="10.5" step="0.01"></div>
-      <div class="field-group"><label class="field-label">Croissance CA (%)</label><input type="number" id="m-croiss-ca" class="field-input" placeholder="8.5" step="0.1"></div>
+    <h2 style="font-size:14px;font-weight:700;color:#f8fafc;margin-bottom:5px">&#9998; Ajouter / modifier un r&eacute;sultat</h2>
+    <div style="font-size:11px;color:#475569;margin-bottom:18px">Sources : pmi.com/investor-relations &middot; SEC (sec.gov)</div>
+    <div class="frow">
+      <div class="fld"><label class="flbl">P&eacute;riode</label><input type="text" id="mrp" class="finp" placeholder="Q2 2026"></div>
+      <div class="fld"><label class="flbl">CA (Mrd$)</label><input type="number" id="mrca" class="finp" step="0.01"></div>
+      <div class="fld"><label class="flbl">Croissance CA (%)</label><input type="number" id="mrcg" class="finp" step="0.1"></div>
     </div>
-    <div class="field-row">
-      <div class="field-group"><label class="field-label">BPA rapport&eacute; ($)</label><input type="number" id="m-bpa" class="field-input" placeholder="1.75" step="0.01"></div>
-      <div class="field-group"><label class="field-label">BPA ajust&eacute; ($)</label><input type="number" id="m-bpa-adj" class="field-input" placeholder="2.05" step="0.01"></div>
-      <div class="field-group"><label class="field-label">Source</label><input type="text" id="m-res-source" class="field-input" placeholder="pmi.com / SEC"></div>
+    <div class="frow">
+      <div class="fld"><label class="flbl">BPA rapport&eacute; ($)</label><input type="number" id="mrbpa" class="finp" step="0.01"></div>
+      <div class="fld"><label class="flbl">BPA ajust&eacute; ($)</label><input type="number" id="mrbpaa" class="finp" step="0.01"></div>
+      <div class="fld"><label class="flbl">Source</label><input type="text" id="mrssrc" class="finp" placeholder="pmi.com / SEC"></div>
     </div>
-    <div style="font-size:11px;color:#475569;margin:12px 0 8px">Guidance mise &agrave; jour (optionnel)</div>
-    <div class="field-row">
-      <div class="field-group"><label class="field-label">BPA rapport&eacute; ann&eacute;e</label><input type="text" id="m-g-rep" class="field-input" placeholder="7.56$ – 7.71$"></div>
-      <div class="field-group"><label class="field-label">BPA ajust&eacute; ann&eacute;e</label><input type="text" id="m-g-adj" class="field-input" placeholder="8.36$ – 8.51$"></div>
-      <div class="field-group"><label class="field-label">Croissance BPA adj.</label><input type="text" id="m-g-croiss" class="field-input" placeholder="+10,9% à +12,9%"></div>
+    <div style="font-size:11px;color:#475569;margin:10px 0 7px">Guidance (si mise &agrave; jour)</div>
+    <div class="frow">
+      <div class="fld"><label class="flbl">BPA rapport&eacute; ann&eacute;e</label><input type="text" id="mgr" class="finp"></div>
+      <div class="fld"><label class="flbl">BPA ajust&eacute; ann&eacute;e</label><input type="text" id="mga" class="finp"></div>
+      <div class="fld"><label class="flbl">Croissance BPA adj.</label><input type="text" id="mgc" class="finp"></div>
     </div>
-    <div class="field-group"><label class="field-label">Notes management / citation</label><input type="text" id="m-g-notes" class="field-input" placeholder="Commentaires du management..."></div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('resultats')">Annuler</button>
-      <button class="btn-primary" onclick="saveResultats()">&#10003; Enregistrer</button>
-    </div>
+    <div class="fld"><label class="flbl">Notes / citation management</label><input type="text" id="mgn" class="finp"></div>
+    <div class="mfoot"><button class="btn" onclick="closeM('resultats')">Annuler</button><button class="btnp" onclick="saveRes()">&#10003; Enregistrer</button></div>
   </div>
 </div>
 
 <!-- Calendrier -->
-<div class="modal-overlay" id="modal-calendrier">
+<div class="mov" id="m-calendrier">
   <div class="modal">
-    <h2>&#9998; Mettre &agrave; jour le calendrier</h2>
-    <div class="modal-sub">Ajouter ou modifier une &eacute;ch&eacute;ance. Source : pmi.com/investor-relations</div>
-    <div id="cal-edit-list"></div>
-    <button onclick="addCalRow()" class="btn-ghost" style="margin-top:8px;width:100%">+ Ajouter une &eacute;ch&eacute;ance</button>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('calendrier')">Annuler</button>
-      <button class="btn-primary" onclick="saveCalendrier()">&#10003; Enregistrer</button>
-    </div>
+    <h2 style="font-size:14px;font-weight:700;color:#f8fafc;margin-bottom:5px">&#9998; &Eacute;ch&eacute;ances du calendrier</h2>
+    <div style="font-size:11px;color:#475569;margin-bottom:18px">Source : pmi.com/investor-relations</div>
+    <div id="caledits"></div>
+    <button onclick="addCrow()" class="btn" style="width:100%;margin-top:7px">+ Ajouter une &eacute;ch&eacute;ance</button>
+    <div class="mfoot"><button class="btn" onclick="closeM('calendrier')">Annuler</button><button class="btnp" onclick="saveCal()">&#10003; Enregistrer</button></div>
   </div>
 </div>
 
 <script>
-// ════════════════════════════════════════
+// ════════════════════════════════
 // GLOSSAIRE
-// ════════════════════════════════════════
-const GLOSSAIRE = {
+// ════════════════════════════════
+const GL = {
   "PER":"Price-to-Earnings Ratio : rapport cours / bénéfice par action. PER de 20 = vous payez 20€ pour 1€ de bénéfice annuel. Plus élevé → forte croissance anticipée.",
   "PER prévisionnel":"PER calculé avec le bénéfice anticipé par les analystes sur les 12 prochains mois. Souvent plus pertinent pour une valeur en croissance.",
   "BPA":"Bénéfice Par Action (EPS) : bénéfice net / nombre d'actions. C'est le 'salaire' théorique de chaque action. PMI FY2025 : 7,54$.",
-  "BPA ajusté":"BPA retraité des éléments exceptionnels. Donne une image plus fidèle de la rentabilité récurrente. PMI Q1 2026 : BPA rapporté 1,56$ vs BPA ajusté 1,96$.",
-  "FCF":"Free Cash Flow : argent réellement encaissé après dépenses ET investissements. Le vrai cash disponible pour dividendes, remboursement de dettes ou rachats d'actions. PMI 2025 : 10,6 Mrd$.",
-  "ROE":"Return On Equity : bénéfice net / capitaux propres. PMI : ROE négatif (situation technique — capitaux propres négatifs suite aux rachats d'actions massifs, pas un signal d'alarme).",
-  "ROIC":"Return On Invested Capital : efficacité de TOUT le capital investi. Si ROIC > coût du capital, l'entreprise crée de la valeur. PMI : 33,3% — exceptionnellement élevé.",
+  "BPA ajusté":"BPA retraité des éléments exceptionnels. Donne une image plus fidèle de la rentabilité récurrente. PMI Q1 2026 : BPA rapporté 1,56$ vs ajusté 1,96$.",
+  "FCF":"Free Cash Flow : argent encaissé après dépenses ET investissements. Le vrai cash pour dividendes, remboursement dette, rachats d'actions. PMI 2025 : 10,6 Mrd$.",
+  "ROE":"Return On Equity : bénéfice net / capitaux propres. PMI : ROE négatif — technique, dû aux rachats massifs d'actions, pas un signal d'alarme.",
+  "ROIC":"Return On Invested Capital : efficacité de TOUT le capital investi. Si ROIC > coût du capital → création de valeur. PMI : 33,3% — exceptionnel.",
   "EBITDA":"Bénéfice avant intérêts, impôts, dépréciation et amortissement. Proxy du cash-flow opérationnel brut.",
-  "Marge EBITDA":"EBITDA / chiffre d'affaires. PMI : 43% = 43 centimes sur chaque euro de vente deviennent du cash opérationnel.",
-  "Marge opérationnelle":"Résultat d'exploitation / CA. Part des ventes qui devient profit avant intérêts et impôts.",
+  "Marge EBITDA":"EBITDA / CA. PMI : 43% = 43 centimes sur chaque dollar de vente deviennent du cash opérationnel.",
+  "Marge opérationnelle":"Résultat d'exploitation / CA. PMI 2025 : 43% (marge opérationnelle ajustée — retraitée des éléments non-récurrents).",
   "Marge nette":"Bénéfice net / CA. PMI : 28% → pour 100$ de ventes, 28$ restent en profit net.",
-  "Marge brute":"(CA - coût des ventes) / CA. Mesure la rentabilité intrinsèque du produit. PMI : 67% — fort pouvoir de fixation des prix.",
-  "Dette nette":"Dettes financières - trésorerie disponible. PMI : 43,9 Mrd$ — élevée mais maîtrisée (FCF 10,6 Mrd$/an).",
+  "Dette nette":"Dettes financières - trésorerie. PMI : 43,9 Mrd$ — élevée mais maîtrisée (FCF 10,6 Mrd$/an = remboursement en ~4 ans).",
   "Dette/EBITDA":"Années nécessaires pour rembourser la dette avec le cash opérationnel. < 2x = faible. 2-4x = normal. PMI : 2,45x — confortable.",
   "MACD":"Moving Average Convergence Divergence : indicateur technique. Histogramme positif = momentum haussier. Négatif = momentum baissier.",
-  "RSI":"Relative Strength Index : 0-100. < 30 = survente (potentiel achat). > 70 = surachat (prudence). 30-70 = zone neutre.",
+  "RSI":"Relative Strength Index : 0-100. < 30 = survente (opportunité). > 70 = surachat (prudence). 30-70 = zone neutre.",
   "SMA":"Simple Moving Average : moyenne du cours sur N jours. SMA50 = tendance moyen terme. SMA200 = tendance longue.",
-  "SMA 50j":"Moyenne des 50 derniers cours de clôture. Cours sous la SMA50 = signal de faiblesse court terme.",
+  "SMA 50j":"Moyenne des 50 derniers cours de clôture. Cours sous SMA50 = signal de faiblesse court terme.",
   "SMA 200j":"Moyenne des 200 derniers cours. Cours au-dessus = tendance longue haussière confirmée.",
-  "Bêta":"Sensibilité de l'action au marché global. Bêta 0,39 = PMI bouge 2,5× moins que le S&P 500. Très défensif.",
-  "Rendement":"Dividende annuel / cours. PMI : 5,88$ / 173$ = 3,4%. Le 'loyer' perçu en tant qu'actionnaire.",
-  "Ex-dividende":"Date limite pour avoir droit au dividende. Il faut détenir l'action AVANT cette date.",
+  "Bêta":"Sensibilité au marché global. Bêta 0,39 = PMI bouge 2,5× moins que le S&P 500. Très défensif.",
+  "Rendement":"Dividende annuel / cours. PMI : 5,88$/173$ = ~3,4%. Le 'loyer' perçu en tant qu'actionnaire.",
+  "Ex-dividende":"Date limite : il faut détenir l'action AVANT cette date pour recevoir le dividende. Le cours baisse théoriquement du montant du dividende ce jour-là.",
   "VE/EBITDA":"Valeur d'Entreprise / EBITDA. Multiple de valorisation indépendant de la structure financière.",
   "Price/FCF":"Cours / Free Cash Flow par action. Alternative robuste au PER.",
   "Consensus analystes":"Synthèse des recommandations professionnelles : Achat Fort → Vendre Fort.",
-  "Objectif de cours":"Prix cible à 12 mois fixé par chaque analyste selon ses modèles de valorisation.",
+  "Objectif de cours":"Prix cible à 12 mois fixé par chaque analyste selon ses modèles (DCF, multiples comparables).",
   "CA":"Chiffre d'Affaires : total des ventes. PMI 2025 : 40,65 Mrd$ (+7,3%).",
   "Capitalisation boursière":"Cours × nombre d'actions. PMI : ~284 Mrd$.",
-  "HTU":"Heat-not-Burn Unit : tabac chauffé sans combustion. Marché principal de l'IQOS.",
-  "Smoke-Free":"Produits PMI sans fumée : IQOS, ZYN (sachets nicotine), VEEV (vapotage).",
-  "EUR/USD":"Prix d'un euro en dollars. Important car PMI publie en USD mais gère des revenus multidevises.",
-  "Tailwind devise":"Effet favorable des taux de change sur les résultats en USD.",
+  "HTU":"Heat-not-Burn Unit : tabac chauffé sans combustion. Marché principal de l'IQOS de PMI.",
+  "Smoke-Free":"Produits PMI sans fumée : IQOS/HTU, sachets nicotine ZYN, vapotage VEEV.",
+  "SFP":"Smoke-Free Products : désigne l'ensemble des produits Philip Morris International qui ne nécessitent pas de combustion. Comprend les produits à base de tabac chauffé (IQOS/HTU), les sachets de nicotine (ZYN) et les produits de vapotage (VEEV). Stratégie centrale de PMI : dépasser 50% du CA en SFP.",
+  "EUR/USD":"Prix d'un euro en dollars. PMI publie en USD mais génère des revenus dans de nombreuses devises. Un dollar fort pèse sur les revenus convertis.",
+  "Tailwind devise":"Effet favorable des variations de change sur les résultats en USD. PMI guide +0,25$ sur le BPA 2026.",
+  "Taux de distribution":"Dividendes versés / bénéfice net. Mesure la part du profit redistribuée aux actionnaires. PMI : ~75% en 2025 — politique de retour aux actionnaires généreuse.",
 };
 
-// ════════════════════════════════════════
-// DONNÉES STATIQUES (secteur, SWOT, tendances)
-// ════════════════════════════════════════
-const CONCURRENTS = [
-  {n:"Philip Morris Int.",t:"PM",per:null,rend:null,cap:"~284 Mrd$",v1a:null,isPM:true},
-  {n:"Altria Group",t:"MO",per:9.8,rend:8.4,cap:"95 Mrd$",v1a:12.1,isPM:false},
-  {n:"British Am. Tobacco",t:"BTI",per:7.5,rend:9.8,cap:"81 Mrd$",v1a:-4.2,isPM:false},
-  {n:"Japan Tobacco",t:"2914.T",per:12.3,rend:5.6,cap:"57 Mrd$",v1a:8.4,isPM:false}
-];
-const TENDANCES = [
-  "IQOS #1 marque nicotine mondiale (hors cigarettes) — 77% de part de marché HTU global, disponible dans 108 marchés",
+// ════════════════════════════════
+// DONNÉES STATIQUES
+// ════════════════════════════════
+const TEND = [
+  "IQOS #1 marque nicotine mondiale — 77% de part de marché HTU global, disponible dans 108 marchés",
   "ZYN leader des sachets de nicotine — pression concurrentielle US (VELO, On!) + normalisation stocks Q1 2026",
-  "Réglementation UE : interdiction arômes caractérisants en Pologne/Hongrie — impact transitoire, récupération attendue H2 2026",
-  "Pression fiscale Japon (hausse accise avr. 2026) — effet pantry loading Q1, rebond négatif anticipé Q2",
-  "Partenariat Ferrari F1 2026+ pour la marque ZYN — image premium, segment jeune adulte",
-  "Cigarettes combustibles : déclin volume compensé par hausse des prix (+8,5% Q1 2026) — fort pouvoir de fixation des prix",
-  "Diversification santé & bien-être au-delà du tabac/nicotine (horizon long terme, annoncé par le management)"
+  "Réglementation UE : interdiction arômes caractérisants Pologne/Hongrie — impact transitoire, récupération attendue H2 2026",
+  "Pression fiscale Japon (hausse accise avr. 2026) — effet pantry loading Q1, rebond négatif attendu Q2",
+  "Partenariat Ferrari F1 2026+ pour la marque ZYN — stratégie image premium, segment jeune adulte",
+  "Cigarettes combustibles : déclin volume compensé par hausse des prix (+8,5% Q1 2026) — fort pricing power",
+  "Objectif stratégique : >50% du CA en SFP d'ici fin 2026 (43% atteint au Q1 2026)"
 ];
 const SWOT = [
-  {t:"Forces ✓",c:"#22d3a5",items:["Leader mondial IQOS (77% part HTU global)","FCF 10,6 Mrd$/an — machine à cash récurrente","ROIC 33,3% — efficacité capital top décile","Diversification géographique (108 marchés)","Croissance BPA ajusté +10–13% guidé 2026"]},
-  {t:"Faiblesses ✗",c:"#f87171",items:["Dette nette 43,9 Mrd$ (capitaux propres négatifs)","Déclin structurel volume cigarettes combustibles","Concentration revenus Japon & Europe de l'Ouest","ZYN sous pression concurrentielle aux États-Unis"]},
-  {t:"Opportunités ↑",c:"#4ade80",items:["Autorisation FDA IQOS ILUMA attendue aux USA","Expansion marchés émergents (Asie du Sud-Est, Afrique)","Croissance sachets nicotine (ZYN) & vapotage (VEEV)","Diversification santé/bien-être (horizon long terme)"]},
-  {t:"Menaces ↓",c:"#facc15",items:["Réglementation antitabac croissante (UE, OMS)","Hausses taxes accise (Japon avr. 2026, Europe)","Volatilité USD/EUR sur résultats publiés","Concurrence BAT, Altria, JTI sur smoke-free"]}
+  {t:"Forces ✓",c:"#22d3a5",i:["Leader mondial IQOS (77% part HTU global)","FCF 10,6 Mrd$/an — machine à cash récurrente","ROIC 33,3% — efficacité capital top décile mondial","Diversification géographique (108 marchés)","Croissance BPA ajusté +10–13% guidé 2026"]},
+  {t:"Faiblesses ✗",c:"#f87171",i:["Dette nette 43,9 Mrd$ (capitaux propres négatifs)","Déclin structurel volume cigarettes combustibles","Concentration revenus Japon & Europe de l'Ouest","ZYN sous pression concurrentielle aux États-Unis"]},
+  {t:"Opportunités ↑",c:"#4ade80",i:["Autorisation FDA IQOS ILUMA attendue aux USA","Expansion marchés émergents (Asie du Sud-Est, Afrique)","Croissance sachets nicotine (ZYN) & vapotage (VEEV)","Diversification santé/bien-être (horizon long terme)"]},
+  {t:"Menaces ↓",c:"#facc15",i:["Réglementation antitabac croissante (UE, OMS)","Hausses taxes accise (Japon avr. 2026, Europe)","Volatilité USD/EUR sur résultats publiés","Concurrence BAT, Altria, JTI sur smoke-free"]}
 ];
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // ÉTAT
-// ════════════════════════════════════════
-let D = null; // data.json complet
-let currentView = "annuel";
-let countdown = 3600;
-let cdInterval = null;
+// ════════════════════════════════
+let D = null;
+let vt = "annuel";
+let cd = 3600;
+let cdIv = null;
+let chartPeriod = "5d";
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // CHARGEMENT data.json
-// ════════════════════════════════════════
+// ════════════════════════════════
 async function loadData() {
-  setStatus('warn','Chargement…','#facc15','dot-warn');
+  setSt('dwarn','Chargement…','#facc15');
   try {
-    const res = await fetch('./data.json?t=' + Date.now());
-    if(!res.ok) throw new Error('HTTP ' + res.status);
-    D = await res.json();
+    const r = await fetch('./data.json?t=' + Date.now());
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    D = await r.json();
+    // Restaurer overrides locaux
+    ['manuel_analystes','manuel_resultats','manuel_calendrier'].forEach(k => {
+      try { const v = localStorage.getItem('pmi_'+k); if(v) D[k] = JSON.parse(v); } catch(e){}
+    });
     renderAll();
-    if(D.is_fallback){
-      setStatus('warn','Données initiales (en attente GitHub Actions)','#facc15','dot-warn');
-    } else {
-      setStatus('ok','LIVE','#22d3a5','dot-ok');
-    }
-    const src = D.updated_paris || (D.updated_at ? new Date(D.updated_at).toLocaleString('fr-FR') : '');
-    document.getElementById('last-update').textContent = src ? ' · Mis à jour : ' + src : '';
-    countdown = 3600;
+    if(D.is_fallback) setSt('dwarn','Données initiales','#facc15');
+    else setSt('dok','LIVE','#22d3a5');
+    document.getElementById('lupd').textContent = D.updated_paris ? ' · ' + D.updated_paris : '';
+    cd = 3600;
   } catch(e) {
-    setStatus('error','Erreur de chargement','#f87171','dot-error');
+    setSt('derr','Erreur chargement','#f87171');
     console.error(e);
   }
 }
 
-function setStatus(type, txt, color, dotClass) {
-  const dot = document.getElementById('dot');
-  dot.className = 'status-dot ' + dotClass;
-  const st = document.getElementById('status-text');
-  st.textContent = txt; st.style.color = color;
+function setSt(dotCls, txt, color) {
+  document.getElementById('dot').className = 'sdot ' + dotCls;
+  const el = document.getElementById('stxt');
+  el.textContent = txt; el.style.color = color;
 }
 
-// ════════════════════════════════════════
-// RENDU PRINCIPAL
-// ════════════════════════════════════════
+// ════════════════════════════════
+// RENDU GLOBAL
+// ════════════════════════════════
 function renderAll() {
   if(!D) return;
   renderSynthese();
@@ -581,666 +625,726 @@ function renderAll() {
   renderGlossaire();
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // SYNTHÈSE
-// ════════════════════════════════════════
+// ════════════════════════════════
 function renderSynthese() {
   const price = D.pm_price || 173.75;
-  const usdeur = D.usdeur || 0.9217;
+  const usdeur = D.usdeur || 0.866;
 
   // Hero
-  document.getElementById('price-hero').textContent = price.toFixed(2);
-  document.getElementById('price-eur-hero').textContent = '≈ ' + (price * usdeur).toFixed(2) + ' €';
-  setPill('chg-pill', D.pm_chg_pct);
-  const absEl = document.getElementById('chg-abs-txt');
-  absEl.textContent = (D.pm_chg_abs >= 0 ? '+' : '') + (D.pm_chg_abs||0).toFixed(2) + '$ aujourd\'hui';
-  absEl.style.color = (D.pm_chg_abs||0) >= 0 ? '#22d3a5' : '#f87171';
+  document.getElementById('phero').textContent = price.toFixed(2);
+  document.getElementById('peur').textContent = '≈ ' + (price * usdeur).toFixed(2) + '€';
+  setPill('cpill', D.pm_chg_pct);
+  const ca = document.getElementById('cabtxt');
+  const chgA = D.pm_chg_abs || 0;
+  ca.textContent = (chgA >= 0 ? '+' : '') + chgA.toFixed(2) + '$ aujourd\'hui';
+  ca.style.color = chgA >= 0 ? '#22d3a5' : '#f87171';
   if(D.pm_open) document.getElementById('ohlcv').textContent =
-    `Ouverture ${D.pm_open.toFixed(2)}$ · Haut ${D.pm_high.toFixed(2)}$ · Bas ${D.pm_low.toFixed(2)}$ · Vol. ${D.pm_volume}`;
-  const mb = document.getElementById('market-badge');
+    `Ouv. ${D.pm_open.toFixed(2)}$ · H ${D.pm_high.toFixed(2)}$ · B ${D.pm_low.toFixed(2)}$ · Vol. ${D.pm_volume}`;
+  const mb = document.getElementById('mktbadge');
   mb.innerHTML = D.market_status === 'open'
-    ? '<span style="margin-left:10px;color:#22d3a5">● Marché ouvert</span>'
-    : '<span style="margin-left:10px;color:#f87171">● Marché fermé</span>';
-  setPill('p-week', D.pm_week_chg);
-  setPill('p-month', D.pm_month_chg);
-  setPill('p-ytd', D.pm_ytd_chg);
-  setPill('p-1y', D.pm_1y_chg);
+    ? '<span style="color:#22d3a5;margin-left:8px">● Ouvert</span>'
+    : '<span style="color:#f87171;margin-left:8px">● Fermé</span>';
+  ['pw','pm_','py','p1y'].forEach((id,i) => {
+    const v = [D.pm_week_chg, D.pm_month_chg, D.pm_ytd_chg, D.pm_1y_chg][i];
+    if(v != null) setPill(id, v);
+  });
 
-  // EUR/USD
-  document.getElementById('eurusd-val').textContent = (D.eurusd||1.085).toFixed(4);
-  document.getElementById('usdeur-val').textContent = usdeur.toFixed(4);
-  document.getElementById('pm-eur-val').textContent = (price * usdeur).toFixed(2) + '€';
-  document.getElementById('pm-eur-calc').textContent = price.toFixed(2) + '$ × ' + usdeur.toFixed(4);
-  updateSim();
-
-  // 52W cursor
+  // 52w cursor
   const pct = Math.min(95, Math.max(3, ((price - 142.11) / (191.30 - 142.11)) * 100));
-  document.getElementById('range-cursor').style.left = pct + '%';
+  document.getElementById('rcur').style.left = pct + '%';
+
+  // Chart
+  drawChart(chartPeriod, null, true);
+
+  // Weekly recap
+  renderWeekly();
+
+  // Bloc business
+  document.getElementById('capv').textContent = (price * 1.554).toFixed(0) + ' Mrd$';
+
+  // Résumé financier 2025
+  renderFinSummary();
 
   // Dividende
-  document.getElementById('rendement-val').textContent = ((5.88 / price) * 100).toFixed(2) + '%';
+  document.getElementById('rendv').textContent = ((5.88 / price) * 100).toFixed(2) + '%';
+  renderNextDivs();
 
-  // Capitalisation
-  document.getElementById('cap-val').textContent = (price * 1.554).toFixed(0) + ' Mrd$';
+  // KPIs clés (5)
+  const per = (price / (173.75 / 24.9)).toFixed(1);
+  const rend = ((5.88 / price) * 100).toFixed(2);
+  document.getElementById('kpis-key').innerHTML = [
+    {l:'PER TTM <span class="ti" onclick="openTT(\'PER\')">i</span>',         v:per+'x',           c:'#f8fafc'},
+    {l:'PER prév. <span class="ti" onclick="openTT(\'PER prévisionnel\')">i</span>',v:'20,7x',       c:'#f8fafc'},
+    {l:'Rendement <span class="ti" onclick="openTT(\'Rendement\')">i</span>', v:rend+'%',          c:'#22d3a5'},
+    {l:'Dette/EBITDA <span class="ti" onclick="openTT(\'Dette/EBITDA\')">i</span>',v:'2,45x',        c:'#facc15'},
+    {l:'ROIC <span class="ti" onclick="openTT(\'ROIC\')">i</span>',           v:'33,3%',           c:'#4ade80'},
+  ].map(({l,v,c}) => `<div class="kbox"><div class="kl">${l}</div><div class="kv" style="color:${c}">${v}</div></div>`).join('');
 
-  // PER dynamique
-  document.getElementById('per-val').textContent = (price / (173.75 / 24.9)).toFixed(1) + 'x';
-  document.getElementById('pfcf-val').textContent = (price / (173.75 / 26.7)).toFixed(1) + 'x';
+  // KPIs complets (onglet détail)
+  document.getElementById('kpis-full').innerHTML = [
+    {l:'PER TTM <span class="ti" onclick="openTT(\'PER\')">i</span>',           v:per+'x'},
+    {l:'PER prév. <span class="ti" onclick="openTT(\'PER prévisionnel\')">i</span>',v:'20,7x'},
+    {l:'VE/EBITDA <span class="ti" onclick="openTT(\'VE/EBITDA\')">i</span>',   v:'18,2x'},
+    {l:'Price/FCF <span class="ti" onclick="openTT(\'Price/FCF\')">i</span>',   v:(price/(173.75/26.7)).toFixed(1)+'x'},
+    {l:'Marge op. adj. <span class="ti" onclick="openTT(\'Marge opérationnelle\')">i</span>',v:'43,0%'},
+    {l:'Marge nette <span class="ti" onclick="openTT(\'Marge nette\')">i</span>',v:'27,9%'},
+    {l:'Marge EBITDA <span class="ti" onclick="openTT(\'Marge EBITDA\')">i</span>',v:'43,0%'},
+    {l:'ROIC <span class="ti" onclick="openTT(\'ROIC\')">i</span>',             v:'33,3%'},
+    {l:'Dette/EBITDA <span class="ti" onclick="openTT(\'Dette/EBITDA\')">i</span>',v:'2,45x'},
+    {l:'Bêta <span class="ti" onclick="openTT(\'Bêta\')">i</span>',             v:'0,39'},
+    {l:'Rendement <span class="ti" onclick="openTT(\'Rendement\')">i</span>',   v:rend+'%'},
+    {l:'Price/Book <span class="ti" onclick="openTT(\'Price/Book\')">i</span>', v:'—'},
+  ].map(({l,v}) => `<div class="kbox"><div class="kl">${l}</div><div class="kv">${v}</div></div>`).join('');
 
-  // S&P 500
-  if(D.sp500_chg != null) setPill('sp500-txt', D.sp500_chg);
+  // EUR/USD compact
+  document.getElementById('fx1').textContent = (D.eurusd || 1.154).toFixed(4);
+  document.getElementById('fx2').textContent = (D.usdeur || 0.866).toFixed(4);
+  document.getElementById('fx3').textContent = (price * (D.usdeur || 0.866)).toFixed(2);
 
-  // Consensus mini
-  renderConsensusMini();
+  // Simulateur
+  updateSim();
+}
+
+function renderFinSummary() {
+  const mr = D.manuel_resultats;
+  if(!mr || !mr.annuel) return;
+  const last = mr.annuel[mr.annuel.length - 1];
+  if(!last) return;
+  const rn = last.rn || 0;
+  const divV = last.dividendes_verses || 0;
+  const txD = last.tx_distribution || 0;
+  document.getElementById('fin-summary').innerHTML = `
+    <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:#64748b">CA 2025 <span class="ti" onclick="openTT('CA')">i</span></span><span style="font-weight:700;color:#f8fafc">${last.ca.toFixed(2)} Mrd$</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:#64748b">Croissance CA</span><span style="font-weight:700;color:#22d3a5">+${last.croissance_ca}%</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:#64748b">Marge op. ajust. <span class="ti" onclick="openTT('Marge opérationnelle')">i</span></span><span style="font-weight:700;color:#818cf8">${last.marge_op}%</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:#64748b">R&eacute;sultat net</span><span style="font-weight:700;color:#4ade80">${rn.toFixed(2)} Mrd$</span></div>`;
+  // Corrélation dividende
+  document.getElementById('div-corr').innerHTML = `
+    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+      <span style="font-size:11px;color:#64748b">Dividendes vers&eacute;s 2025</span>
+      <span style="font-weight:700;color:#22d3a5">${divV.toFixed(2)} Mrd$</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+      <span style="font-size:11px;color:#64748b">Taux de distribution <span class="ti" onclick="openTT('Taux de distribution')">i</span></span>
+      <span style="font-weight:700;color:#facc15">${txD.toFixed(1)}%</span>
+    </div>
+    <div style="background:#1e293b;height:7px;border-radius:4px">
+      <div style="width:${Math.min(txD,100)}%;height:100%;border-radius:4px;background:${txD>100?'#f87171':'#22d3a5'}"></div>
+    </div>
+    <div style="font-size:9px;color:#334155;margin-top:5px">${txD > 100 ? '⚠️ Distribution > 100% du résultat net — financé par la dette et le FCF' : '✓ Distribution financée par le résultat net'}</div>`;
+}
+
+function renderNextDivs() {
+  const cal = D.manuel_calendrier || [];
+  const today = new Date();
+  const divFuturs = cal
+    .filter(e => e.type === 'dividende' && new Date(e.date) >= today)
+    .sort((a,b) => a.date.localeCompare(b.date))
+    .slice(0, 4);
+  document.getElementById('next-divs').innerHTML = divFuturs.map(e => {
+    const d = new Date(e.date);
+    const days = Math.ceil((d - today) / 86400000);
+    const isEx = e.label.toLowerCase().includes('ex-div');
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:#0a111e;border-radius:5px;margin-bottom:5px;border-left:2px solid ${isEx?'#facc15':'#22d3a5'}">
+      <span style="font-size:11px;color:${isEx?'#facc15':'#94a3b8'}">${e.label.replace('— 1,47$/action','').trim()}</span>
+      <span style="font-size:10px;color:#475569;flex-shrink:0;margin-left:8px">${d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})} <span style="color:#334155">(${days}j)</span></span>
+    </div>`;
+  }).join('') || '<div style="color:#334155;font-size:11px">Aucune date future disponible</div>';
+}
+
+function renderWeekly() {
+  const cd = D.chart_data;
+  if(!cd || !cd['5d']) {
+    document.getElementById('weekly-recap').textContent = 'Données hebdomadaires non disponibles.';
+    return;
+  }
+  const w = cd['5d'];
+  const sign = w.chg_pct >= 0 ? '+' : '';
+  const dir = w.chg_pct >= 0 ? 'progression' : 'repli';
+  const tech = D.technicals || {};
+  const rsi = tech.rsi14;
+  const price = D.pm_price || 173.75;
+  const sma200 = tech.sma200;
+  const above200 = sma200 && price > sma200;
+  document.getElementById('weekly-recap').innerHTML = `
+    <div style="font-size:12px;color:#e2e8f0;line-height:1.7">
+      Sur les 5 dernières séances, PMI affiche une <strong style="color:${w.chg_pct>=0?'#22d3a5':'#f87171'}">${dir} de ${sign}${w.chg_pct}%</strong>, 
+      passant de <strong>${w.start}$</strong> à <strong>${w.end}$</strong>. 
+      Le cours évolue ${above200 ? '<strong style="color:#22d3a5">au-dessus</strong>' : '<strong style="color:#facc15">en dessous</strong>'} de sa moyenne mobile 200 jours (${sma200 || '—'}$), 
+      signe d&rsquo;une tendance longue terme ${above200 ? 'haussière ✓' : 'à surveiller ⚠️'}.
+      ${rsi ? `Le RSI 14j est à <strong style="color:${rsi>70?'#f87171':rsi<30?'#22d3a5':'#94a3b8'}">${rsi}</strong> (${rsi>70?'zone de surachat':'rsi<30?\'zone de survente\'':'zone neutre'}).` : ''}
+    </div>`;
+}
+
+// ════════════════════════════════
+// GRAPHIQUE
+// ════════════════════════════════
+function drawChart(period, btn, silent) {
+  chartPeriod = period;
+  if(!silent) {
+    document.querySelectorAll('.ptab').forEach(b => b.classList.remove('on'));
+    if(btn) btn.classList.add('on');
+  }
+  const cd = D && D.chart_data && D.chart_data[period];
+  if(!cd || !cd.closes || cd.closes.length < 2) {
+    document.getElementById('chart-svg').innerHTML = '<text x="350" y="80" fill="#334155" text-anchor="middle" font-size="12">Données non disponibles</text>';
+    return;
+  }
+  const closes = cd.closes;
+  const dates = cd.dates || [];
+  const W = 700, H = 160, PAD = 10;
+  const mn = cd.min - (cd.max - cd.min) * 0.05;
+  const mx = cd.max + (cd.max - cd.min) * 0.05;
+  const n = closes.length;
+  const toX = i => PAD + (i / (n-1)) * (W - 2*PAD);
+  const toY = v => H - PAD - ((v - mn) / (mx - mn)) * (H - 2*PAD);
+  const pts = closes.map((v,i) => `${toX(i).toFixed(1)},${toY(v).toFixed(1)}`).join(' ');
+  const first = closes[0], last = closes[closes.length-1];
+  const isUp = last >= first;
+  const col = isUp ? '#22d3a5' : '#f87171';
+  // Area fill
+  const areaPath = `M ${toX(0)},${toY(first)} ` +
+    closes.map((v,i) => `L ${toX(i).toFixed(1)},${toY(v).toFixed(1)}`).join(' ') +
+    ` L ${toX(n-1)},${H} L ${toX(0)},${H} Z`;
+  // Labels
+  const nLabels = Math.min(dates.length, 5);
+  let labelsSvg = '';
+  for(let i = 0; i < nLabels; i++) {
+    const idx = Math.round(i * (dates.length-1) / (nLabels-1));
+    if(dates[idx]) {
+      labelsSvg += `<text x="${toX(idx).toFixed(1)}" y="${H-1}" fill="#334155" text-anchor="middle" font-size="9">${dates[idx]}</text>`;
+    }
+  }
+  document.getElementById('chart-svg').innerHTML = `
+    <defs>
+      <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${col}" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="${col}" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+    <path d="${areaPath}" fill="url(#ag)"/>
+    <polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.5"/>
+    <circle cx="${toX(n-1).toFixed(1)}" cy="${toY(last).toFixed(1)}" r="3" fill="${col}"/>
+    ${labelsSvg}`;
+  // Info
+  document.getElementById('chart-info').innerHTML =
+    `<span>Début : <strong>${first}$</strong></span>` +
+    `<span>Fin : <strong>${last}$</strong></span>` +
+    `<span style="color:${col}">Variation : <strong>${cd.chg_pct >= 0 ? '+' : ''}${cd.chg_pct}%</strong></span>` +
+    `<span>Plus bas : ${cd.min}$</span>` +
+    `<span>Plus haut : ${cd.max}$</span>`;
 }
 
 function updateSim() {
-  const m = parseFloat(document.getElementById('sim-input').value) || 1000;
-  const usdeur = D ? D.usdeur || 0.9217 : 0.9217;
-  const price = D ? D.pm_price || 173.75 : 173.75;
+  const m = parseFloat(document.getElementById('simi').value) || 1000;
+  const usdeur = D ? (D.usdeur || 0.866) : 0.866;
+  const price = D ? (D.pm_price || 173.75) : 173.75;
   const usd = m / usdeur;
   const nb = Math.floor(usd / price);
-  document.getElementById('sim-usd').textContent = usd.toFixed(0) + '$';
-  document.getElementById('sim-nb').textContent = nb + ' action' + (nb > 1 ? 's' : '');
-  document.getElementById('sim-div').textContent = (nb * 5.88 * usdeur).toFixed(0) + '€';
+  document.getElementById('s-usd').textContent = usd.toFixed(0) + '$';
+  document.getElementById('s-nb').textContent = nb + ' action' + (nb > 1 ? 's' : '');
+  document.getElementById('s-div').textContent = (nb * 5.88 * usdeur).toFixed(0) + '€';
 }
 
-function renderConsensusMini() {
-  const an = D.manuel_analystes;
-  if(!an) return;
-  document.getElementById('consensus-label').textContent = an.consensus;
-  document.getElementById('consensus-nb').textContent = an.nb_analystes + ' analystes';
-  document.getElementById('median-val').textContent = an.objectif_median + '$';
-  const price = D.pm_price || 173.75;
-  document.getElementById('potentiel-val').textContent = 'Potentiel : +' + ((an.objectif_median / price - 1) * 100).toFixed(1) + '%';
-  document.getElementById('consensus-source').textContent = an.source || '';
-  const bars = ['achat_fort','achat','conserver','vendre'];
-  const colors = ['#22d3a5','#4ade80','#facc15','#f87171'];
-  const labels = ['Achat Fort','Achat','Conserver','Vendre'];
-  let html = '';
-  bars.forEach((k,i) => {
-    const c = an.repartition[k] || 0;
-    const w = Math.round(c / an.nb_analystes * 100);
-    html += `<div style="display:flex;align-items:center;margin-bottom:8px">
-      <span style="width:74px;font-size:11px;color:#94a3b8">${labels[i]}</span>
-      <div class="con-track" style="flex:1;margin:0 10px"><div class="con-fill" style="width:${w}%;background:${colors[i]}"></div></div>
-      <span style="font-size:12px;font-weight:700;color:${colors[i]};width:18px;text-align:right">${c}</span>
-    </div>`;
-  });
-  document.getElementById('consensus-bars').innerHTML = html;
-}
-
-// ════════════════════════════════════════
+// ════════════════════════════════
 // CALENDRIER
-// ════════════════════════════════════════
+// ════════════════════════════════
 function renderCalendrier() {
-  const events = (D.manuel_calendrier || []).map(e => ({...e, dateObj: new Date(e.date)}));
+  const evts = (D.manuel_calendrier || []).map(e => ({...e, dateObj: new Date(e.date)}));
   const today = new Date();
   const icons = {dividende:'💰', resultats:'📊', ag:'🏛'};
-  const bColors = {dividende:'#22d3a5', resultats:'#818cf8', ag:'#fb923c'};
-  const next = events.find(e => e.dateObj >= today);
-  const src = D.manuel_calendrier ? (D.updated_paris || '') : '';
-  document.getElementById('cal-source').textContent = 'pmi.com/investor-relations' + (src ? ' · Màj ' + src : '');
+  const bC = {dividende:'#22d3a5', resultats:'#818cf8', ag:'#fb923c'};
+  const next = evts.find(e => e.dateObj >= today);
+  document.getElementById('calsrc').textContent = 'pmi.com/investor-relations · Dates officielles 2026';
 
-  // Banner
-  let banner = '';
+  // Banner prochain
   if(next) {
     const days = Math.ceil((next.dateObj - today) / 86400000);
-    const bc = bColors[next.type];
-    banner = `<div style="background:${bc}08;border:1px solid ${bc};border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px">
-      <div style="font-size:32px">⏳</div>
-      <div>
-        <div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.1em">Prochaine échéance</div>
-        <div style="font-size:14px;font-weight:700;color:#f8fafc;margin:3px 0">${next.label}</div>
-        <div style="font-size:12px;color:${bc}">${next.dateObj.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} <span style="color:#475569">— dans ${days} jours</span></div>
-        ${next.type==='dividende'?`<div style="font-size:10px;color:#22d3a5;margin-top:4px">⚠️ Détenir l'action AVANT cette date pour le dividende <span class="tt-icon" onclick="openTT('Ex-dividende')">i</span></div>`:''}
-      </div>
-    </div>`;
+    const bc = bC[next.type];
+    document.getElementById('next-banner').innerHTML = `
+      <div style="background:${bc}08;border:1px solid ${bc};border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px">
+        <div style="font-size:30px">⏳</div>
+        <div>
+          <div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.1em">Prochaine échéance</div>
+          <div style="font-size:14px;font-weight:700;color:#f8fafc;margin:2px 0">${next.label}</div>
+          <div style="font-size:11px;color:${bc}">${next.dateObj.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} <span style="color:#475569">— dans ${days} jours</span></div>
+          ${next.type==='dividende'?`<div style="font-size:10px;color:#22d3a5;margin-top:3px">⚠️ Détenir l'action AVANT cette date <span class="ti" onclick="openTT('Ex-dividende')">i</span></div>`:''}
+          <div style="margin-top:6px"><button class="ics" onclick="makeICS('${next.date}','${next.label.replace(/'/g,"\\'")}','${next.type}')">📅 Ajouter au calendrier</button></div>
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('next-banner').innerHTML = '';
   }
-  document.getElementById('next-banner').innerHTML = banner;
 
   let html = '';
-  events.forEach(evt => {
+  evts.forEach(evt => {
     const isPast = evt.dateObj < today;
     const isNext = evt === next;
-    const bc = bColors[evt.type];
-    html += `<div class="cal-item" style="background:${isNext?bc+'08':'#0a111e'};border:1px solid ${isNext?bc:isPast?'#131e2e':bc+'44'};opacity:${isPast?.5:1}">
-      <span style="font-size:20px">${icons[evt.type]||'📌'}</span>
-      <div style="flex:1;font-size:13px;font-weight:${isNext?700:400};color:${isPast?'#334155':'#e2e8f0'}">${evt.label}</div>
-      <div style="text-align:right;flex-shrink:0">
-        <div style="font-size:12px;font-weight:700;color:${isPast?'#253348':bc}">${evt.dateObj.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})}</div>
-        ${isNext?'<div style="font-size:9px;color:'+bc+'">◀ PROCHAIN</div>':''}
-        ${isPast?'<div style="font-size:9px;color:#253348">Passé</div>':''}
-        ${!isPast&&!isNext&&evt.statut==='futur'?'<div style="font-size:9px;color:#253348">estimée</div>':''}
+    const bc = bC[evt.type];
+    html += `<div class="ci" style="background:${isNext?bc+'08':'#0a111e'};border:1px solid ${isNext?bc:isPast?'#131e2e':bc+'44'};opacity:${isPast?.5:1}">
+      <span style="font-size:18px;flex-shrink:0">${icons[evt.type]||'📌'}</span>
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:${isNext?700:400};color:${isPast?'#334155':'#e2e8f0'}">${evt.label}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;display:flex;align-items:center;gap:8px">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:${isPast?'#253348':bc}">${evt.dateObj.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})}</div>
+          ${isNext?`<div style="font-size:9px;color:${bc}">◀ PROCHAIN</div>`:''}
+          ${isPast?'<div style="font-size:9px;color:#253348">Passé</div>':''}
+          ${!isPast&&!isNext&&evt.statut==='futur'?'<div style="font-size:9px;color:#253348">estimée</div>':''}
+        </div>
+        ${!isPast?`<button class="ics" onclick="makeICS('${evt.date}','${evt.label.replace(/'/g,"\\'")}','${evt.type}')">📅</button>`:''}
       </div>
     </div>`;
   });
-  document.getElementById('cal-list').innerHTML = html;
+  document.getElementById('callist').innerHTML = html;
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
+// ICS — EXPORT CALENDRIER
+// ════════════════════════════════
+function makeICS(dateStr, label, type) {
+  const d = new Date(dateStr);
+  const pad = n => String(n).padStart(2,'0');
+  const fmt = dt => `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}`;
+  const now = new Date();
+  const stamp = `${fmt(now)}T${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}Z`;
+  const alarms = {
+    dividende: [-14*24*60, -7*24*60, -1*24*60, -60], // J-14, J-7, J-1, H-1
+    resultats:  [-7*24*60, -1*24*60, -60],
+    ag:         [-7*24*60, -1*24*60],
+  };
+  const notifMins = (alarms[type] || [-1*24*60]);
+  const alarmsICS = notifMins.map(m => `BEGIN:VALARM\nACTION:DISPLAY\nDESCRIPTION:${label}\nTRIGGER:${m < 0 ? '-' : '+'}PT${Math.abs(m)}M\nEND:VALARM`).join('\n');
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//PMI Dashboard//FR',
+    'CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT',
+    `UID:pmi-${dateStr}-${type}@dashboard`,
+    `DTSTAMP:${stamp}`,
+    `DTSTART;VALUE=DATE:${fmt(d)}`,
+    `DTEND;VALUE=DATE:${fmt(new Date(d.getTime() + 86400000))}`,
+    `SUMMARY:PMI — ${label}`,
+    `DESCRIPTION:Philip Morris International\\n${label}\\nSource : pmi.com/investor-relations`,
+    alarmsICS,
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  const blob = new Blob([ics], {type:'text/calendar'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `PMI_${type}_${dateStr}.ics`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ════════════════════════════════
 // RÉSULTATS
-// ════════════════════════════════════════
+// ════════════════════════════════
 function renderResultats() {
   const mr = D.manuel_resultats;
   if(!mr) return;
-  document.getElementById('resultats-source').textContent = mr.source || 'pmi.com / SEC';
-  renderFinTable();
-  // Guidance
+  document.getElementById('ressrc').textContent = (mr.source || 'pmi.com / SEC') + (mr.derniere_maj ? ' · Màj ' + mr.derniere_maj : '');
+  renderResTable();
   const g = mr.guidance_2026 || {};
-  document.getElementById('g-bpa-rep').textContent = g.bpa_reported || '—';
-  document.getElementById('g-bpa-adj').textContent = g.bpa_ajuste || '—';
-  document.getElementById('g-croiss').textContent = g.croissance_bpa_adj || '—';
+  document.getElementById('g-rep').textContent = g.bpa_reported || '—';
+  document.getElementById('g-adj').textContent = g.bpa_ajuste || '—';
+  document.getElementById('g-cro').textContent = g.croissance_bpa_adj || '—';
   document.getElementById('g-notes').textContent = g.notes || '';
-  document.getElementById('g-cite').textContent = g.cite || '';
+  document.getElementById('g-cite').textContent = g.cite ? '"' + g.cite + '"' : '';
 }
 
-function renderFinTable() {
+function renderResTable() {
   const mr = D.manuel_resultats;
   if(!mr) return;
-  const isA = currentView === 'annuel';
+  const isA = vt === 'annuel';
   const data = isA ? (mr.annuel || []) : (mr.trimestriel || []);
   const heads = isA
-    ? ['Période','CA (Mrd$)','Croiss. CA','Marge op.','Rés. Net','BPA ($)','FCF (Mrd$)','Dette nette']
+    ? ['Période','CA (Mrd$)','Croiss. CA','Marge op.','Rés. Net','Div. Versés','Tx. Distrib.','BPA ($)','FCF (Mrd$)','Dette nette']
     : ['Période','CA (Mrd$)','Croiss. CA','Marge op.','BPA rapporté','BPA ajusté'];
-  let html = '<thead><tr>' + heads.map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>';
+  let h = '<thead><tr>' + heads.map(hh => `<th>${hh}</th>`).join('') + '</tr></thead><tbody>';
   data.forEach(row => {
-    html += '<tr>';
-    html += `<td style="font-weight:700;color:#f8fafc">${row.annee || row.periode}</td>`;
-    html += `<td>${(row.ca||0).toFixed(2)}</td>`;
-    html += `<td>${row.croissance_ca != null ? pillHtml(row.croissance_ca,'%') : '<span style="color:#253348">—</span>'}</td>`;
+    const txColor = row.tx_distribution > 100 ? '#f87171' : '#22d3a5';
+    h += '<tr>';
+    h += `<td style="font-weight:700;color:#f8fafc">${row.annee || row.periode}</td>`;
+    h += `<td>${(row.ca||0).toFixed(2)}</td>`;
+    h += `<td>${row.croissance_ca != null ? pillH(row.croissance_ca,'%') : '<span style="color:#253348">—</span>'}</td>`;
     if(isA) {
-      html += `<td style="color:#22d3a5;font-weight:600">${row.marge_op != null ? row.marge_op+'%' : '—'}</td>`;
-      html += `<td>${row.rn != null ? row.rn.toFixed(2) : '—'}</td>`;
-      html += `<td style="color:#818cf8;font-weight:700">${(row.bpa||0).toFixed(2)}</td>`;
-      html += `<td style="color:#fb923c">${row.fcf != null ? row.fcf.toFixed(1) : '—'}</td>`;
-      html += `<td style="color:#f87171">${row.dette_nette != null ? row.dette_nette.toFixed(1) : '—'}</td>`;
+      h += `<td style="color:#818cf8;font-weight:600">${row.marge_op != null ? row.marge_op+'%' : '—'}</td>`;
+      h += `<td style="color:#4ade80">${row.rn != null ? row.rn.toFixed(2) : '—'}</td>`;
+      h += `<td style="color:#22d3a5;font-weight:600">${row.dividendes_verses != null ? row.dividendes_verses.toFixed(2) : '—'}</td>`;
+      h += `<td style="color:${txColor};font-weight:600">${row.tx_distribution != null ? row.tx_distribution.toFixed(1)+'%' : '—'}</td>`;
+      h += `<td style="color:#818cf8">${(row.bpa||0).toFixed(2)}</td>`;
+      h += `<td style="color:#fb923c">${row.fcf != null ? row.fcf.toFixed(1) : '—'}</td>`;
+      h += `<td style="color:#f87171">${row.dette_nette != null ? row.dette_nette.toFixed(1) : '—'}</td>`;
     } else {
-      html += `<td style="color:#253348">—</td>`;
-      html += `<td style="color:#818cf8;font-weight:700">${(row.bpa||0).toFixed(2)}</td>`;
-      html += `<td style="color:#4ade80;font-weight:700">${(row.bpa_adj||0).toFixed(2)}</td>`;
+      h += `<td style="color:#253348">—</td>`;
+      h += `<td style="color:#818cf8">${(row.bpa||0).toFixed(2)}</td>`;
+      h += `<td style="color:#4ade80;font-weight:700">${(row.bpa_adj||0).toFixed(2)}</td>`;
     }
-    html += '</tr>';
+    h += '</tr>';
   });
-  html += '</tbody>';
-  document.getElementById('fin-table').innerHTML = html;
+  h += '</tbody>';
+  document.getElementById('restable').innerHTML = h;
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // ANALYSTES
-// ════════════════════════════════════════
+// ════════════════════════════════
 function renderAnalystes() {
   const ma = D.manuel_analystes;
   if(!ma) return;
   const price = D.pm_price || 173.75;
-  const srcTxt = (ma.source || '') + (ma.derniere_maj ? ' · Màj ' + ma.derniere_maj : '');
-  document.getElementById('avis-source').textContent = srcTxt;
-  document.getElementById('consensus-detail-source').textContent = srcTxt;
-
-  // Avis list
-  const rColors = {"Surpondérer":"#22d3a5","Achat":"#4ade80","Neutre":"#facc15","Conserver":"#94a3b8","Vendre":"#f87171","Sous-pondérer":"#f87171"};
-  let html = '';
-  (ma.avis || []).forEach(a => {
-    const c = rColors[a.recommandation] || '#94a3b8';
-    const pot = ((a.objectif / price - 1) * 100).toFixed(1);
-    html += `<div style="display:flex;align-items:center;gap:12px;background:#0a111e;border-radius:8px;padding:11px 14px;margin-bottom:7px;border:1px solid #1e293b">
-      <div style="width:128px;font-weight:700;color:#f8fafc;font-size:12px;flex-shrink:0">${a.banque}</div>
+  const src = (ma.source||'') + (ma.derniere_maj ? ' · Màj ' + ma.derniere_maj : '');
+  document.getElementById('avissrc').textContent = src;
+  document.getElementById('consrc').textContent = src;
+  const rC = {"Surpondérer":"#22d3a5","Achat":"#4ade80","Neutre":"#facc15","Conserver":"#94a3b8","Vendre":"#f87171","Sous-pondérer":"#f87171"};
+  let ah = '';
+  (ma.avis||[]).forEach(a => {
+    const c = rC[a.recommandation]||'#94a3b8';
+    const pot = ((a.objectif/price-1)*100).toFixed(1);
+    ah += `<div style="display:flex;align-items:center;gap:10px;background:#0a111e;border-radius:8px;padding:9px 12px;margin-bottom:6px;border:1px solid #1e293b">
+      <div style="width:120px;font-weight:700;color:#f8fafc;font-size:12px;flex-shrink:0">${a.banque}</div>
       <div style="flex:1"><span class="ab" style="background:${c}18;color:${c};border:1px solid ${c}44">${a.recommandation}</span></div>
-      <div style="text-align:right;flex-shrink:0">
-        <div style="font-weight:700;color:#818cf8;font-size:14px">${a.objectif}$</div>
-        <div style="font-size:10px;color:${a.objectif > price ? '#22d3a5':'#f87171'}">${a.objectif > price ? '+':''}${pot}%</div>
-      </div>
-      <div style="width:54px;font-size:10px;color:#475569;text-align:right;flex-shrink:0">${a.date||''}</div>
-      <div style="width:80px;font-size:9px;color:#253348;text-align:right;font-style:italic;flex-shrink:0">${a.source||''}</div>
+      <div style="text-align:right;flex-shrink:0"><div style="font-weight:700;color:#818cf8;font-size:13px">${a.objectif}$</div><div style="font-size:10px;color:${a.objectif>price?'#22d3a5':'#f87171'}">${a.objectif>price?'+':''}${pot}%</div></div>
+      <div style="width:50px;font-size:10px;color:#475569;text-align:right;flex-shrink:0">${a.date||''}</div>
+      <div style="width:75px;font-size:9px;color:#253348;font-style:italic;text-align:right;flex-shrink:0">${a.source||''}</div>
     </div>`;
   });
-  document.getElementById('avis-list').innerHTML = html || '<div style="color:#334155;font-size:12px">Aucun avis enregistré.</div>';
+  document.getElementById('avislist').innerHTML = ah || '<div style="color:#334155;font-size:12px">Aucun avis — utilisez le bouton Mettre à jour.</div>';
 
   // Consensus bars
   const items = [['Achat Fort','achat_fort','#22d3a5'],['Achat','achat','#4ade80'],['Conserver','conserver','#facc15'],['Vendre','vendre','#f87171']];
-  let bHtml = '';
-  items.forEach(([l, k, col]) => {
-    const c = (ma.repartition || {})[k] || 0;
-    const w = ma.nb_analystes ? Math.round(c / ma.nb_analystes * 100) : 0;
-    bHtml += `<div style="margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-        <span style="font-size:11px;color:#94a3b8">${l}</span>
-        <span style="font-size:11px;font-weight:700;color:${col}">${c} (${w}%)</span>
-      </div>
-      <div class="con-track"><div class="con-fill" style="width:${w}%;background:${col}"></div></div>
+  let cb = '';
+  items.forEach(([l,k,col]) => {
+    const c = (ma.repartition||{})[k]||0;
+    const w = ma.nb_analystes ? Math.round(c/ma.nb_analystes*100) : 0;
+    cb += `<div style="margin-bottom:9px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:#94a3b8">${l}</span><span style="font-size:11px;font-weight:700;color:${col}">${c} (${w}%)</span></div>
+      <div style="background:#1e293b;border-radius:4px;height:7px"><div style="width:${w}%;background:${col};height:100%;border-radius:4px"></div></div>
     </div>`;
   });
-  document.getElementById('consensus-bars2').innerHTML = bHtml;
+  document.getElementById('conbars').innerHTML = cb;
 
   // Objectifs
-  let oHtml = '';
-  [[`Bas (pessimiste)`, ma.objectif_bas, '#f87171'],
-   [`Cours actuel`, price, '#f8fafc'],
-   [`Médiane consensus`, ma.objectif_median, '#facc15'],
-   [`Haut (optimiste)`, ma.objectif_haut, '#22d3a5']].forEach(([l, v, c]) => {
-    const pot = v !== price ? `<span style="font-size:10px;margin-left:6px;color:${v>price?'#22d3a5':'#f87171'}">(${v>price?'+':''}${((v/price-1)*100).toFixed(1)}%)</span>` : '';
-    oHtml += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px">
-      <span style="font-size:11px;color:#475569">${l}</span>
-      <div><span style="font-weight:700;color:${c};font-size:15px">${typeof v==='number'?v.toFixed(2):v}$</span>${pot}</div>
-    </div>`;
+  let ob = '';
+  [['Bas',ma.objectif_bas,'#f87171'],['Cours actuel',price,'#f8fafc'],['Médiane',ma.objectif_median,'#facc15'],['Haut',ma.objectif_haut,'#22d3a5']].forEach(([l,v,c]) => {
+    const pot = v !== price ? `<span style="font-size:10px;margin-left:5px;color:${v>price?'#22d3a5':'#f87171'}">(${v>price?'+':''}${((v/price-1)*100).toFixed(1)}%)</span>` : '';
+    ob += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:11px;color:#475569">${l}</span><div><span style="font-weight:700;color:${c};font-size:14px">${typeof v==='number'?v.toFixed(2):v}$</span>${pot}</div></div>`;
   });
-  document.getElementById('objectifs-list').innerHTML = oHtml;
+  document.getElementById('objlist').innerHTML = ob;
 
-  // Techniques
-  renderTechnique();
+  // Technique
+  renderTech();
 }
 
-function renderTechnique() {
+function renderTech() {
   const tech = D.technicals || {};
   const price = D.pm_price || 173.75;
-  const sma50 = tech.sma50;
-  const sma200 = tech.sma200;
-  const rsi = tech.rsi14;
-  const items = [
-    {l:'Moyenne Mobile 50j <span class="tt-icon" onclick="openTT(\'SMA 50j\')">i</span>',
-     v: sma50 ? sma50.toFixed(2)+'$' : '—',
-     note: sma50 ? (price > sma50 ? '✓ Cours AU-DESSUS — momentum CT positif' : '⚠️ Cours EN-DESSOUS — signal faiblesse CT') : 'Non disponible',
-     c: !sma50 ? '#475569' : price > sma50 ? '#22d3a5' : '#f87171'},
-    {l:'Moyenne Mobile 200j <span class="tt-icon" onclick="openTT(\'SMA 200j\')">i</span>',
-     v: sma200 ? sma200.toFixed(2)+'$' : '—',
-     note: sma200 ? (price > sma200 ? '✓ Cours AU-DESSUS — tendance LT haussière confirmée' : '⚠️ Cours EN-DESSOUS — tendance LT baissière') : 'Non disponible',
-     c: !sma200 ? '#475569' : price > sma200 ? '#22d3a5' : '#f87171'},
-    {l:'RSI 14 jours <span class="tt-icon" onclick="openTT(\'RSI\')">i</span>',
-     v: rsi ? rsi.toFixed(1) : '—',
-     note: !rsi ? 'Non disponible' : rsi > 70 ? '⚠️ Zone de surachat (> 70) — prudence' : rsi < 30 ? '✓ Zone de survente (< 30) — opportunité potentielle' : `Zone neutre (${tech.rsi_zone||'neutre'}) — pas de signal extrême`,
-     c: !rsi ? '#475569' : rsi > 70 ? '#f87171' : rsi < 30 ? '#22d3a5' : '#94a3b8'},
-    {l:'Bêta <span class="tt-icon" onclick="openTT(\'Bêta\')">i</span>',
-     v:'0,39', note:'Très défensif : 2,5× moins volatile que le S&P 500. Protection naturelle en cas de correction.', c:'#818cf8'}
+  const sma50 = tech.sma50, sma200 = tech.sma200, rsi = tech.rsi14;
+  const itms = [
+    {l:'SMA 50j <span class="ti" onclick="openTT(\'SMA 50j\')">i</span>', v: sma50 ? sma50.toFixed(2)+'$' : '—', note: sma50 ? (price>sma50?'✓ Au-dessus — momentum CT positif':'⚠️ En dessous — signal faiblesse CT') : 'En attente mise à jour', c: !sma50?'#475569':price>sma50?'#22d3a5':'#f87171'},
+    {l:'SMA 200j <span class="ti" onclick="openTT(\'SMA 200j\')">i</span>', v: sma200 ? sma200.toFixed(2)+'$' : '—', note: sma200 ? (price>sma200?'✓ Au-dessus — tendance LT haussière':'⚠️ En dessous — tendance LT baissière') : 'En attente mise à jour', c: !sma200?'#475569':price>sma200?'#22d3a5':'#f87171'},
+    {l:'RSI 14j <span class="ti" onclick="openTT(\'RSI\')">i</span>', v: rsi ? rsi.toFixed(1) : '—', note: !rsi?'En attente':rsi>70?'⚠️ Surachat (>70)':rsi<30?'✓ Survente (<30) — opportunité':'Zone neutre — pas de signal extrême', c: !rsi?'#475569':rsi>70?'#f87171':rsi<30?'#22d3a5':'#94a3b8'},
+    {l:'Bêta <span class="ti" onclick="openTT(\'Bêta\')">i</span>', v:'0,39', note:'Très défensif — 2,5× moins volatile que le S&P 500', c:'#818cf8'}
   ];
-  let html = '';
-  items.forEach(({l,v,note,c}) => {
-    html += `<div style="background:#0a111e;border-radius:8px;padding:14px;border:1px solid ${c}33">
-      <div style="font-size:11px;color:#475569;margin-bottom:4px">${l}</div>
-      <div style="font-size:22px;font-weight:800;color:${c};margin-bottom:4px">${v}</div>
-      <div style="font-size:10px;color:#475569">${note}</div>
-    </div>`;
-  });
-  document.getElementById('tech-grid').innerHTML = html;
+  document.getElementById('techgrid').innerHTML = itms.map(({l,v,note,c}) =>
+    `<div style="background:#0a111e;border-radius:8px;padding:12px;border:1px solid ${c}33"><div style="font-size:11px;color:#475569;margin-bottom:3px">${l}</div><div style="font-size:20px;font-weight:800;color:${c};margin-bottom:3px">${v}</div><div style="font-size:10px;color:#475569">${note}</div></div>`
+  ).join('');
 
-  // MACD
   const macd = tech.macd;
   if(macd && macd.hist) {
-    const maxH = Math.max(...macd.hist.map(Math.abs), 0.1);
-    let mHtml = '';
-    macd.hist.forEach((v, i) => {
-      const h = Math.abs(v) / maxH * 80;
-      const col = v >= 0 ? '#22d3a5' : '#f87171';
-      mHtml += `<div class="macd-col">
-        <div class="macd-bar" style="height:${h}px;background:${col};align-self:${v>=0?'flex-end':'flex-start'}"></div>
-        <div style="font-size:9px;color:#253348">${(macd.labels||[])[i]||''}</div>
-      </div>`;
-    });
-    document.getElementById('macd-chart').innerHTML = mHtml;
-    const signalTxt = macd.signal === 'haussier'
-      ? '<strong style="color:#22d3a5">Signal haussier ✓</strong> — Histogramme positif → momentum ascendant.'
-      : '<strong style="color:#facc15">Signal baissier ⚠️</strong> — Histogramme négatif → momentum descendant à court terme. Tendance longue terme (SMA 200j) reste à surveiller.';
-    document.getElementById('macd-signal').innerHTML = signalTxt + ' <span style="color:#475569;font-size:10px">Calculé automatiquement depuis les cours historiques Yahoo Finance.</span>';
-  } else {
-    document.getElementById('macd-chart').innerHTML = '<div style="color:#334155;font-size:12px;padding:20px">Données MACD non disponibles (en attente première mise à jour GitHub Actions)</div>';
+    const mx = Math.max(...macd.hist.map(Math.abs), 0.1);
+    document.getElementById('macdchart').innerHTML = macd.hist.map((v,i) => {
+      const h = Math.abs(v)/mx*75;
+      const col = v>=0?'#22d3a5':'#f87171';
+      return `<div class="mcol"><div class="mbar" style="height:${h}px;background:${col};align-self:${v>=0?'flex-end':'flex-start'}"></div><div style="font-size:8px;color:#253348">${(macd.labels||[])[i]||''}</div></div>`;
+    }).join('');
+    document.getElementById('macdsig').innerHTML = macd.signal === 'haussier'
+      ? '<strong style="color:#22d3a5">Signal haussier ✓</strong> — Histogramme positif → momentum ascendant. <span style="font-size:10px;color:#475569">Calculé automatiquement via GitHub Actions.</span>'
+      : '<strong style="color:#facc15">Signal baissier ⚠️</strong> — Histogramme négatif → momentum baissier CT. Tendance LT (SMA 200j) à vérifier. <span style="font-size:10px;color:#475569">Calculé automatiquement via GitHub Actions.</span>';
   }
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // SECTEUR
-// ════════════════════════════════════════
+// ════════════════════════════════
 function renderSecteur() {
   const price = D.pm_price || 173.75;
-  let html = '';
-  CONCURRENTS.forEach(c => {
-    html += `<tr style="${c.isPM ? 'background:#22d3a508' : ''}">
-      <td style="font-weight:${c.isPM?800:500};color:${c.isPM?'#22d3a5':'#f8fafc'}">${c.n}</td>
-      <td style="color:#818cf8;font-weight:700">${c.t}</td>
-      <td>${c.isPM ? price.toFixed(2)+'$' : '—'}</td>
-      <td>${c.per != null ? c.per+'x' : '—'}</td>
-      <td style="color:#22d3a5;font-weight:600">${c.rend != null ? c.rend+'%' : '—'}</td>
-      <td>${c.cap}</td>
-      <td>${c.v1a != null ? pillHtml(c.v1a,'%') : '—'}</td>
+  const comp = D.competitors || {};
+  const per_pm = (price / (173.75 / 24.9)).toFixed(1);
+  const rend_pm = ((5.88 / price) * 100).toFixed(2);
+  const rows = [
+    {n:'Philip Morris Int.', t:'PM', price: price, chg: D.pm_chg_pct, per: per_pm, rend: rend_pm, cap: (price*1.554).toFixed(0)+' Mrd$', isPM:true},
+    {n:'Altria Group',       t:'MO',    ...(comp.MO||{price:55.20,chg_pct:0.18,per:9.8,rendement:8.4,capitalisation:'95 Mrd$'}),     isPM:false},
+    {n:'British Am. Tobacco',t:'BTI',   ...(comp.BTI||{price:35.60,chg_pct:-0.28,per:7.5,rendement:9.8,capitalisation:'81 Mrd$'}),   isPM:false},
+    {n:'Japan Tobacco',      t:'2914.T',...(comp['2914.T']||{price:3850,chg_pct:0.52,per:12.3,rendement:5.6,capitalisation:'57 Mrd$'}),isPM:false},
+  ];
+  document.getElementById('sectbl').innerHTML = rows.map(r => {
+    const pv   = r.price || r.pm_price || 0;
+    const chgV = r.chg || r.chg_pct || r.pm_chg_pct || 0;
+    const perV = r.per || '—';
+    const rV   = r.rend || r.rendement || '—';
+    const capV = r.cap || r.capitalisation || '—';
+    return `<tr style="${r.isPM?'background:#22d3a508':''}">
+      <td style="font-weight:${r.isPM?800:500};color:${r.isPM?'#22d3a5':'#f8fafc'}">${r.n}</td>
+      <td style="color:#818cf8;font-weight:700">${r.t}</td>
+      <td style="color:#e2e8f0;font-weight:${r.isPM?700:400}">${pv ? pv.toFixed(2)+'$' : '—'}</td>
+      <td>${pv ? pillH(chgV,'%') : '—'}</td>
+      <td>${perV !== '—' ? perV+'x' : '—'}</td>
+      <td style="color:#22d3a5;font-weight:600">${rV !== '—' ? rV+'%' : '—'}</td>
+      <td style="color:#e2e8f0">${capV}</td>
     </tr>`;
-  });
-  document.getElementById('secteur-table').innerHTML = html;
-  let tHtml = '';
-  TENDANCES.forEach(t => {
-    tHtml += `<div style="display:flex;gap:10px;align-items:flex-start;background:#0a111e;border-radius:8px;padding:11px 14px;margin-bottom:8px;border:1px solid #1e293b">
-      <div style="color:#818cf8;font-weight:900;font-size:14px;flex-shrink:0">›</div>
-      <div style="font-size:12px;color:#cbd5e1;line-height:1.55">${t}</div>
-    </div>`;
-  });
-  document.getElementById('tendances-list').innerHTML = tHtml;
-  let sHtml = '';
-  SWOT.forEach(({t,c,items}) => {
-    sHtml += `<div class="swot-box" style="border:1px solid ${c}33">
-      <div style="font-weight:700;color:${c};font-size:12px;margin-bottom:10px">${t}</div>
-      ${items.map(i => `<div style="font-size:11px;color:#94a3b8;margin-bottom:5px;padding-left:6px"><span style="color:${c}88">• </span>${i}</div>`).join('')}
-    </div>`;
-  });
-  document.getElementById('swot-grid').innerHTML = sHtml;
+  }).join('');
+
+  document.getElementById('tendlist').innerHTML = TEND.map(t =>
+    `<div style="display:flex;gap:9px;align-items:flex-start;background:#0a111e;border-radius:8px;padding:9px 12px;margin-bottom:7px;border:1px solid #1e293b"><div style="color:#818cf8;font-weight:900;font-size:13px;flex-shrink:0">›</div><div style="font-size:12px;color:#cbd5e1;line-height:1.55">${t}</div></div>`
+  ).join('');
+
+  document.getElementById('swotgrid').innerHTML = SWOT.map(({t,c,i}) =>
+    `<div style="background:#0a111e;border-radius:8px;padding:12px;border:1px solid ${c}33">
+      <div style="font-weight:700;color:${c};font-size:12px;margin-bottom:9px">${t}</div>
+      ${i.map(x=>`<div style="font-size:11px;color:#94a3b8;margin-bottom:4px;padding-left:5px"><span style="color:${c}88">• </span>${x}</div>`).join('')}
+    </div>`
+  ).join('');
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // GLOSSAIRE
-// ════════════════════════════════════════
+// ════════════════════════════════
 function renderGlossaire() {
-  let html = '';
-  Object.entries(GLOSSAIRE).forEach(([term, def]) => {
-    html += `<div class="gloss-item"><div class="gloss-term">${term}</div><div class="gloss-def">${def}</div></div>`;
-  });
-  document.getElementById('gloss-grid').innerHTML = html;
+  document.getElementById('ggrid').innerHTML = Object.entries(GL).map(([term,def]) =>
+    `<div class="gi"><div style="font-weight:700;color:#22d3a5;font-size:11px;margin-bottom:3px">${term}</div><div style="font-size:10px;color:#475569;line-height:1.55">${def}</div></div>`
+  ).join('');
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // HELPERS
-// ════════════════════════════════════════
-function pillHtml(val, suffix) {
-  suffix = suffix||'%';
-  const cls = val>0?'pill-up':val<0?'pill-down':'pill-flat';
-  const arrow = val>0?'▲':val<0?'▼':'—';
-  return `<span class="pill ${cls}">${arrow} ${Math.abs(val).toFixed(2)}${suffix}</span>`;
+// ════════════════════════════════
+function pillH(v,s){
+  s=s||'%';
+  const cls=v>0?'pup':v<0?'pdn':'pfl';
+  return `<span class="pill ${cls}">${v>0?'▲':v<0?'▼':'—'} ${Math.abs(v).toFixed(2)}${s}</span>`;
 }
-function setPill(id, val) {
-  const el = document.getElementById(id);
-  if(!el || val == null) return;
-  el.className = 'pill ' + (val > 0 ? 'pill-up' : val < 0 ? 'pill-down' : 'pill-flat');
-  el.textContent = (val > 0 ? '▲ ' : val < 0 ? '▼ ' : '— ') + Math.abs(val).toFixed(2) + '%';
+function setPill(id,v){
+  const el=document.getElementById(id); if(!el||v==null)return;
+  el.className='pill '+(v>0?'pup':v<0?'pdn':'pfl');
+  el.textContent=(v>0?'▲ ':v<0?'▼ ':'— ')+Math.abs(v).toFixed(2)+'%';
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // NAVIGATION
-// ════════════════════════════════════════
-function showTab(id, btn) {
-  document.querySelectorAll('.tab-content').forEach(e => e.style.display='none');
-  document.querySelectorAll('.tab').forEach(e => e.classList.remove('active'));
+// ════════════════════════════════
+function showTab(id,btn){
+  document.querySelectorAll('.tc').forEach(e=>e.style.display='none');
+  document.querySelectorAll('.tab').forEach(e=>e.classList.remove('on'));
   document.getElementById('tab-'+id).style.display='block';
-  btn.classList.add('active');
+  btn.classList.add('on');
 }
-function showSub(id, btn) {
-  ['avis','consensus-detail','technique'].forEach(s => {
-    document.getElementById('sub-'+s).style.display = s===id ? 'block':'none';
-  });
-  document.querySelectorAll('.sub-tab').forEach(e => e.classList.remove('active'));
-  btn.classList.add('active');
+function showSub(id,btn){
+  ['vue','detail'].forEach(s=>{document.getElementById('sub-'+s).style.display=s===id?'block':'none';});
+  document.querySelectorAll('#tab-synthese .stab').forEach(e=>e.classList.remove('on'));
+  btn.classList.add('on');
 }
-function showView(id, btn) {
-  currentView = id;
-  document.querySelectorAll('.view-tab').forEach(e => e.classList.remove('active'));
-  btn.classList.add('active');
-  if(D) renderFinTable();
+function showSub2(id,btn){
+  ['avis','concensus','technique'].forEach(s=>{document.getElementById('sub2-'+s).style.display=s===id?'block':'none';});
+  document.querySelectorAll('#tab-analystes .stab').forEach(e=>e.classList.remove('on'));
+  btn.classList.add('on');
 }
-function toggleGlossaire() {
-  document.getElementById('glossaire-panel').classList.toggle('visible');
+function showVt(id,btn){
+  vt=id;
+  document.querySelectorAll('.vtab').forEach(e=>e.classList.remove('on'));
+  btn.classList.add('on');
+  if(D) renderResTable();
 }
+function toggleG(){document.getElementById('gpanel').classList.toggle('vis');}
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // TOOLTIP
-// ════════════════════════════════════════
-function openTT(term) {
-  const def = GLOSSAIRE[term]; if(!def) return;
-  document.getElementById('tt-title').textContent = term;
-  document.getElementById('tt-body').textContent = def;
-  document.getElementById('tt-popup').style.display='block';
-  document.getElementById('tt-overlay').style.display='block';
+// ════════════════════════════════
+function openTT(term){
+  const def=GL[term]; if(!def)return;
+  document.getElementById('tttitle').textContent=term;
+  document.getElementById('ttbody').textContent=def;
+  document.getElementById('ttp').style.display='block';
+  document.getElementById('tto').style.display='block';
 }
-function closeTT() {
-  document.getElementById('tt-popup').style.display='none';
-  document.getElementById('tt-overlay').style.display='none';
+function closeTT(){
+  document.getElementById('ttp').style.display='none';
+  document.getElementById('tto').style.display='none';
 }
 
-// ════════════════════════════════════════
-// MODALES MISE À JOUR MANUELLE
-// ════════════════════════════════════════
-function openModal(type) {
-  if(type === 'consensus') {
-    const an = (D && D.manuel_analystes) || {};
-    const r = an.repartition || {};
-    document.getElementById('m-consensus').value = an.consensus || 'Achat';
-    document.getElementById('m-nb-anal').value = an.nb_analystes || '';
-    document.getElementById('m-median').value = an.objectif_median || '';
-    document.getElementById('m-haut').value = an.objectif_haut || '';
-    document.getElementById('m-bas').value = an.objectif_bas || '';
-    document.getElementById('m-con-source').value = an.source || '';
-    document.getElementById('m-af').value = r.achat_fort || 0;
-    document.getElementById('m-a').value = r.achat || 0;
-    document.getElementById('m-c').value = r.conserver || 0;
-    document.getElementById('m-v').value = r.vendre || 0;
-    document.getElementById('m-vf').value = r.vendre_fort || 0;
-  } else if(type === 'analystes') {
-    const avis = (D && D.manuel_analystes && D.manuel_analystes.avis) || [];
-    document.getElementById('m-avis-source').value = (D && D.manuel_analystes && D.manuel_analystes.source) || '';
-    renderAnalystEditRows(avis);
-  } else if(type === 'resultats') {
-    const g = (D && D.manuel_resultats && D.manuel_resultats.guidance_2026) || {};
-    document.getElementById('m-g-rep').value = g.bpa_reported || '';
-    document.getElementById('m-g-adj').value = g.bpa_ajuste || '';
-    document.getElementById('m-g-croiss').value = g.croissance_bpa_adj || '';
-    document.getElementById('m-g-notes').value = g.notes || '';
-    document.getElementById('m-res-source').value = (D && D.manuel_resultats && D.manuel_resultats.source) || 'pmi.com / SEC';
-    document.getElementById('m-periode').value = '';
-    document.getElementById('m-ca').value = '';
-    document.getElementById('m-croiss-ca').value = '';
-    document.getElementById('m-bpa').value = '';
-    document.getElementById('m-bpa-adj').value = '';
-  } else if(type === 'calendrier') {
-    const cal = (D && D.manuel_calendrier) || [];
-    renderCalEditRows(cal);
+// ════════════════════════════════
+// MODALES
+// ════════════════════════════════
+function openM(type){
+  if(type==='consensus'){
+    const an=(D&&D.manuel_analystes)||{};
+    const r=an.repartition||{};
+    document.getElementById('mc').value=an.consensus||'Achat';
+    document.getElementById('mna').value=an.nb_analystes||'';
+    document.getElementById('mmed').value=an.objectif_median||'';
+    document.getElementById('mhaut').value=an.objectif_haut||'';
+    document.getElementById('mbas').value=an.objectif_bas||'';
+    document.getElementById('mcsrc').value=an.source||'';
+    document.getElementById('maf').value=r.achat_fort||0;
+    document.getElementById('ma').value=r.achat||0;
+    document.getElementById('mco').value=r.conserver||0;
+    document.getElementById('mv').value=r.vendre||0;
+    document.getElementById('mvf').value=r.vendre_fort||0;
+  } else if(type==='analystes'){
+    const avis=(D&&D.manuel_analystes&&D.manuel_analystes.avis)||[];
+    document.getElementById('mav-src').value=(D&&D.manuel_analystes&&D.manuel_analystes.source)||'';
+    renderAvisEdits(avis);
+  } else if(type==='resultats'){
+    const g=(D&&D.manuel_resultats&&D.manuel_resultats.guidance_2026)||{};
+    ['mgr','mga','mgc','mgn','mrp','mrca','mrcg','mrbpa','mrbpaa'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('mgr').value=g.bpa_reported||'';
+    document.getElementById('mga').value=g.bpa_ajuste||'';
+    document.getElementById('mgc').value=g.croissance_bpa_adj||'';
+    document.getElementById('mgn').value=g.notes||'';
+    document.getElementById('mrssrc').value=(D&&D.manuel_resultats&&D.manuel_resultats.source)||'pmi.com / SEC';
+  } else if(type==='calendrier'){
+    renderCalEdits((D&&D.manuel_calendrier)||[]);
   }
-  document.getElementById('modal-' + type).classList.add('open');
+  document.getElementById('m-'+type).classList.add('open');
 }
-function closeModal(type) {
-  document.getElementById('modal-' + type).classList.remove('open');
+function closeM(type){document.getElementById('m-'+type).classList.remove('open');}
+
+function saveLocal(k,v){
+  if(!D)D={};
+  D[k]=v;
+  try{localStorage.setItem('pmi_'+k,JSON.stringify(v));}catch(e){}
+  // Notification
+  const n=document.createElement('div');
+  n.style.cssText='position:fixed;bottom:20px;right:20px;background:#22d3a5;color:#060e1a;padding:10px 18px;border-radius:8px;font-size:12px;font-weight:700;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.5)';
+  n.textContent='✓ Enregistré — Mettez à jour data.json sur GitHub pour partager';
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(),4000);
 }
 
-// Sauvegarde en localStorage + notification export
-function saveToLocal(key, value) {
-  if(!D) D = {};
-  D[key] = value;
-  try { localStorage.setItem('pmi_' + key, JSON.stringify(value)); } catch(e) {}
-  showSaveNotification();
-}
-
-function showSaveNotification() {
-  const notif = document.createElement('div');
-  notif.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#22d3a5;color:#060e1a;padding:12px 20px;border-radius:8px;font-size:12px;font-weight:700;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.5)';
-  notif.innerHTML = '✓ Enregistré — <span style="font-weight:400">Pensez à mettre à jour data.json sur GitHub</span>';
-  document.body.appendChild(notif);
-  setTimeout(() => notif.remove(), 4000);
-}
-
-function saveConsensus() {
-  const val = {
-    consensus: document.getElementById('m-consensus').value,
-    nb_analystes: parseInt(document.getElementById('m-nb-anal').value) || 18,
-    objectif_median: parseFloat(document.getElementById('m-median').value) || 187.5,
-    objectif_haut: parseFloat(document.getElementById('m-haut').value) || 220,
-    objectif_bas: parseFloat(document.getElementById('m-bas').value) || 155,
-    source: document.getElementById('m-con-source').value,
-    derniere_maj: new Date().toLocaleDateString('fr-FR'),
-    repartition: {
-      achat_fort: parseInt(document.getElementById('m-af').value)||0,
-      achat: parseInt(document.getElementById('m-a').value)||0,
-      conserver: parseInt(document.getElementById('m-c').value)||0,
-      vendre: parseInt(document.getElementById('m-v').value)||0,
-      vendre_fort: parseInt(document.getElementById('m-vf').value)||0,
-    },
-    avis: (D && D.manuel_analystes && D.manuel_analystes.avis) || []
-  };
-  saveToLocal('manuel_analystes', val);
-  closeModal('consensus');
-  renderAll();
-}
-
-function renderAnalystEditRows(avis) {
-  const rcols = ['Surpondérer','Achat','Neutre','Conserver','Vendre','Sous-pondérer'];
-  let html = '';
-  avis.forEach((a, i) => {
-    html += `<div class="analyst-row" id="ar-${i}">
-      <input type="text" value="${a.banque||''}" placeholder="Banque" style="flex:1.5">
-      <select style="flex:1">${rcols.map(r=>`<option ${r===a.recommandation?'selected':''}>${r}</option>`).join('')}</select>
-      <input type="number" value="${a.objectif||''}" placeholder="Cible $" style="flex:.7">
-      <input type="text" value="${a.date||''}" placeholder="Date" style="flex:.7">
-      <input type="text" value="${a.source||''}" placeholder="Source" style="flex:1">
-      <button class="btn-danger" onclick="document.getElementById('ar-${i}').remove()">✕</button>
-    </div>`;
-  });
-  document.getElementById('avis-edit-list').innerHTML = html;
-}
-
-function addAnalystRow() {
-  const rcols = ['Surpondérer','Achat','Neutre','Conserver','Vendre'];
-  const i = Date.now();
-  const div = document.createElement('div');
-  div.className = 'analyst-row'; div.id = 'ar-' + i;
-  div.innerHTML = `<input type="text" placeholder="Banque" style="flex:1.5">
-    <select style="flex:1">${rcols.map(r=>`<option>${r}</option>`).join('')}</select>
-    <input type="number" placeholder="Cible $" style="flex:.7">
-    <input type="text" placeholder="Date" style="flex:.7">
-    <input type="text" placeholder="Source" style="flex:1">
-    <button class="btn-danger" onclick="this.parentElement.remove()">✕</button>`;
-  document.getElementById('avis-edit-list').appendChild(div);
-}
-
-function saveAnalystes() {
-  const rows = document.querySelectorAll('#avis-edit-list .analyst-row');
-  const avis = [];
-  rows.forEach(row => {
-    const inputs = row.querySelectorAll('input, select');
-    if(inputs[0].value.trim()) {
-      avis.push({
-        banque: inputs[0].value.trim(),
-        recommandation: inputs[1].value,
-        objectif: parseFloat(inputs[2].value) || 0,
-        date: inputs[3].value,
-        source: inputs[4].value
-      });
+function saveCon(){
+  const existing=(D&&D.manuel_analystes)||{};
+  const val={...existing,
+    consensus:document.getElementById('mc').value,
+    nb_analystes:parseInt(document.getElementById('mna').value)||18,
+    objectif_median:parseFloat(document.getElementById('mmed').value)||187.5,
+    objectif_haut:parseFloat(document.getElementById('mhaut').value)||220,
+    objectif_bas:parseFloat(document.getElementById('mbas').value)||155,
+    source:document.getElementById('mcsrc').value,
+    derniere_maj:new Date().toLocaleDateString('fr-FR'),
+    repartition:{
+      achat_fort:parseInt(document.getElementById('maf').value)||0,
+      achat:parseInt(document.getElementById('ma').value)||0,
+      conserver:parseInt(document.getElementById('mco').value)||0,
+      vendre:parseInt(document.getElementById('mv').value)||0,
+      vendre_fort:parseInt(document.getElementById('mvf').value)||0,
     }
+  };
+  saveLocal('manuel_analystes',val);
+  closeM('consensus'); renderAll();
+}
+
+function renderAvisEdits(avis){
+  const rcols=['Surpondérer','Achat','Neutre','Conserver','Vendre'];
+  document.getElementById('avisedits').innerHTML=avis.map((a,i)=>
+    `<div class="arow" id="ar-${i}">
+      <input type="text" value="${a.banque||''}" placeholder="Banque" style="flex:1.4">
+      <select style="flex:1">${rcols.map(r=>`<option ${r===a.recommandation?'selected':''}>${r}</option>`).join('')}</select>
+      <input type="number" value="${a.objectif||''}" placeholder="Cible $" style="flex:.6">
+      <input type="text" value="${a.date||''}" placeholder="Date" style="flex:.6">
+      <input type="text" value="${a.source||''}" placeholder="Source" style="flex:.9">
+      <button class="btnd" onclick="document.getElementById('ar-${i}').remove()">✕</button>
+    </div>`
+  ).join('');
+}
+function addArow(){
+  const i=Date.now(),d=document.createElement('div');
+  d.className='arow';d.id='ar-'+i;
+  d.innerHTML=`<input type="text" placeholder="Banque" style="flex:1.4"><select style="flex:1"><option>Surpondérer</option><option>Achat</option><option>Neutre</option><option>Conserver</option><option>Vendre</option></select><input type="number" placeholder="Cible $" style="flex:.6"><input type="text" placeholder="Date" style="flex:.6"><input type="text" placeholder="Source" style="flex:.9"><button class="btnd" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('avisedits').appendChild(d);
+}
+function saveAv(){
+  const rows=document.querySelectorAll('#avisedits .arow');
+  const avis=[];
+  rows.forEach(r=>{
+    const inp=r.querySelectorAll('input,select');
+    if(inp[0].value.trim()) avis.push({banque:inp[0].value.trim(),recommandation:inp[1].value,objectif:parseFloat(inp[2].value)||0,date:inp[3].value,source:inp[4].value});
   });
-  const existing = (D && D.manuel_analystes) || {};
-  const val = {...existing, avis, source: document.getElementById('m-avis-source').value, derniere_maj: new Date().toLocaleDateString('fr-FR')};
-  saveToLocal('manuel_analystes', val);
-  closeModal('analystes');
-  renderAll();
+  const ex=(D&&D.manuel_analystes)||{};
+  saveLocal('manuel_analystes',{...ex,avis,source:document.getElementById('mav-src').value,derniere_maj:new Date().toLocaleDateString('fr-FR')});
+  closeM('analystes'); renderAll();
 }
 
-function saveResultats() {
-  const periode = document.getElementById('m-periode').value.trim();
-  const mr = (D && D.manuel_resultats) ? JSON.parse(JSON.stringify(D.manuel_resultats)) : {annuel:[], trimestriel:[]};
-  if(periode) {
-    const newTrim = {
-      periode,
-      ca: parseFloat(document.getElementById('m-ca').value) || 0,
-      croissance_ca: parseFloat(document.getElementById('m-croiss-ca').value) || null,
-      bpa: parseFloat(document.getElementById('m-bpa').value) || 0,
-      bpa_adj: parseFloat(document.getElementById('m-bpa-adj').value) || 0
-    };
-    const idx = mr.trimestriel.findIndex(r => r.periode === periode);
-    if(idx >= 0) mr.trimestriel[idx] = newTrim;
-    else mr.trimestriel.push(newTrim);
+function saveRes(){
+  const p=document.getElementById('mrp').value.trim();
+  const mr=D&&D.manuel_resultats?JSON.parse(JSON.stringify(D.manuel_resultats)):{annuel:[],trimestriel:[]};
+  if(p){
+    const nt={periode:p,ca:parseFloat(document.getElementById('mrca').value)||0,croissance_ca:parseFloat(document.getElementById('mrcg').value)||null,bpa:parseFloat(document.getElementById('mrbpa').value)||0,bpa_adj:parseFloat(document.getElementById('mrbpaa').value)||0};
+    const idx=mr.trimestriel.findIndex(r=>r.periode===p);
+    if(idx>=0) mr.trimestriel[idx]=nt; else mr.trimestriel.push(nt);
   }
-  // Guidance
-  const gRep = document.getElementById('m-g-rep').value;
-  const gAdj = document.getElementById('m-g-adj').value;
-  const gCroiss = document.getElementById('m-g-croiss').value;
-  const gNotes = document.getElementById('m-g-notes').value;
-  if(gRep || gAdj) {
-    mr.guidance_2026 = {...(mr.guidance_2026||{}),
-      bpa_reported: gRep || mr.guidance_2026?.bpa_reported,
-      bpa_ajuste: gAdj || mr.guidance_2026?.bpa_ajuste,
-      croissance_bpa_adj: gCroiss || mr.guidance_2026?.croissance_bpa_adj,
-      notes: gNotes || mr.guidance_2026?.notes
-    };
-  }
-  mr.source = document.getElementById('m-res-source').value;
-  mr.derniere_maj = new Date().toLocaleDateString('fr-FR');
-  saveToLocal('manuel_resultats', mr);
-  closeModal('resultats');
-  renderAll();
+  const gr=document.getElementById('mgr').value,ga=document.getElementById('mga').value;
+  if(gr||ga) mr.guidance_2026={...(mr.guidance_2026||{}),bpa_reported:gr||mr.guidance_2026?.bpa_reported,bpa_ajuste:ga||mr.guidance_2026?.bpa_ajuste,croissance_bpa_adj:document.getElementById('mgc').value||mr.guidance_2026?.croissance_bpa_adj,notes:document.getElementById('mgn').value||mr.guidance_2026?.notes};
+  mr.source=document.getElementById('mrssrc').value;
+  mr.derniere_maj=new Date().toLocaleDateString('fr-FR');
+  saveLocal('manuel_resultats',mr); closeM('resultats'); renderAll();
 }
 
-function renderCalEditRows(cal) {
-  let html = '';
-  cal.forEach((e, i) => {
-    html += `<div class="analyst-row" id="cr-${i}">
+function renderCalEdits(cal){
+  document.getElementById('caledits').innerHTML=cal.map((e,i)=>
+    `<div class="arow" id="cr-${i}">
       <input type="date" value="${e.date||''}" style="flex:1">
       <select style="flex:.7"><option value="dividende" ${e.type==='dividende'?'selected':''}>💰 Dividende</option><option value="resultats" ${e.type==='resultats'?'selected':''}>📊 Résultats</option><option value="ag" ${e.type==='ag'?'selected':''}>🏛 AG</option></select>
       <input type="text" value="${e.label||''}" placeholder="Description" style="flex:2">
-      <button class="btn-danger" onclick="document.getElementById('cr-${i}').remove()">✕</button>
-    </div>`;
+      <button class="btnd" onclick="document.getElementById('cr-${i}').remove()">✕</button>
+    </div>`
+  ).join('');
+}
+function addCrow(){
+  const i=Date.now(),d=document.createElement('div');
+  d.className='arow';d.id='cr-'+i;
+  d.innerHTML=`<input type="date" style="flex:1"><select style="flex:.7"><option value="dividende">💰 Dividende</option><option value="resultats">📊 Résultats</option><option value="ag">🏛 AG</option></select><input type="text" placeholder="Description" style="flex:2"><button class="btnd" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('caledits').appendChild(d);
+}
+function saveCal(){
+  const rows=document.querySelectorAll('#caledits .arow');
+  const cal=[];
+  rows.forEach(r=>{
+    const inp=r.querySelectorAll('input,select');
+    if(inp[0].value) cal.push({date:inp[0].value,type:inp[1].value,label:inp[2].value,statut:new Date(inp[0].value)>=new Date()?'futur':'passé'});
   });
-  document.getElementById('cal-edit-list').innerHTML = html;
+  cal.sort((a,b)=>a.date.localeCompare(b.date));
+  saveLocal('manuel_calendrier',cal); closeM('calendrier'); renderAll();
 }
 
-function addCalRow() {
-  const i = Date.now();
-  const div = document.createElement('div');
-  div.className = 'analyst-row'; div.id = 'cr-'+i;
-  div.innerHTML = `<input type="date" style="flex:1">
-    <select style="flex:.7"><option value="dividende">💰 Dividende</option><option value="resultats">📊 Résultats</option><option value="ag">🏛 AG</option></select>
-    <input type="text" placeholder="Description de l'échéance" style="flex:2">
-    <button class="btn-danger" onclick="this.parentElement.remove()">✕</button>`;
-  document.getElementById('cal-edit-list').appendChild(div);
-}
-
-function saveCalendrier() {
-  const rows = document.querySelectorAll('#cal-edit-list .analyst-row');
-  const cal = [];
-  rows.forEach(row => {
-    const inputs = row.querySelectorAll('input, select');
-    if(inputs[0].value) {
-      const d = new Date(inputs[0].value);
-      cal.push({
-        date: inputs[0].value,
-        type: inputs[1].value,
-        label: inputs[2].value,
-        statut: d >= new Date() ? 'futur' : 'passé'
-      });
-    }
-  });
-  cal.sort((a, b) => a.date.localeCompare(b.date));
-  saveToLocal('manuel_calendrier', cal);
-  closeModal('calendrier');
-  renderAll();
-}
-
-// ════════════════════════════════════════
-// RESTAURATION DEPUIS LOCALSTORAGE
-// ════════════════════════════════════════
-function restoreLocalOverrides() {
-  ['manuel_analystes','manuel_resultats','manuel_calendrier'].forEach(k => {
-    try {
-      const v = localStorage.getItem('pmi_' + k);
-      if(v && D) D[k] = JSON.parse(v);
-    } catch(e) {}
-  });
-}
-
-// ════════════════════════════════════════
+// ════════════════════════════════
 // COUNTDOWN
-// ════════════════════════════════════════
-function startCountdown() {
-  cdInterval = setInterval(() => {
-    countdown--;
-    if(countdown <= 0) { countdown = 3600; loadData(); }
-    const el = document.getElementById('countdown-txt');
-    if(el) {
-      const h = Math.floor(countdown / 3600);
-      const m = Math.floor((countdown % 3600) / 60);
-      const s = countdown % 60;
-      el.textContent = h > 0 ? ` ↻ ${h}h${String(m).padStart(2,'0')}` : m > 0 ? ` ↻ ${m}m${String(s).padStart(2,'0')}s` : ` ↻ ${s}s`;
+// ════════════════════════════════
+function startCd(){
+  cdIv=setInterval(()=>{
+    cd--;
+    if(cd<=0){cd=3600;loadData();}
+    const el=document.getElementById('cdtxt');
+    if(el){
+      const h=Math.floor(cd/3600),m=Math.floor((cd%3600)/60),s=cd%60;
+      el.textContent=h>0?` ↻ ${h}h${String(m).padStart(2,'0')}`:m>0?` ↻ ${m}m${String(s).padStart(2,'0')}s`:` ↻ ${s}s`;
     }
-  }, 1000);
+  },1000);
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 // INIT
-// ════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', async () => {
+// ════════════════════════════════
+document.addEventListener('DOMContentLoaded',async()=>{
   await loadData();
-  restoreLocalOverrides();
   if(D) renderAll();
-  startCountdown();
+  startCd();
 });
 </script>
 </body>
