@@ -886,7 +886,7 @@ function renderResultats() {
   setText("gadj", g.bpa_ajuste || "—");
   setText("gcro", g.croissance_bpa_adj || "—");
   setText("gnotes", g.notes || "");
-  setText("gcite", g.cite ? """ + g.cite + """ : "");
+  ssetText("gcite", g.cite || "");
 }
 
 function renderResTable() {
