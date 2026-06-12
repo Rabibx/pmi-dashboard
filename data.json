@@ -1,12 +1,12 @@
 {
-  "pm_price": 183.52,
+  "pm_price": 183.57,
   "pm_chg_pct": 0.0,
   "pm_chg_abs": 0.0,
-  "pm_open": 183.52,
+  "pm_open": 183.57,
   "pm_high": 185.12,
   "pm_low": 180.42,
   "pm_volume": "1.3M",
-  "pm_prev_close": 183.52,
+  "pm_prev_close": 183.57,
   "eurusd": 1.1578,
   "usdeur": 0.8637,
   "pm_week_chg": -1.2,
@@ -15,8 +15,8 @@
   "pm_1y_chg": 23.8,
   "market_status": "closed",
   "sp500_chg": null,
-  "updated_at": "2026-06-12T16:59:04.611793+00:00",
-  "updated_paris": "12/06/2026 à 18:59",
+  "updated_at": "2026-06-12T17:23:12.978180+00:00",
+  "updated_paris": "12/06/2026 à 19:23",
   "is_fallback": false,
   "technicals": {
     "sma50": null,
@@ -31,7 +31,7 @@
   "competitors": {
     "MO": {
       "name": "Altria Group",
-      "price": 71.49,
+      "price": 71.66,
       "chg_pct": 0.0,
       "per": null,
       "rendement": null,
@@ -39,7 +39,7 @@
     },
     "BTI": {
       "name": "British Am. Tobacco",
-      "price": 62.13,
+      "price": 62.21,
       "chg_pct": 0.0,
       "per": null,
       "rendement": null,
