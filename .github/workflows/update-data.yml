@@ -14,12 +14,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+        uses: actions/checkout@v4
 
       - name: Installer requests
-        run: pip install requests --quiet --break-system-packages
+        run: pip install requests --quiet
 
       - name: Fetcher les donnees
         run: python3 scripts/fetch_data.py
