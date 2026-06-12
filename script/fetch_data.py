@@ -240,7 +240,9 @@ print("\n[1/5] Cours PM (historique 260 jours)...")
 pm_closes, pm_ts = get_history("PM", 260)
 pm_quote = get_quote("PM")
 price = pm_quote.get("price", FALLBACK_PRICE)
-print(f"      Prix: {price}$  Variation: {pm_quote.get('chg_pct', '?'):+}%  Points: {len(pm_closes)}")
+chg_display = pm_quote.get('chg_pct', None)
+chg_str = f"{chg_display:+.2f}%" if isinstance(chg_display, (int, float)) else "?"
+print(f"      Prix: {price}$  Variation: {chg_str}  Points: {len(pm_closes)}")
 
 print("\n[2/5] EUR/USD et S&P 500...")
 fx     = get_eurusd()
