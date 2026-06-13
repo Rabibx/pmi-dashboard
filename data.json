@@ -1,333 +1,115 @@
 {
-  "pm_price": 184.3,
-  "pm_chg_pct": 0.0,
-  "pm_chg_abs": 0.0,
-  "pm_open": 184.3,
-  "pm_high": 185.12,
-  "pm_low": 180.42,
-  "pm_volume": "3.2M",
-  "pm_prev_close": 184.3,
-  "eurusd": 1.1573,
-  "usdeur": 0.8641,
+  "pm_price": 173.75,
+  "pm_chg_pct": -0.49,
+  "pm_chg_abs": -0.86,
+  "pm_open": 174.20,
+  "pm_high": 174.50,
+  "pm_low": 173.10,
+  "pm_volume": "5.7M",
+  "pm_prev_close": 174.61,
+  "eurusd": 1.154,
+  "usdeur": 0.866,
   "pm_week_chg": -1.2,
   "pm_month_chg": 3.8,
   "pm_ytd_chg": 5.3,
   "pm_1y_chg": 23.8,
   "market_status": "closed",
-  "sp500_chg": null,
-  "updated_at": "2026-06-12T23:25:12.267128+00:00",
-  "updated_paris": "13/06/2026 à 01:25",
-  "is_fallback": false,
+  "sp500_chg": 0.3,
+  "updated_at": "2026-06-10T10:00:00Z",
+  "updated_paris": "10/06/2026 à 12:00",
+  "is_fallback": true,
+
   "technicals": {
-    "sma50": null,
-    "sma200": null,
-    "rsi14": null,
-    "macd": null,
+    "sma50": 174.97,
+    "sma200": 167.44,
+    "rsi14": 46.43,
     "sma50_signal": "below",
-    "sma200_signal": "below",
-    "rsi_zone": "neutre"
-  },
-  "chart_data": {},
-  "competitors": {
-    "MO": {
-      "name": "Altria Group",
-      "price": 71.94,
-      "chg_pct": 0.0,
-      "per": null,
-      "rendement": null,
-      "capitalisation": null
-    },
-    "BTI": {
-      "name": "British Am. Tobacco",
-      "price": 62.32,
-      "chg_pct": 0.0,
-      "per": null,
-      "rendement": null,
-      "capitalisation": null
-    },
-    "2914.T": {
-      "name": "Japan Tobacco",
-      "price": 6177.0,
-      "chg_pct": 0.0,
-      "per": null,
-      "rendement": null,
-      "capitalisation": null
+    "sma200_signal": "above",
+    "rsi_zone": "neutre",
+    "macd": {
+      "hist": [-0.4, -0.1, 0.4, 0.8, 0.1, -0.5, -0.6],
+      "labels": ["J-30","J-25","J-20","J-15","J-10","J-5","J"],
+      "signal": "baissier",
+      "last_value": -0.6
     }
   },
+
+  "chart_data": {
+    "5d":  {"closes":[174.2,173.5,174.8,173.9,173.75],"dates":["04/06","05/06","06/06","09/06","10/06"],"min":173.5,"max":174.8,"start":174.2,"end":173.75,"chg_pct":-0.26},
+    "1m":  {"closes":[168.1,169.4,170.2,171.5,172.8,173.75],"dates":["12/05","17/05","21/05","26/05","02/06","10/06"],"min":168.1,"max":173.75,"start":168.1,"end":173.75,"chg_pct":3.36},
+    "3m":  {"closes":[163.2,165.8,168.1,170.5,172.0,173.75],"dates":["10/03","27/03","14/04","01/05","19/05","10/06"],"min":163.2,"max":173.75,"start":163.2,"end":173.75,"chg_pct":6.46},
+    "6m":  {"closes":[160.5,162.1,165.3,167.8,170.2,173.75],"dates":["10/12","10/01","10/02","10/03","10/04","10/06"],"min":160.5,"max":191.3,"start":160.5,"end":173.75,"chg_pct":8.25},
+    "1y":  {"closes":[140.2,148.5,155.3,162.8,169.4,173.75],"dates":["06/25","08/25","10/25","12/25","03/26","06/26"],"min":140.2,"max":191.3,"start":140.2,"end":173.75,"chg_pct":23.93}
+  },
+
+  "competitors": {
+    "MO":     {"name":"Altria Group",        "price":55.20,"chg_pct":0.18,"per":9.8, "rendement":8.4,"capitalisation":"95 Mrd$"},
+    "BTI":    {"name":"British Am. Tobacco", "price":35.60,"chg_pct":-0.28,"per":7.5,"rendement":9.8,"capitalisation":"81 Mrd$"},
+    "2914.T": {"name":"Japan Tobacco",       "price":3850, "chg_pct":0.52,"per":12.3,"rendement":5.6,"capitalisation":"57 Mrd$"}
+  },
+
   "manuel_resultats": {
     "annuel": [
-      {
-        "annee": 2021,
-        "ca": 31.41,
-        "croissance_ca": null,
-        "marge_op": 36.8,
-        "rn": 9.11,
-        "bpa": 5.87,
-        "fcf": 8.2,
-        "dette_nette": 28.1,
-        "dividendes_verses": 4.69,
-        "tx_distribution": 51.5
-      },
-      {
-        "annee": 2022,
-        "ca": 31.76,
-        "croissance_ca": 1.1,
-        "marge_op": 37.4,
-        "rn": 9.05,
-        "bpa": 5.82,
-        "fcf": 8.7,
-        "dette_nette": 31.4,
-        "dividendes_verses": 7.84,
-        "tx_distribution": 86.6
-      },
-      {
-        "annee": 2023,
-        "ca": 35.17,
-        "croissance_ca": 10.7,
-        "marge_op": 39.2,
-        "rn": 7.58,
-        "bpa": 4.88,
-        "fcf": 9.1,
-        "dette_nette": 37.2,
-        "dividendes_verses": 7.97,
-        "tx_distribution": 105.1
-      },
-      {
-        "annee": 2024,
-        "ca": 37.88,
-        "croissance_ca": 7.7,
-        "marge_op": 41.5,
-        "rn": 11.02,
-        "bpa": 7.09,
-        "fcf": 10.1,
-        "dette_nette": 42.1,
-        "dividendes_verses": 8.21,
-        "tx_distribution": 74.5
-      },
-      {
-        "annee": 2025,
-        "ca": 40.65,
-        "croissance_ca": 7.3,
-        "marge_op": 43.0,
-        "rn": 11.35,
-        "bpa": 7.54,
-        "fcf": 10.6,
-        "dette_nette": 43.9,
-        "dividendes_verses": 8.48,
-        "tx_distribution": 74.7
-      }
+      {"annee":2021,"ca":31.41,"croissance_ca":null,"marge_op":36.8,"rn":9.11,"bpa":5.87,"fcf":8.2,"dette_nette":28.1,"dividendes_verses":4.69,"tx_distribution":51.5},
+      {"annee":2022,"ca":31.76,"croissance_ca":1.1, "marge_op":37.4,"rn":9.05,"bpa":5.82,"fcf":8.7,"dette_nette":31.4,"dividendes_verses":7.84,"tx_distribution":86.6},
+      {"annee":2023,"ca":35.17,"croissance_ca":10.7,"marge_op":39.2,"rn":7.58,"bpa":4.88,"fcf":9.1,"dette_nette":37.2,"dividendes_verses":7.97,"tx_distribution":105.1},
+      {"annee":2024,"ca":37.88,"croissance_ca":7.7, "marge_op":41.5,"rn":11.02,"bpa":7.09,"fcf":10.1,"dette_nette":42.1,"dividendes_verses":8.21,"tx_distribution":74.5},
+      {"annee":2025,"ca":40.65,"croissance_ca":7.3, "marge_op":43.0,"rn":11.35,"bpa":7.54,"fcf":10.6,"dette_nette":43.9,"dividendes_verses":8.48,"tx_distribution":74.7}
     ],
     "trimestriel": [
-      {
-        "periode": "Q1 2025",
-        "ca": 9.28,
-        "croissance_ca": 7.8,
-        "bpa": 1.69,
-        "bpa_adj": 1.69
-      },
-      {
-        "periode": "Q2 2025",
-        "ca": 9.94,
-        "croissance_ca": 9.3,
-        "bpa": 1.77,
-        "bpa_adj": 1.77
-      },
-      {
-        "periode": "Q3 2025",
-        "ca": 10.91,
-        "croissance_ca": 11.2,
-        "bpa": 2.38,
-        "bpa_adj": 2.38
-      },
-      {
-        "periode": "Q4 2025",
-        "ca": 10.4,
-        "croissance_ca": 8.5,
-        "bpa": 1.7,
-        "bpa_adj": 1.7
-      },
-      {
-        "periode": "Q1 2026",
-        "ca": 10.14,
-        "croissance_ca": 9.1,
-        "bpa": 1.56,
-        "bpa_adj": 1.96
-      }
+      {"periode":"Q1 2025","ca":9.28, "croissance_ca":7.8, "bpa":1.69,"bpa_adj":1.69},
+      {"periode":"Q2 2025","ca":9.94, "croissance_ca":9.3, "bpa":1.77,"bpa_adj":1.77},
+      {"periode":"Q3 2025","ca":10.91,"croissance_ca":11.2,"bpa":2.38,"bpa_adj":2.38},
+      {"periode":"Q4 2025","ca":10.40,"croissance_ca":8.5, "bpa":1.70,"bpa_adj":1.70},
+      {"periode":"Q1 2026","ca":10.14,"croissance_ca":9.1, "bpa":1.56,"bpa_adj":1.96}
     ],
     "guidance_2026": {
-      "bpa_reported": "7,56$ – 7,71$",
-      "bpa_ajuste": "8,36$ – 8,51$",
+      "bpa_reported":     "7,56$ – 7,71$",
+      "bpa_ajuste":       "8,36$ – 8,51$",
       "croissance_bpa_adj": "+10,9% à +12,9%",
       "notes": "Tailwind devise +0,25$ aux taux actuels. Croissance organique hors devise : +7,5% à +9,5%.",
-      "cite": "Notre performance a dépassé nos attentes au T1, avec une livraison exceptionnelle d'IQOS. — Jacek Olczak, CEO"
+      "cite":  "Notre performance a dépassé nos attentes au T1, avec une livraison exceptionnelle d'IQOS. — Jacek Olczak, CEO"
     },
     "derniere_maj": "10/06/2026",
     "source": "pmi.com / SEC 10-Q Q1 2026"
   },
+
   "manuel_analystes": {
     "consensus": "Achat",
     "nb_analystes": 18,
     "objectif_median": 187.5,
     "objectif_haut": 220,
     "objectif_bas": 155,
-    "repartition": {
-      "achat_fort": 8,
-      "achat": 7,
-      "conserver": 3,
-      "vendre": 0,
-      "vendre_fort": 0
-    },
+    "repartition": {"achat_fort":8,"achat":7,"conserver":3,"vendre":0,"vendre_fort":0},
     "avis": [
-      {
-        "banque": "Morgan Stanley",
-        "recommandation": "Surpondérer",
-        "objectif": 205,
-        "date": "Mai 2026",
-        "source": "Investing.com"
-      },
-      {
-        "banque": "Goldman Sachs",
-        "recommandation": "Achat",
-        "objectif": 210,
-        "date": "Avr 2026",
-        "source": "Zonebourse"
-      },
-      {
-        "banque": "JPMorgan",
-        "recommandation": "Surpondérer",
-        "objectif": 195,
-        "date": "Avr 2026",
-        "source": "Boursier.com"
-      },
-      {
-        "banque": "Deutsche Bank",
-        "recommandation": "Achat",
-        "objectif": 190,
-        "date": "Avr 2026",
-        "source": "BFM Business"
-      },
-      {
-        "banque": "Barclays",
-        "recommandation": "Surpondérer",
-        "objectif": 185,
-        "date": "Avr 2026",
-        "source": "ABC Bourse"
-      },
-      {
-        "banque": "UBS",
-        "recommandation": "Neutre",
-        "objectif": 175,
-        "date": "Mar 2026",
-        "source": "Zonebourse"
-      },
-      {
-        "banque": "Citigroup",
-        "recommandation": "Achat",
-        "objectif": 200,
-        "date": "Avr 2026",
-        "source": "Investing.com"
-      },
-      {
-        "banque": "HSBC",
-        "recommandation": "Conserver",
-        "objectif": 168,
-        "date": "Mar 2026",
-        "source": "Boursier.com"
-      }
+      {"banque":"Morgan Stanley","recommandation":"Surpondérer","objectif":205,"date":"Mai 2026","source":"Investing.com"},
+      {"banque":"Goldman Sachs", "recommandation":"Achat",       "objectif":210,"date":"Avr 2026","source":"Zonebourse"},
+      {"banque":"JPMorgan",      "recommandation":"Surpondérer","objectif":195,"date":"Avr 2026","source":"Boursier.com"},
+      {"banque":"Deutsche Bank", "recommandation":"Achat",       "objectif":190,"date":"Avr 2026","source":"BFM Business"},
+      {"banque":"Barclays",      "recommandation":"Surpondérer","objectif":185,"date":"Avr 2026","source":"ABC Bourse"},
+      {"banque":"UBS",           "recommandation":"Neutre",      "objectif":175,"date":"Mar 2026","source":"Zonebourse"},
+      {"banque":"Citigroup",     "recommandation":"Achat",       "objectif":200,"date":"Avr 2026","source":"Investing.com"},
+      {"banque":"HSBC",          "recommandation":"Conserver",   "objectif":168,"date":"Mar 2026","source":"Boursier.com"}
     ],
     "derniere_maj": "10/06/2026",
     "source": "Investing.com / Zonebourse / Boursier.com"
   },
+
   "manuel_calendrier": [
-    {
-      "date": "2026-01-14",
-      "type": "dividende",
-      "label": "Versement dividende Q4 2025 — 1,47$/action",
-      "statut": "passé"
-    },
-    {
-      "date": "2026-02-06",
-      "type": "resultats",
-      "label": "Publication résultats annuels 2025",
-      "statut": "passé"
-    },
-    {
-      "date": "2026-03-19",
-      "type": "dividende",
-      "label": "Date ex-dividende Q1 2026",
-      "statut": "passé"
-    },
-    {
-      "date": "2026-04-13",
-      "type": "dividende",
-      "label": "Versement dividende Q1 2026 — 1,47$/action",
-      "statut": "passé"
-    },
-    {
-      "date": "2026-04-22",
-      "type": "resultats",
-      "label": "Publication résultats T1 2026",
-      "statut": "passé"
-    },
-    {
-      "date": "2026-05-06",
-      "type": "ag",
-      "label": "Assemblée Générale annuelle 2026 (virtuelle)",
-      "statut": "passé"
-    },
-    {
-      "date": "2026-06-25",
-      "type": "dividende",
-      "label": "Date ex-dividende Q2 2026",
-      "statut": "futur"
-    },
-    {
-      "date": "2026-07-20",
-      "type": "dividende",
-      "label": "Versement dividende Q2 2026 — 1,47$/action",
-      "statut": "futur"
-    },
-    {
-      "date": "2026-07-22",
-      "type": "resultats",
-      "label": "Publication résultats T2 2026 (estimée)",
-      "statut": "futur"
-    },
-    {
-      "date": "2026-10-02",
-      "type": "dividende",
-      "label": "Date ex-dividende Q3 2026",
-      "statut": "futur"
-    },
-    {
-      "date": "2026-10-22",
-      "type": "resultats",
-      "label": "Publication résultats T3 2026 (estimée)",
-      "statut": "futur"
-    },
-    {
-      "date": "2026-10-26",
-      "type": "dividende",
-      "label": "Versement dividende Q3 2026 — 1,47$/action",
-      "statut": "futur"
-    },
-    {
-      "date": "2026-12-24",
-      "type": "dividende",
-      "label": "Date ex-dividende Q4 2026",
-      "statut": "futur"
-    },
-    {
-      "date": "2027-01-20",
-      "type": "dividende",
-      "label": "Versement dividende Q4 2026 — 1,47$/action",
-      "statut": "futur"
-    },
-    {
-      "date": "2027-02-05",
-      "type": "resultats",
-      "label": "Publication résultats annuels 2026 (estimée)",
-      "statut": "futur"
-    }
+    {"date":"2026-01-14","type":"dividende","label":"Versement dividende Q4 2025 — 1,47$/action","statut":"passé"},
+    {"date":"2026-02-06","type":"resultats","label":"Publication résultats annuels 2025","statut":"passé"},
+    {"date":"2026-03-19","type":"dividende","label":"Date ex-dividende Q1 2026","statut":"passé"},
+    {"date":"2026-04-13","type":"dividende","label":"Versement dividende Q1 2026 — 1,47$/action","statut":"passé"},
+    {"date":"2026-04-22","type":"resultats","label":"Publication résultats T1 2026","statut":"passé"},
+    {"date":"2026-05-06","type":"ag",       "label":"Assemblée Générale annuelle 2026 (virtuelle)","statut":"passé"},
+    {"date":"2026-06-25","type":"dividende","label":"Date ex-dividende Q2 2026","statut":"futur"},
+    {"date":"2026-07-20","type":"dividende","label":"Versement dividende Q2 2026 — 1,47$/action","statut":"futur"},
+    {"date":"2026-07-22","type":"resultats","label":"Publication résultats T2 2026 (estimée)","statut":"futur"},
+    {"date":"2026-10-02","type":"dividende","label":"Date ex-dividende Q3 2026","statut":"futur"},
+    {"date":"2026-10-22","type":"resultats","label":"Publication résultats T3 2026 (estimée)","statut":"futur"},
+    {"date":"2026-10-26","type":"dividende","label":"Versement dividende Q3 2026 — 1,47$/action","statut":"futur"},
+    {"date":"2026-12-24","type":"dividende","label":"Date ex-dividende Q4 2026","statut":"futur"},
+    {"date":"2027-01-20","type":"dividende","label":"Versement dividende Q4 2026 — 1,47$/action","statut":"futur"},
+    {"date":"2027-02-05","type":"resultats","label":"Publication résultats annuels 2026 (estimée)","statut":"futur"}
   ]
 }
