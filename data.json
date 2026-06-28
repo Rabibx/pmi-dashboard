@@ -15,8 +15,8 @@
   "pm_1y_chg": 0.65,
   "market_status": "closed",
   "sp500_chg": -0.05,
-  "updated_at": "2026-06-28T10:22:00.829407+00:00",
-  "updated_paris": "28/06/2026 a 12:22",
+  "updated_at": "2026-06-28T13:21:01.355408+00:00",
+  "updated_paris": "28/06/2026 a 15:21",
   "is_fallback": false,
   "technicals": {
     "sma50": 175.87,
