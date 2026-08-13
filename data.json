@@ -15,8 +15,8 @@
   "pm_1y_chg": 9.32,
   "market_status": "closed",
   "sp500_chg": 0.26,
-  "updated_at": "2026-08-12T22:51:32.477069+00:00",
-  "updated_paris": "13/08/2026 a 00:51",
+  "updated_at": "2026-08-13T08:27:16.160444+00:00",
+  "updated_paris": "13/08/2026 a 10:27",
   "is_fallback": false,
   "technicals": {
     "sma50": 184.42,
@@ -1074,7 +1074,7 @@
     },
     "2914.T": {
       "name": "Japan Tobacco",
-      "price": 7026.0,
+      "price": 7068.0,
       "chg_pct": 0.0,
       "per": null,
       "rendement": null,
