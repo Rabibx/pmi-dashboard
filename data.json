@@ -1,27 +1,27 @@
 {
-  "pm_price": 204.12,
+  "pm_price": 205.2,
   "pm_chg_pct": 0.0,
   "pm_chg_abs": 0.0,
-  "pm_open": 204.12,
-  "pm_high": 205.31,
+  "pm_open": 205.2,
+  "pm_high": 205.79,
   "pm_low": 201.69,
-  "pm_volume": "2.2M",
-  "pm_prev_close": 204.12,
-  "eurusd": 1.1225,
-  "usdeur": 0.8909,
-  "pm_week_chg": 1.46,
-  "pm_month_chg": 6.47,
-  "pm_ytd_chg": 12.09,
-  "pm_1y_chg": 29.41,
+  "pm_volume": "6.1M",
+  "pm_prev_close": 205.2,
+  "eurusd": 1.1242,
+  "usdeur": 0.8895,
+  "pm_week_chg": 1.99,
+  "pm_month_chg": 7.04,
+  "pm_ytd_chg": 12.68,
+  "pm_1y_chg": 30.1,
   "market_status": "closed",
-  "sp500_chg": -1.14,
-  "updated_at": "2026-10-16T17:18:16.042692+00:00",
-  "updated_paris": "16/10/2026 a 19:18",
+  "sp500_chg": -1.09,
+  "updated_at": "2026-10-16T20:53:28.006675+00:00",
+  "updated_paris": "16/10/2026 a 22:53",
   "is_fallback": false,
   "technicals": {
-    "sma50": 191.26,
+    "sma50": 191.28,
     "sma200": 179.83,
-    "rsi14": 62.79,
+    "rsi14": 63.8,
     "macd": {
       "hist": [
         -0.305,
@@ -55,7 +55,7 @@
         199.29,
         205.58,
         199.9,
-        204.12
+        205.2
       ],
       "dates": [
         "12/10",
@@ -67,8 +67,8 @@
       "min": 199.29,
       "max": 205.58,
       "start": 202.0,
-      "end": 204.12,
-      "chg_pct": 1.05
+      "end": 205.2,
+      "chg_pct": 1.58
     },
     "1m": {
       "closes": [
@@ -93,7 +93,7 @@
         199.29,
         205.58,
         199.9,
-        204.12
+        205.2
       ],
       "dates": [
         "17/09",
@@ -122,8 +122,8 @@
       "min": 187.46,
       "max": 205.58,
       "start": 190.48,
-      "end": 204.12,
-      "chg_pct": 7.16
+      "end": 205.2,
+      "chg_pct": 7.73
     },
     "3m": {
       "closes": [
@@ -192,7 +192,7 @@
         199.29,
         205.58,
         199.9,
-        204.12
+        205.2
       ],
       "dates": [
         "16/07",
@@ -265,8 +265,8 @@
       "min": 182.53,
       "max": 205.58,
       "start": 189.84,
-      "end": 204.12,
-      "chg_pct": 7.52
+      "end": 205.2,
+      "chg_pct": 8.09
     },
     "6m": {
       "closes": [
@@ -399,7 +399,7 @@
         199.29,
         205.58,
         199.9,
-        204.12
+        205.2
       ],
       "dates": [
         "14/04",
@@ -536,8 +536,8 @@
       "min": 153.25,
       "max": 205.58,
       "start": 159.47,
-      "end": 204.12,
-      "chg_pct": 28.0
+      "end": 205.2,
+      "chg_pct": 28.68
     },
     "1y": {
       "closes": [
@@ -792,7 +792,7 @@
         199.29,
         205.58,
         199.9,
-        204.12
+        205.2
       ],
       "dates": [
         "16/10",
@@ -1051,14 +1051,14 @@
       "min": 144.33,
       "max": 205.58,
       "start": 155.98,
-      "end": 204.12,
-      "chg_pct": 30.86
+      "end": 205.2,
+      "chg_pct": 31.56
     }
   },
   "competitors": {
     "MO": {
       "name": "Altria Group",
-      "price": 74.88,
+      "price": 75.11,
       "chg_pct": 0.0,
       "per": null,
       "rendement": null,
@@ -1066,7 +1066,7 @@
     },
     "BTI": {
       "name": "British Am. Tobacco",
-      "price": 59.62,
+      "price": 60.0,
       "chg_pct": 0.0,
       "per": null,
       "rendement": null,
